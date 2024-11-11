@@ -4,10 +4,10 @@ import Contents from './music/Contents';
 const Main = () => {
 
     return (
-        <div>
+        <>
             <Header />
             <Contents />
-        </div>
+        </>
     );
 }
 
