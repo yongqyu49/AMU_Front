@@ -1,19 +1,24 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Main from "./component/Main";
-import NotFound from "./component/NotFound";
-import Header from "./component/Header";
 
 function App() {
-    return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Main />} />
-                <Route path="*" element={<NotFound />} />
-            </Routes>
-        </BrowserRouter>
-    );
+  const [hello, setHello] = useState('');
+  const [user, setUser] = useState('');
+
+    axios.get('/api/test')
+        .then((res) => {
+        setHello(res.data);
+    })
+  axios.post('/api/getOneUser')
+      .then((res) => {
+          setUser(res.data);
+      })
+  return (
+      <div className="App">
+        백엔드 데이터 : {hello}
+          유저: {user.id}, {user.artist}
+      </div>
+  );
 }
 
 export default App;
