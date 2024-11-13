@@ -2,64 +2,20 @@
     margin-top: 20px;
     background-color: skyblue;
 }
-.dropdown{
-    height: 400px;
-    background-color: red;
+.drop_down{
+    height: 50px;
+    background-color: gray;
 }
 .drop1{
     float: left;
+    margin-left: 30px;
 }
 .drop2{
-
+    float: right;
+    margin-right: 30px;
 }
 
 .table{
-
-}
-.main_img{
-
-}
-.title{
-
-}
-
-.contents{
-
-}
-.date{
-
-}
-.file_size{
-
-}
-.maker{
-
-}
-.genre{
-
-}
-.views{
-
-}
-.heart_count{
-
-}
-.download{
-
-}
-.download_button{
-
-}
-.heart{
-
-}
-.heart_button{
-
-}
-.playlist{
-
-}
-.playlist_button{
 
 }
 
