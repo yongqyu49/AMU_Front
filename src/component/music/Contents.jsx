@@ -1,5 +1,7 @@
 import styles from '../../css/music/Contents.module.css';
 import { Link } from 'react-router-dom';
+import Layout from '../Layout'
+
 
 const Contents = () => {
     return (
