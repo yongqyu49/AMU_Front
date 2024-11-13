@@ -34,8 +34,8 @@ const Header = () => {
                             <Link to="/upload" className={styles.upload_link}>Upload</Link>
                         </div>
                         <div className={styles.header_user_nav}>
-                            <Link to="/login" className={styles.login_link}>Login</Link>
-                            <Link to="/signup" className={styles.signup_link}>Signup</Link>
+                            <Link to="/signIn" className={styles.login_link}>Login</Link>
+                            <Link to="/signUp" className={styles.signup_link}>Signup</Link>
                         </div>
                     </div>
                 </div>
