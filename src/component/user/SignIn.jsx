@@ -1,3 +1,5 @@
+import Layout from "../Layout";
+
 const SignIn = () => {
     const doSignIn = (e) => {
         e.preventDefault();
