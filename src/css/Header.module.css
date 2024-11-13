@@ -1,167 +1,189 @@
-.header_container {
-  width: 1170px;
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto;
-  box-sizing: border-box;
-}
-
-@media (min-width: 768px) {
-  .header_container {
-    width: 750px;
-  }
-}
-
-.header_row {
-  padding: 25px 0;
-  position: relative;
-  margin-right: -15px;
-  margin-left: -15px;
-}
-
-.header_logo {
-  float: left;
-  height: 36px;
-  background: url("../logo.svg") no-repeat center center;
-  background-size: 128px 27px;
-}
-
-@media (min-width: 768px) {
-  .header_logo {
-    background-position: center center;
-  }
-}
-
-@media (min-width: 768px) {
-  .header_logo {
-    width: 25%;
-  }
-}
-
-@media (min-width: 992px) {
-  .header_logo {
-    width: 16.66666667%;
-  }
-}
-
-.search_holder {
-  margin: -5px 0 0;
-  box-sizing: border-box;
-
-  position: relative;
-  min-height: 1px;
-  padding-right: 15px;
-  padding-left: 15px;
-}
-
-@media (min-width: 768px) {
-  .search_holder {
-    width: 41.66666667%;
-  }
-}
-
-@media (min-width: 768px) {
-  .search_holder {
-    float: left;
-  }
-}
-
-/*.search_holder {*/
-/*  display: flex; !* 플렉스 레이아웃으로 정렬 *!*/
-/*  align-items: center; !* 세로 중앙 정렬 *!*/
-/*  justify-content: center; !* 가로 정렬 조정 *!*/
-/*  width: 100%; !* 부모 컨테이너의 너비를 유지 *!*/
-/*  max-width: 600px; !* 적절한 최대 너비 설정 *!*/
-/*  margin: 0 auto; !* 가운데 정렬 *!*/
-/*}*/
-
-.search_input {
-  box-sizing: border-box;
-  padding: 12px 118px 14px 26px;
-  color: #414851;
-  background-color: #e8e8e8;
-  margin: 0;
-  position: relative;
-  z-index: 102;
-
-  height: 46px;
+/* 공통 스타일 */
+.header {
+  background: #333;
+  font-family: Inter, sans-serif;
+  font-weight: 100;
   font-size: 14px;
-  line-height: 20px;
-  border-radius: 23px;
-  box-shadow: none !important;
-  outline: none !important;
+  line-height: 1.5;
+  width: 100%;
+  height: 46px;
+  -webkit-font-smoothing: subpixel-antialiased;
+  transition: height 0.2s ease-in-out;
+  position: fixed;
+  z-index: 1000;
+  color: #999;
+  cursor: default;
+  outline: 0;
+}
+
+.header_inner {
+  display: flex;
+  margin: 0 auto;
+  padding: 0;
+  width: 1240px;
+}
+
+@media (max-width: 1239px) {
+  .header_inner {
+    width: 1080px;
+  }
+}
+
+@media (max-width: 1079px) {
+  .header_inner {
+    width: 920px;
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 1079px) {
+  .header_inner {
+    width: 960px;
+  }
+}
+
+/* 로고 스타일 */
+.header_logo {
+  background: linear-gradient(#f70, #f30);
+  display: block;
+  float: left;
+}
+
+.header_logo_link {
+  display: block;
+  justify-content: center;
+  align-content: center;
+  background: transparent url(https://a-v2.sndcdn.com/assets/images/brand-1b72dd82.svg) no-repeat 0 11px;
+  background-size: 49px 22px;
+  width: 69px;
+  height: 46px;
+  border: 0;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAWCAQAAAAs/tcnAAABMUlEQVR4Ac3UJfQUARTGUaxnrBHpPeDu7u7uTg/QO/SK9q1U3KHg2i7fH4exNeSdc9/ZNL/RHfRfjdHOuOajt246b7Fh/T38WO/9OnfM7s+hx3gUh5XNWYN7D4wnTlOe6OGsv/6eQlQFmNX9WScTs4jqwD3DOr/j04gJxHyiOsCiTgITibnEdGIJURc410lgJrGYmE+sIuoCz1301BstGwxueqQLiVXEMmI9cVp7c9WIYmAqkUysIjYQa4mtRAJtJwb//kgXEdOJTcR2Yiuxi2g/wIYfgTnEBmIFsYvYS+whDhCdBFo/ApuJvcRO4hBxhDhMHCU6Cbz5EThKHCe+7BNEcXceKFxB/e7yFs0h1hP1u/OHXHiL6nfnr2nhO6jfR3r50L5cR9O+oX5+/FX8vfkElmh0Xu+KRLEAAAAASUVORK5CYII=);
+  background-position-x: 12px;
+}
+
+/* 네비게이션 스타일 */
+.header_nav {
+  display: block;
+  visibility: visible;
+  float: left;
+}
+
+.header_nav_ul {
+  float: left;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.header_nav_li {
+  float: left;
+  position: relative;
+  list-style: none;
+}
+
+.header_nav_link {
+  outline: 0;
+  color: #fff !important;
+  background-color: #111;
+  border-bottom: none;
 
   display: block;
-  width: 100%;
+  padding: 12px 0;
+  height: 46px;
+  width: 104px;
+  text-align: center;
+  border-right: 1px solid #111;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1239px) {
+  .header_nav_link {
+    width: 60px;
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/* 검색 스타일 */
+.header_middle {
+  flex: 1;
+}
+
+.header_search {
+  display: block;
+  visibility: visible;
+}
+
+.header_search_form {
+  position: relative;
+  padding: 9px 10px 8px;
+  appearance: none;
+}
+
+.header_search_input {
+  color: #666;
+  outline: 0;
+  border: 0;
+  padding: 5px 7px;
+  background: #e5e5e5;
+  height: 28px;
+  font-weight: 100;
+  box-sizing: border-box;
 }
 
 .search_button {
-  box-sizing: border-box;
+  background: url(https://a-v2.sndcdn.com/assets/images/search-dbfe5cbb.svg) 0 0 no-repeat;
+  width: 15px;
+  height: 15px;
+  right: 20px;
+  top: 15px;
   position: absolute;
-  right: 21px;
-  top: 5px;
-  width: 64px;
-  height: 36px;
-  border-radius: 18px;
   border: 0;
-  background: #008bf6 url("../logo.svg") no-repeat center center;
-  background-size: 16px 16px;
-  z-index: 105;
-  outline: none !important;
   cursor: pointer;
+  color: transparent;
+  -webkit-appearance: button;
+  padding: 0;
+  margin: 0;
 }
 
-.header_buttons_holder {
-  box-sizing: border-box;
-  white-space: nowrap;
-  position: relative;
-  min-height: 1px;
-  padding-right: 15px;
-  padding-left: 15px;
+/* 우측 메뉴 스타일 */
+.header_right {
+  display: block;
+  visibility: visible;
 }
 
-@media (min-width: 768px) {
-  .header_buttons_holder {
-    width: 33.33333333%;
-  }
-}
-
-@media (min-width: 768px) {
-  .header_buttons_holder {
-    float: left;
-  }
-}
-
-@media (min-width: 992px) {
-  .header_buttons_holder {
-    width: 41.66666667%;
-  }
-}
-
-@media (min-width: 992px) {
-  .header_buttons_holder {
-    float: left;
-  }
-}
-
-.head_elem {
-  height: 36px;
-  margin-left: 8px;
+.header_upsell {
   display: inline-block;
-  vertical-align: middle;
-  text-align: left;
-  box-sizing: border-box;
-
-  color: #008cf6;
-  font-weight: bold;
-  padding: 0 16px;
-  line-height: 32px;
-  border: 2px solid transparent;
-  border-radius: 18px;
-  background-color: transparent;
-  text-decoration: none !important;
-  outline: none !important;
-  cursor: pointer;
+  float: left;
 }
 
+.upload_link {
+  font-weight: 100;
+  line-height: 21px;
+  color: #f50;
+  float: left;
+  padding: 12px 10px;
+}
+
+.header_user_nav {
+  float: left;
+}
+
+.login_link, .signup_link {
+  float: left;
+  padding: 12px 28px 12px 10px;
+  color: #ccc;
+  height: 46px;
+}
+
+@media (max-width: 1239px) {
+  .login_link {
+    width: auto;
+  }
+}
+
+a {
+  text-decoration: none;
+}

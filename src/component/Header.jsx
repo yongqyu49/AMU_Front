@@ -3,21 +3,44 @@ import { Link } from 'react-router-dom';
 
 const Header = () => {
     return (
-        <div className={styles.header_container}>
-            <div className={styles.header_row}>
-                <Link to="/" className={styles.header_logo} />
-                <form name="searchform" action="" id="search">
-                    <div className={styles.search_holder}>
-                        <input type="text" className={styles.search_input} id={styles.searchQuery} placeholder="파일, 음악 동영상, 사진을 검색하세요…" maxLength="200" autoComplete="off" />
-                        <button id={styles.doSearch} type="button" className={styles.search_button} aria-label="Search button"></button>
+        <>
+            <div className={styles.header}>
+                <div className={styles.header_inner}>
+                    <div className={styles.header_left}>
+                        <div className={styles.header_logo}>
+                            <Link to="/" className={styles.header_logo_link}/>
+                        </div>
+                        <nav className={styles.header_nav}>
+                            <ul className={styles.header_nav_ul}>
+                                <li className={styles.header_nav_li}>
+                                    <Link to="/home" className={styles.header_nav_link}>Home</Link>
+                                </li>
+                                <li className={styles.header_nav_li}>
+                                    <Link to="/feed" className={styles.header_nav_link}>Feed</Link>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
-                </form>
-                <div className={styles.header_buttons_holder}>
-                    <Link to="/login" className={styles.head_elem}>로그인</Link>
-                    <Link to="/signup" className={styles.head_elem}>회원가입</Link>
+                    <div className={styles.header_middle}>
+                        <div className={styles.header_search} role="search">
+                            <form className={styles.header_search_form}>
+                                <input type="search" className={styles.header_search_input} placeholder="Search" />
+                                <button type="button" className={styles.search_button}>Search</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div className={styles.header_right}>
+                        <div className={styles.header_upsell}>
+                            <Link to="/upload" className={styles.upload_link}>Upload</Link>
+                        </div>
+                        <div className={styles.header_user_nav}>
+                            <Link to="/login" className={styles.login_link}>Login</Link>
+                            <Link to="/signup" className={styles.signup_link}>Signup</Link>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 
