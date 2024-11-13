@@ -1,28 +1,39 @@
+/* 공통 스타일 */
 .header {
   background: #333;
   font-family: Inter, sans-serif;
   font-weight: 100;
   font-size: 14px;
   line-height: 1.5;
-
   width: 100%;
   height: 46px;
-  transition: height .2s ease-in-out;
-
+  -webkit-font-smoothing: subpixel-antialiased;
+  transition: height 0.2s ease-in-out;
   position: fixed;
   z-index: 1000;
   color: #999;
-
-  user-select: none;
   cursor: default;
   outline: 0;
-
 }
 
 .header_inner {
   display: flex;
-  width: 1240px;
   margin: 0 auto;
+  padding: 0;
+  width: 1240px;
+}
+
+@media (max-width: 1239px) {
+  .header_inner {
+    width: 1080px;
+  }
+}
+
+@media (max-width: 1079px) {
+  .header_inner {
+    width: 920px;
+    padding: 0 20px;
+  }
 }
 
 @media (max-width: 1079px) {
@@ -31,28 +42,7 @@
   }
 }
 
-@media (max-width: 1239px) {
-  .header_inner {
-    width: 1080px;
-  }
-}
-.header_inner {
-  width: 1240px;
-  padding: 0;
-}
-@media (max-width: 1079px) {
-  .header_inner {
-    width: 920px;
-    padding: 0 20px;
-  }
-}
-
-@media (max-width: 1239px) {
-  .header_inner {
-    width: 1020px;
-  }
-}
-
+/* 로고 스타일 */
 .header_logo {
   background: linear-gradient(#f70, #f30);
   display: block;
@@ -61,23 +51,18 @@
 
 .header_logo_link {
   display: block;
-  flex-direction: column;
   justify-content: center;
   align-content: center;
-
   background: transparent url(https://a-v2.sndcdn.com/assets/images/brand-1b72dd82.svg) no-repeat 0 11px;
   background-size: 49px 22px;
+  width: 69px;
+  height: 46px;
+  border: 0;
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAWCAQAAAAs/tcnAAABMUlEQVR4Ac3UJfQUARTGUaxnrBHpPeDu7u7uTg/QO/SK9q1U3KHg2i7fH4exNeSdc9/ZNL/RHfRfjdHOuOajt246b7Fh/T38WO/9OnfM7s+hx3gUh5XNWYN7D4wnTlOe6OGsv/6eQlQFmNX9WScTs4jqwD3DOr/j04gJxHyiOsCiTgITibnEdGIJURc410lgJrGYmE+sIuoCz1301BstGwxueqQLiVXEMmI9cVp7c9WIYmAqkUysIjYQa4mtRAJtJwb//kgXEdOJTcR2Yiuxi2g/wIYfgTnEBmIFsYvYS+whDhCdBFo/ApuJvcRO4hBxhDhMHCU6Cbz5EThKHCe+7BNEcXceKFxB/e7yFs0h1hP1u/OHXHiL6nfnr2nhO6jfR3r50L5cR9O+oX5+/FX8vfkElmh0Xu+KRLEAAAAASUVORK5CYII=);
   background-position-x: 12px;
-  background-size: 48px 22px;
-  width: 69px;
-  margin-right: unset;
-  height: 46px;
-
-  border: 0;
-  text-shadow: none;
 }
 
+/* 네비게이션 스타일 */
 .header_nav {
   display: block;
   visibility: visible;
@@ -88,6 +73,7 @@
   float: left;
   list-style: none;
   margin: 0;
+  padding: 0;
 }
 
 .header_nav_li {
@@ -105,9 +91,10 @@
   display: block;
   padding: 12px 0;
   height: 46px;
-  box-sizing: border-box;
+  width: 104px;
   text-align: center;
   border-right: 1px solid #111;
+  box-sizing: border-box;
 }
 
 @media (max-width: 1239px) {
@@ -119,10 +106,7 @@
   }
 }
 
-a {
-  text-decoration: none;
-}
-
+/* 검색 스타일 */
 .header_middle {
   flex: 1;
 }
@@ -155,17 +139,16 @@ a {
   height: 15px;
   right: 20px;
   top: 15px;
-  border: 0;
-  padding: 0;
   position: absolute;
-  text-shadow: none;
+  border: 0;
+  cursor: pointer;
   color: transparent;
   -webkit-appearance: button;
-  cursor: pointer;
+  padding: 0;
   margin: 0;
-  visibility: visible;
 }
 
+/* 우측 메뉴 스타일 */
 .header_right {
   display: block;
   visibility: visible;
@@ -174,7 +157,6 @@ a {
 .header_upsell {
   display: inline-block;
   float: left;
-  visibility: visible;
 }
 
 .upload_link {
@@ -190,10 +172,8 @@ a {
 }
 
 .login_link, .signup_link {
-  box-sizing: border-box;
   float: left;
   padding: 12px 28px 12px 10px;
-  position: relative;
   color: #ccc;
   height: 46px;
 }
@@ -202,4 +182,8 @@ a {
   .login_link {
     width: auto;
   }
+}
+
+a {
+  text-decoration: none;
 }

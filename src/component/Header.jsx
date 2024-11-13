@@ -25,7 +25,7 @@ const Header = () => {
                         <div className={styles.header_search} role="search">
                             <form className={styles.header_search_form}>
                                 <input type="search" className={styles.header_search_input} placeholder="Search" />
-                                <button type="button" className={styles.search_button}/>
+                                <button type="button" className={styles.search_button}>Search</button>
                             </form>
                         </div>
                     </div>

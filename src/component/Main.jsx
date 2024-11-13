@@ -1,5 +1,6 @@
 import Header from './Header';
 import Contents from './music/Contents';
+import MiniPlayer from './MiniPlayer';
 
 const Main = () => {
 
@@ -7,6 +8,7 @@ const Main = () => {
         <>
             <Header />
             <Contents />
+            <MiniPlayer />
         </>
     );
 }
