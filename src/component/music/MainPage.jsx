@@ -4,12 +4,20 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 
 const MainPage = () => {
+    const listElement = document.getElementsByClassName('list_table');
+    listElement.innerHTML = '<tr>\n' +
+        '<th>' +
+        '   <img src="image.jpg" alt="이미지" style="width: 50px; height: 50px;">' +
+        '</th>' +
+        '<th><></th>' +
+        '</tr>'
+
     return (
         <div className={styles.container}>
-            <div className={styles.drop_down}>
-                <div className={`${styles.drop1} d-flex`}> {/* 장르 */}
+            <div className={styles.drop_down}> {/* 드롭다운 바 */}
+                <div className={styles.drop1}> {/* 장르 */}
                     <DropdownButton
-                    id="dropdown-basic-button"
+                    id="dropdown-genre-button"
                     title="장르"
                     size="sm"
                     variant="light">
@@ -20,7 +28,7 @@ const MainPage = () => {
                 </div>
                 <div className={styles.drop2}> {/* 노래 정렬 */}
                     <DropdownButton
-                    id="dropdown-basic-button"
+                    id="dropdown-sort-button1"
                     title="이름순"
                     size="sm"
                     variant="light">
@@ -30,44 +38,16 @@ const MainPage = () => {
                         <Dropdown.Item>좋아요순</Dropdown.Item>
                     </DropdownButton>
                 </div>
-            </div>
-            <div className={styles.table}> {/* 노래 목록 */}
-                <div className={styles.main_img}>
-
-                </div>
-                <div className={styles.title}>
-
-                </div>
-                <div className={styles.contents}> {/* 노래 정보 */}
-                    <div className={styles.date}>
-
-                    </div>
-                    <div className={styles.file_size}>
-
-                    </div>
-                    <div className={styles.maker}>
-
-                    </div>
-                    <div className={styles.genre}>
-
-                    </div>
-                    <div className={styles.views}>
-
-                    </div>
-                    <div className={styles.heart_count}>
-
-                    </div>
-                    <div className={styles.download}>
-                        <button className={styles.download_button}>download</button>
-                    </div>
-                </div>
-                <div className={styles.heart}>
-                    <button className={styles.heart_button}>♡</button>
-                </div>
-                <div className={styles.playlist}>
-                    <button className={styles.playlist_button}>현재 재생목록에 추가</button>
-                </div>
-            </div>
+            </div><br/>
+            {/*<div> /!* 노래 목록 *!/*/}
+                <table className={styles.list_table}>
+                    {/*이미지, 제목*/}
+                    {/*노래정보[날짜, 파일크기, 제작자, 장르, 조회수, 하트수*/}
+                    {/*다운로드 버튼*/}
+                    {/*하트버튼*/}
+                    {/*플레이리스트 추가 버튼*/}
+                </table>
+            {/*</div>*/}
             <div className={styles.page}>
 
             </div>

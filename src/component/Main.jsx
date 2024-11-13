@@ -9,7 +9,7 @@ const Main = () => {
         <>
             <Header />
             {/*<Contents />*/}
-            <MainPage/>
+            {/*<MainPage/>*/}
             <Contents />
             <MiniPlayer />
         </>
