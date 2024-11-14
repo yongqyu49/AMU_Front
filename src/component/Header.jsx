@@ -1,7 +1,10 @@
 import styles from '../css/Header.module.css';
 import { Link } from 'react-router-dom';
+import useAuth from "../hooks/useAuth";
 
 const Header = () => {
+    const isLoggedIn = useAuth();
+
     return (
         <>
             <div className={styles.header}>
@@ -34,8 +37,20 @@ const Header = () => {
                             <Link to="/upload" className={styles.upload_link}>Upload</Link>
                         </div>
                         <div className={styles.header_user_nav}>
-                            <Link to="/signIn" className={styles.login_link}>Login</Link>
-                            <Link to="/signUp" className={styles.signup_link}>Signup</Link>
+                            {isLoggedIn ? (
+                                // 로그인된 경우: userInfo 링크만 보여줌
+                                <Link to="/userInfo" className={styles.header_user_nav_button}>
+                                    <div className={styles.header_user_nav_item}>
+                                        <span className={styles.header_user_nav_avatar}></span>
+                                    </div>
+                                </Link>
+                            ) : (
+                                // 로그인되지 않은 경우: Login 및 Signup 링크 보여줌
+                                <>
+                                    <Link to="/signIn" className={styles.login_link}>Login</Link>
+                                    <Link to="/signUp" className={styles.signup_link}>Signup</Link>
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>

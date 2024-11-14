@@ -26,7 +26,8 @@ const SignIn = () => {
         axios.post("http://localhost:8787/user/signIn", formData, {
             headers: {
                 'Content-Type': 'application/json',
-            }
+            },
+            withCredentials: true
         })
             .then(response => {
                 console.log("로그인 성공:", response);
