@@ -5,6 +5,7 @@ import SignIn from "./component/user/SignIn";
 import SignUp from "./component/user/SignUp";
 import MainPage from "./component/music/MainPage";
 import Contents from "./component/music/Contents";
+import Upload from "./component/Upload";
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
                 <Route path="/signIn" element={<Layout><SignIn /></Layout>} />
                 <Route path="/signUp" element={<Layout><SignUp /></Layout>} />
                 <Route path="/mainPage" element={<Layout><MainPage /></Layout>}/>
+                <Route path="/Upload" element={<Layout><Upload /></Layout>} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </BrowserRouter>
