@@ -1,9 +1,26 @@
 import styles from '../css/Header.module.css';
 import { Link } from 'react-router-dom';
 import useAuth from "../hooks/useAuth";
+import axios from "axios";
 
 const Header = () => {
     const isLoggedIn = useAuth();
+
+    const signOut = () => {
+        console.log("로그아웃 시도");
+        axios.post("http://localhost:8787/user/signOut", {}, {
+            withCredentials: true
+        })
+        .then(response => {
+            console.log("로그아웃 성공:", response);
+            alert("로그아웃 되었습니다.");
+            window.location.href = "/";
+        })
+        .catch(error => {
+            console.error("로그아웃 중 오류 발생:", error);
+            alert("로그아웃 중 오류가 발생했습니다.");
+        });
+    }
 
     return (
         <>
@@ -39,11 +56,14 @@ const Header = () => {
                         <div className={styles.header_user_nav}>
                             {isLoggedIn ? (
                                 // 로그인된 경우: userInfo 링크만 보여줌
-                                <Link to="/userInfo" className={styles.header_user_nav_button}>
-                                    <div className={styles.header_user_nav_item}>
-                                        <span className={styles.header_user_nav_avatar}></span>
-                                    </div>
-                                </Link>
+                                <>
+                                    <Link to="/userInfo" className={styles.header_user_nav_button}>
+                                        <div className={styles.header_user_nav_item}>
+                                            <span className={styles.header_user_nav_avatar}></span>
+                                        </div>
+                                    </Link>
+                                    <button type={"button"} className={styles.signout_link} onClick={signOut}>Signout</button>
+                                </>
                             ) : (
                                 // 로그인되지 않은 경우: Login 및 Signup 링크 보여줌
                                 <>

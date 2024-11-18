@@ -1,7 +1,26 @@
 import styles from '../css/MiniPlayer.module.css';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 const MiniPlayer = () => {
+    const [audioSrc, setAudioSrc] = useState('');
+    const [audio, setAudio] = useState(new Audio());
+
+    const playAudio = async (filename) => {
+        try {
+            const response = await fetch(`http://localhost:8787/playlist/play/${filename}`);
+            if (!response.ok) throw new Error('Failed to fetch audio file');
+            const url = response.url;
+
+            audio.pause(); // 현재 재생 중인 오디오 중지
+            const newAudio = new Audio(url); // 새 오디오 인스턴스 생성
+            setAudio(newAudio);
+            await newAudio.play();
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     return (
         <div className={styles.play_controls}>
             <section className={styles.mini_player_container}>
@@ -18,8 +37,8 @@ const MiniPlayer = () => {
                     <div className={styles.play_controls_bg}></div>
                     <div className={styles.play_controls_elements}>
                         <button type={"button"} className={styles.play_controls_previous}>Skip to previous</button>
-                        <button type={"button"} className={styles.play_controls_play}>Play current</button>
-                        <button type={"button"} className={styles.play_controls_next}>Skip to next</button>
+                        <button type={"button"} className={styles.play_controls_play} onClick={() => playAudio('After_You.mp3')}>Play current</button>
+                        <button type={"button"} className={styles.play_controls_next} onClick={() => playAudio('Burkinelectric.mp3')}>Skip to next</button>
                         <div className={styles.play_controls_shuffle}>
                             <button type={"button"} className={styles.shuffle_control}>Shuffle</button>
                         </div>

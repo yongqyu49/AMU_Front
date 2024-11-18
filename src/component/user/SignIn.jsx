@@ -45,7 +45,7 @@ const SignIn = () => {
 
     return (
         <div>
-            <form onSubmit={doSignIn}>
+            <form onSubmit={doSignIn} style={{paddingTop: "100px"}}>
                 <input type={"text"} name={"id"} placeholder={"id"} onChange={handleChange} />
                 <input type={"password"} name={"password"} placeholder={"password"} onChange={handleChange} />
                 <button type={"submit"}>Login</button>

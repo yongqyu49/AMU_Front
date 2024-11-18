@@ -6,7 +6,7 @@ const Main = (props) => {
     return (
         <>
             <Header />
-            <main style={{padding: '46px'}}>
+            <main>
                 {props.children}
             </main>
             <MiniPlayer />
