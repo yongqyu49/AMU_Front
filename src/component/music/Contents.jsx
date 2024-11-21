@@ -1,8 +1,28 @@
 import styles from '../../css/music/Contents.module.css';
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
+const Contents = ({ setSelectedTrack }) => {
 
-const Contents = () => {
+    const [playlist, setPlaylist] = useState([]);
+
+    useEffect(() => {
+        axios.post('http://localhost:8787/music/list')
+            .then((response) => {
+                setPlaylist(response.data);
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.error('Failed to fetch music list:', error);
+            });
+    }, []);
+
+    const handleTrackClick = (track) => {
+        console.log("Contents.jsx 이미지 클릭 track: " + track.title);
+        setSelectedTrack(track); // 선택된 노래 설정
+    };
+
     return (
         <>
             <div className={styles.contents_container}>
@@ -38,169 +58,39 @@ const Contents = () => {
                                                                         <div className={styles.slider_panel}>
 
                                                                             {/*요소*/}
-                                                                            <div className={styles.slider_panel_slide}>
-                                                                                <div className={styles.playable_tile}>
-                                                                                    <div className={styles.playable_artwork}>
-                                                                                        <Link to="/music" className={styles.playable_artwork_link}>
-                                                                                            <div className={styles.playable_artwork_image}>
-                                                                                                <div className={styles.image_outline}>
+                                                                            {playlist.map((track) => (
+                                                                                <div className={styles.slider_panel_slide} key={track.musicCode}>
+                                                                                    <div className={styles.playable_tile}>
+                                                                                        <div className={styles.playable_artwork}>
+                                                                                            <div className={styles.playable_artwork_link} onClick={() => handleTrackClick(track)}>
+                                                                                                <div className={styles.playable_artwork_image}>
+                                                                                                    <div className={styles.image_outline}>
                                                                                                     <span className={styles.artwork}>
 
                                                                                                     </span>
+                                                                                                    </div>
                                                                                                 </div>
                                                                                             </div>
-                                                                                        </Link>
-                                                                                        <div className={styles.playable_tile_overlay}></div>
-                                                                                        <div className={styles.playable_tile_play_button}>
-                                                                                            <Link to="/music" className={styles.play_button}>Play</Link>
-                                                                                        </div>
-                                                                                        <div className={styles.playable_tile_action}>
+                                                                                            <div className={styles.playable_tile_overlay}></div>
+                                                                                            <div className={styles.playable_tile_play_button}>
+                                                                                                <Link to="/music" className={styles.play_button}>Play</Link>
+                                                                                            </div>
+                                                                                            <div className={styles.playable_tile_action}>
 
+                                                                                            </div>
                                                                                         </div>
-                                                                                    </div>
-                                                                                    <div className={styles.playable_tile_description}>
-                                                                                        <div className={styles.playable_tile_description_container}>
-                                                                                            <Link to="/music" className={styles.playable_audible_tile}>Hip Hop & Rap</Link>
-                                                                                        </div>
-                                                                                        <div className={styles.playable_tile_username_container}>
-                                                                                            <Link to="/music" className={styles.playable_tile_username}>Trending Music</Link>
+                                                                                        <div className={styles.playable_tile_description}>
+                                                                                            <div className={styles.playable_tile_description_container}>
+                                                                                                <Link to="/music" className={styles.playable_audible_tile}>{track.title}</Link>
+                                                                                            </div>
+                                                                                            <div className={styles.playable_tile_username_container}>
+                                                                                                <Link to="/music" className={styles.playable_tile_username}>{track.artist}</Link>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>
-                                                                            {/*요소 끝*/}
-
+                                                                            ))}
                                                                             {/*요소*/}
-                                                                            <div className={styles.slider_panel_slide}>
-                                                                                <div className={styles.playable_tile}>
-                                                                                    <div className={styles.playable_artwork}>
-                                                                                        <Link to="/music" className={styles.playable_artwork_link}>
-                                                                                            <div className={styles.playable_artwork_image}>
-                                                                                                <div className={styles.image_outline}>
-                                                                                                    <span className={styles.artwork}>
-
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </Link>
-                                                                                        <div className={styles.playable_tile_overlay}></div>
-                                                                                        <div className={styles.playable_tile_play_button}>
-                                                                                            <Link to="/music" className={styles.play_button}>Play</Link>
-                                                                                        </div>
-                                                                                        <div className={styles.playable_tile_action}>
-
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div className={styles.playable_tile_description}>
-                                                                                        <div className={styles.playable_tile_description_container}>
-                                                                                            <Link to="/music" className={styles.playable_audible_tile}>Hip Hop & Rap</Link>
-                                                                                        </div>
-                                                                                        <div className={styles.playable_tile_username_container}>
-                                                                                            <Link to="/music" className={styles.playable_tile_username}>Trending Music</Link>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            {/*요소 끝*/}
-
-                                                                            {/*요소*/}
-                                                                            <div className={styles.slider_panel_slide}>
-                                                                                <div className={styles.playable_tile}>
-                                                                                    <div className={styles.playable_artwork}>
-                                                                                        <Link to="/music" className={styles.playable_artwork_link}>
-                                                                                            <div className={styles.playable_artwork_image}>
-                                                                                                <div className={styles.image_outline}>
-                                                                                                    <span className={styles.artwork}>
-
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </Link>
-                                                                                        <div className={styles.playable_tile_overlay}></div>
-                                                                                        <div className={styles.playable_tile_play_button}>
-                                                                                            <Link to="/music" className={styles.play_button}>Play</Link>
-                                                                                        </div>
-                                                                                        <div className={styles.playable_tile_action}>
-
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div className={styles.playable_tile_description}>
-                                                                                        <div className={styles.playable_tile_description_container}>
-                                                                                            <Link to="/music" className={styles.playable_audible_tile}>Hip Hop & Rap</Link>
-                                                                                        </div>
-                                                                                        <div className={styles.playable_tile_username_container}>
-                                                                                            <Link to="/music" className={styles.playable_tile_username}>Trending Music</Link>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            {/*요소 끝*/}
-
-                                                                            {/*요소*/}
-                                                                            <div className={styles.slider_panel_slide}>
-                                                                                <div className={styles.playable_tile}>
-                                                                                    <div className={styles.playable_artwork}>
-                                                                                        <Link to="/music" className={styles.playable_artwork_link}>
-                                                                                            <div className={styles.playable_artwork_image}>
-                                                                                                <div className={styles.image_outline}>
-                                                                                                    <span className={styles.artwork}>
-
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </Link>
-                                                                                        <div className={styles.playable_tile_overlay}></div>
-                                                                                        <div className={styles.playable_tile_play_button}>
-                                                                                            <Link to="/music" className={styles.play_button}>Play</Link>
-                                                                                        </div>
-                                                                                        <div className={styles.playable_tile_action}>
-
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div className={styles.playable_tile_description}>
-                                                                                        <div className={styles.playable_tile_description_container}>
-                                                                                            <Link to="/music" className={styles.playable_audible_tile}>Hip Hop & Rap</Link>
-                                                                                        </div>
-                                                                                        <div className={styles.playable_tile_username_container}>
-                                                                                            <Link to="/music" className={styles.playable_tile_username}>Trending Music</Link>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            {/*요소 끝*/}
-
-                                                                            {/*요소*/}
-                                                                            <div className={styles.slider_panel_slide}>
-                                                                                <div className={styles.playable_tile}>
-                                                                                    <div className={styles.playable_artwork}>
-                                                                                        <Link to="/music" className={styles.playable_artwork_link}>
-                                                                                            <div className={styles.playable_artwork_image}>
-                                                                                                <div className={styles.image_outline}>
-                                                                                                    <span className={styles.artwork}>
-
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </Link>
-                                                                                        <div className={styles.playable_tile_overlay}></div>
-                                                                                        <div className={styles.playable_tile_play_button}>
-                                                                                            <Link to="/music" className={styles.play_button}>Play</Link>
-                                                                                        </div>
-                                                                                        <div className={styles.playable_tile_action}>
-
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div className={styles.playable_tile_description}>
-                                                                                        <div className={styles.playable_tile_description_container}>
-                                                                                            <Link to="/music" className={styles.playable_audible_tile}>Hip Hop & Rap</Link>
-                                                                                        </div>
-                                                                                        <div className={styles.playable_tile_username_container}>
-                                                                                            <Link to="/music" className={styles.playable_tile_username}>Trending Music</Link>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            {/*요소 끝*/}
 
                                                                         </div>
                                                                     </div>
@@ -210,6 +100,9 @@ const Contents = () => {
                                                     </div>
                                                 </li>
                                             </ul>
+
+
+
                                         </div>
                                     </div>
                                 </div>

@@ -192,6 +192,19 @@
     visibility: visible;
 }
 
+.play_controls_pause {
+    margin-left: 12px;
+    background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCI+PHBhdGggZmlsbD0iIzMzMyIgZD0iTTYgMTloNFY1SDZ2MTR6bTgtMTR2MTRoNFY1aC00eiIvPjwvc3ZnPgo=) no-repeat 55%;
+    width: 24px;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    text-shadow: none;
+    color: transparent;
+    cursor: pointer;
+    visibility: visible;
+}
+
 .play_controls_next {
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCI+PHBhdGggZmlsbD0iIzMzMyIgZD0iTTcgMThsOC02LTgtNnYxMnptOC0xMnYxMmgyVjZoLTJ6Ii8+PC9zdmc+Cg==);
     background-position: 60%;
