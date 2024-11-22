@@ -1,3 +1,19 @@
+.a {
+    position: fixed;
+    bottom: -100%; /* 화면 아래로 숨김 */
+    left: 0;
+    width: 100%; /* 화면 전체 너비 */
+    height: calc(100vh - var(64px) - var(72px));
+    background-color: #ffffff;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 99;
+    transition: transform 0.3s ease; /* 슬라이드 애니메이션 */
+}
+
+.a.show {
+    transform: translateY(-100%); /* 위로 슬라이드 */
+}
+
 .play_controls {
     position: fixed;
     bottom: 0;
@@ -182,6 +198,19 @@
 .play_controls_play {
     margin-left: 12px;
     background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCI+PHBhdGggZmlsbD0iIzMzMyIgZD0iTTggNXYxNGwxMS03eiIvPjwvc3ZnPgo=) no-repeat 55%;
+    width: 24px;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    text-shadow: none;
+    color: transparent;
+    cursor: pointer;
+    visibility: visible;
+}
+
+.play_controls_pause {
+    margin-left: 12px;
+    background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCI+PHBhdGggZmlsbD0iIzMzMyIgZD0iTTYgMTloNFY1SDZ2MTR6bTgtMTR2MTRoNFY1aC00eiIvPjwvc3ZnPgo=) no-repeat 55%;
     width: 24px;
     height: 100%;
     padding: 0;
