@@ -19,38 +19,86 @@ const Upload = () => {
         genre: myGenre,
         title: '',
         lyrics: '',
-        mp3: '',
-        image: '',
     });
+    const [fileMp3, setFile1] = useState(null);
+    const [fileImg, setFile2] = useState(null);
+
+    const handleMp3Change = (e) => {
+        const selectedFile = e.target.files[0];
+        setFile1(selectedFile);
+        console.log(selectedFile)
+    };
+
+    const handleImgChange = (e) => {
+        const selectedFile = e.target.files[0];
+        setFile2(selectedFile);
+        console.log(selectedFile)
+    };
 
     const handleChange = (e) => {
         const newFormData = {
             ...formData,
-            [e.target.name]: e.target.type === 'file' ? e.target.files[0] : e.target.value,
+            [e.target.name]:e.target.value,
         };
         setFormData(newFormData);
         console.log(newFormData);
-        console.log(newFormData.mp3)
-        console.log(newFormData.image)
     };
-    
-    const goUpload = (e) => {
-        e.preventDefault();
-        console.log("업로드", formData);
 
-        axios.post("http://localhost:8787/music/upload", formData, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then(response => {
-                console.log("뮤직 데이터 전송");
-                alert("음악 업로드 완료");
-                window.location.href = "/music/Contents.jsx";
-            })
-            .catch(error => {
-                console.log("데이터 전송 실패: ", error);
-            })
+    const goUpload = async (e) => {
+        e.preventDefault();
+
+        if(!fileMp3 || !fileImg){
+            alert("파일을 입력해주세요");
+            return;
+        }
+
+        const fileSize = fileMp3.size.toString();
+
+        const uploadDir1 = "C:/amuUploads/music/";
+        const uploadDir2 = "C:/amuUploads/mainImg/";
+
+        const filePath1 = `${uploadDir1}${fileMp3.name}`;
+        const filePath2 = `${uploadDir2}${fileImg.name}`;
+
+        let playTime = 0;
+        if (fileMp3.type.startsWith("audio/")) {
+            const audio = new Audio(URL.createObjectURL(fileMp3)); //URL을 임시적으로 DOMString으로 변환
+            await new Promise((resolve) => { //비동기 작업을 위한 Promise 사용
+                audio.addEventListener("loadedmetadata", () => { //오디오의 메타데이터가 로드된 후 실행
+                    playTime = audio.duration; // 재생 길이 (초 단위)
+                    resolve(); //Promise를 성공상태로 전환
+                });
+            });
+        }
+
+        const formDataToSend = new FormData(); //폼데이타 생성
+        formDataToSend.append('fileMp3', fileMp3);
+        formDataToSend.append('fileImg', fileImg);
+        formDataToSend.append('fileSize', fileSize); //음악파일 크기
+        formDataToSend.append('filePath1', filePath1); //음악파일 경로
+        formDataToSend.append('filePath2', filePath2); //이미지 경로
+        formDataToSend.append('playTime', playTime); //재생길이
+
+        Object.entries(formData).forEach(([key, value]) => { //file데이터와 text데이터 같이 백에 전달
+            formDataToSend.append(key, value); // 나머지 필드 추가
+        });
+        console.log("업로드1", formData);
+        console.log("업로드 파일: ")
+        for (let [key, value] of formDataToSend.entries()) {
+            console.log(key, value);
+        }
+
+        try{
+            const response = await axios.post("http://localhost:8787/music/upload", formDataToSend, {
+                headers:{
+                    'Content-Type': "multipart/form-data",
+                }
+            });
+            const result = response.data;
+            console.log("업로드 성공: ", result);
+        }catch(error) {
+            console.error("업로드 실패: ", error)
+        }
     }
 
     return (
@@ -82,8 +130,8 @@ const Upload = () => {
                               onChange={handleChange} className={styles.lyrics} required/>
                 </div>
                 <div className={styles.box}>
-                    <input type={"file"} accept={"audio/*"} name={"mp3"} onChange={handleChange} required/>
-                    <input type={"file"} accept={"image/*"} name={"image"} onChange={handleChange} required/>
+                    <input type={"file"} accept={"audio/*"} name={"mp3"} onChange={handleMp3Change} required/>
+                    <input type={"file"} accept={"image/*"} name={"image"} onChange={handleImgChange} required/>
                 </div>
                 <div>
                     <br/><button type={"submit"}>Upload</button>
