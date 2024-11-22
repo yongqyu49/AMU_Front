@@ -124,7 +124,7 @@ const MiniPlayer = ({ selectedTrack }) => {
                     showPlayer ? styles.show : ""
                 }`}
                 >
-              <Player />
+              <Player selectedTrack={selectedTrack}/>
             </div>
             <div className={styles.play_controls}>
                 <section className={styles.mini_player_container}>

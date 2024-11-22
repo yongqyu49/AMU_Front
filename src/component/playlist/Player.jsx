@@ -1,35 +1,100 @@
+import React, { useState } from "react";
 import styles from "../../css/playlist/Player.module.css";
 
-const Player = () => {
+const Player = ({ selectedTrack, trackList, reviews }) => {
+    const [activeTab, setActiveTab] = useState("nextTracks"); // 초기 탭은 다음 트랙
+
+    // 탭 내용 렌더링 함수
+    const renderContent = () => {
+        if (!selectedTrack) return <p>트랙 정보가 없습니다.</p>;
+
+        switch (activeTab) {
+            case "nextTracks":
+                return (
+                    <div>
+                        <ul>
+                            {trackList && trackList.length > 0 ? (
+                                trackList.map((track, index) => (
+                                    <li key={index}>
+                                        {track.title} - {track.artist}
+                                    </li>
+                                ))
+                            ) : (
+                                <p>다음 트랙이 없습니다.</p>
+                            )}
+                        </ul>
+                    </div>
+                );
+            case "lyrics":
+                return (
+                    <div>
+                        <p className={styles.lyrics}>
+                            {selectedTrack.lyrics || "가사가 없습니다."}
+                        </p>
+                    </div>
+                );
+            case "reviews":
+                return (
+                    <div>
+                        <ul>
+                            {reviews && reviews.length > 0 ? (
+                                reviews.map((review, index) => (
+                                    <li key={index}>{review}</li>
+                                ))
+                            ) : (
+                                <p>리뷰가 없습니다.</p>
+                            )}
+                        </ul>
+                    </div>
+                );
+            default:
+                return <p>알 수 없는 탭입니다.</p>;
+        }
+    };
+
     return (
         <div className={styles.player_container}>
+            {/* 앨범 커버 */}
             <div className={styles.main_panel}>
                 <img
-                    src="/img/hanni.jpeg"
+                    src={selectedTrack ? selectedTrack.imgPath : ""}
                     alt="album cover"
                     className={styles.album_cover}
                 />
             </div>
+
+            {/* 탭과 내용 */}
             <div className={styles.side_panel}>
                 <div className={styles.tabs_container}>
-                    <div className={styles.tab_header}>
+                    <div
+                        className={`${styles.tab_header} ${
+                            activeTab === "nextTracks" ? styles.active : ""
+                        }`}
+                        onClick={() => setActiveTab("nextTracks")}
+                    >
                         <div className={styles.tab_content}>다음 트랙</div>
                     </div>
-                    <div className={styles.tab_header}>
+                    <div
+                        className={`${styles.tab_header} ${
+                            activeTab === "lyrics" ? styles.active : ""
+                        }`}
+                        onClick={() => setActiveTab("lyrics")}
+                    >
                         <div className={styles.tab_content}>가사</div>
                     </div>
-                    <div className={styles.tab_header}>
+                    <div
+                        className={`${styles.tab_header} ${
+                            activeTab === "reviews" ? styles.active : ""
+                        }`}
+                        onClick={() => setActiveTab("reviews")}
+                    >
                         <div className={styles.tab_content}>리뷰</div>
                     </div>
                 </div>
+
+                {/* 선택된 탭 내용 */}
                 <div className={styles.tab_render}>
-                    <div className={styles.contents}>
-                        <div className={styles.section_list_render}>
-                            <span className={styles.lyrics}>
-                                {"날 사랑해서 떠난다며 눈물짓던 그대의 말을 믿을 수 없죠\n하지만 나의 전 던 약속들을 지금 또 영원히 기억하겠어요다시 한 번 생각해요\n무엇이 낭 위 돼요 세상의 모든 걸 잃어도 괜찮아용\n그대만 있다면 드개만 있다면 영원히 내곁에 있어야 해용\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ\n\n\n\n\n\n\n\n\n\nㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ\n\n\n\n\n\n\n\n\n\nㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ\n\n\n\n\n\n\n\n\n\nㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ"}
-                            </span>
-                        </div>
-                    </div>
+                    <div className={styles.contents}>{renderContent()}</div>
                 </div>
             </div>
         </div>
