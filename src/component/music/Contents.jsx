@@ -11,7 +11,8 @@ const Contents = ({ setSelectedTrack }) => {
         axios.post('http://localhost:8787/music/list')
             .then((response) => {
                 setPlaylist(response.data);
-                console.log(response.data);
+                console.log("Contents.jsx: " + response.data);
+                console.log("img", response.data[0].imgPath);
             })
             .catch((error) => {
                 console.error('Failed to fetch music list:', error);
@@ -65,7 +66,9 @@ const Contents = ({ setSelectedTrack }) => {
                                                                                             <div className={styles.playable_artwork_link} onClick={() => handleTrackClick(track)}>
                                                                                                 <div className={styles.playable_artwork_image}>
                                                                                                     <div className={styles.image_outline}>
-                                                                                                    <span className={styles.artwork}>
+                                                                                                    <span className={styles.artwork} style={{
+                                                                                                        backgroundImage: `url(http://localhost:8787/${track.imgPath})`
+                                                                                                    }}>
 
                                                                                                     </span>
                                                                                                     </div>

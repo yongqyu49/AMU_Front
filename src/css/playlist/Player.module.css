@@ -32,7 +32,6 @@
     background-color: #ffffff; /* 사이드 패널 배경색 */
     color: #333; /* 기본 텍스트 색상 */
     padding: 24px;
-    /*margin-left: 24px; !* 메인 패널과의 간격 *!*/
     border: 1px solid #e0e0e0; /* 경계선 추가 */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* 부드러운 그림자 */
 }
@@ -101,3 +100,75 @@
 .lyrics::-webkit-scrollbar-track {
     background-color: #f1f1f1;
 }
+
+.review_section {
+    position: relative;
+}
+
+.review_list {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 16px;
+}
+
+.review_list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.review_list::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+}
+
+.review_list::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
+.review_form {
+    position: sticky; /* 부모 컨테이너 내에서 고정 */
+    bottom: 0; /* 스크롤할 때 항상 아래쪽에 고정 */
+    background-color: #fff; /* 배경색 */
+    padding: 12px; /* 여백 */
+    border-top: 1px solid #e0e0e0; /* 위쪽 경계선 */
+}
+
+.review_item {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.review_header {
+    display: flex;
+    justify-content: space-between; /* 작성자와 작성일을 양쪽 정렬 */
+    align-items: center;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.review_author {
+    font-weight: bold; /* 작성자 강조 */
+    color: #333; /* 텍스트 색상 */
+}
+
+.review_date {
+    font-size: 12px;
+    color: #888;
+    margin-left: 16px; /* 작성자와 작성일 간격 조정 */
+}
+
+.review_content {
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.review_footer {
+    display: flex;
+    justify-content: flex-end; /* 좋아요를 오른쪽 정렬 */
+    font-size: 14px;
+    color: #555;
+}
+
