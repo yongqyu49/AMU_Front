@@ -65,19 +65,19 @@ const Upload = () => {
             const audio = new Audio(URL.createObjectURL(fileMp3)); //URL을 임시적으로 DOMString으로 변환
             await new Promise((resolve) => { //비동기 작업을 위한 Promise 사용
                 audio.addEventListener("loadedmetadata", () => { //오디오의 메타데이터가 로드된 후 실행
-                    playTime = audio.duration; // 재생 길이 (초 단위)
+                    playTime = Math.round(audio.duration); // 재생 길이 (초 단위)
                     resolve(); //Promise를 성공상태로 전환
                 });
             });
         }
 
         const formDataToSend = new FormData(); //폼데이타 생성
-        formDataToSend.append('fileMp3', fileMp3);
-        formDataToSend.append('fileImg', fileImg);
-        formDataToSend.append('fileSize', fileSize); //음악파일 크기
-        formDataToSend.append('filePath1', filePath1); //음악파일 경로
-        formDataToSend.append('filePath2', filePath2); //이미지 경로
-        formDataToSend.append('playTime', playTime); //재생길이
+        // formDataToSend.append('fileMp3', fileMp3);
+        // formDataToSend.append('fileImg', fileImg);
+        formDataToSend.append("fileSize", fileSize); //음악파일 크기
+        formDataToSend.append("filePath1", filePath1); //음악파일 경로
+        formDataToSend.append("filePath2", filePath2); //이미지 경로
+        formDataToSend.append("playTime", playTime); //재생길이
 
         Object.entries(formData).forEach(([key, value]) => { //file데이터와 text데이터 같이 백에 전달
             formDataToSend.append(key, value); // 나머지 필드 추가
@@ -86,6 +86,7 @@ const Upload = () => {
         console.log("업로드 파일: ")
         for (let [key, value] of formDataToSend.entries()) {
             console.log(key, value);
+            console.log();
         }
 
         try{
