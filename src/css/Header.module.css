@@ -241,3 +241,64 @@ a {
   background-size: cover;
   background-position: 50% 50%;
 }
+
+/*로그인창*/
+.modal {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: hsla(0, 0%, 94.9%, .9);
+  border: 1px solid black;
+}
+
+.container {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 50px;
+  background-color: white;
+}
+.scontainer {
+}
+
+.provider-buttons {
+
+}
+
+.form_row {
+  width: 400px;
+  height: 40px;
+  border: 1px solid black;
+  margin-bottom: 20px;
+}
+
+.auth_method_separator {
+
+}
+
+.form_buttons {
+  width: 400px;
+  height: 50px;
+  background-color: orangered;
+  color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
