@@ -34,7 +34,7 @@
 }
 
 .lyrics {
-    height: 150px;
+    height: 200px;
     resize: none;
     overflow-y: auto;
 }
