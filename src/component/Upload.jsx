@@ -137,7 +137,7 @@ const Upload = () => {
                     <br/><button type={"submit"}>Upload</button>
                 </div>
                 <div>
-                    <h3>test</h3>
+                    <h3></h3>
                     <pre className={styles.test}>{formData.lyrics}</pre>
                 </div>
             </form>
