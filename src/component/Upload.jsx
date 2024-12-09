@@ -85,25 +85,25 @@ const Upload = () => {
 
         let playTime = 0;
         if (fileMp3.type.startsWith("audio/")) {
-            const audio = new Audio(URL.createObjectURL(fileMp3)); //URL을 임시적으로 DOMString으로 변환
-            await new Promise((resolve) => { //비동기 작업을 위한 Promise 사용
-                audio.addEventListener("loadedmetadata", () => { //오디오의 메타데이터가 로드된 후 실행
-                    playTime = Math.round(audio.duration); // 재생 길이 (초 단위)
-                    resolve(); //Promise를 성공상태로 전환
+            const audio = new Audio(URL.createObjectURL(fileMp3));
+            await new Promise((resolve) => {
+                audio.addEventListener("loadedmetadata", () => {
+                    playTime = Math.round(audio.duration);
+                    resolve();
                 });
             });
         }
 
-        const formDataToSend = new FormData(); //폼데이타 생성
+        const formDataToSend = new FormData();
         formDataToSend.append('fileMp3', fileMp3);
         formDataToSend.append('fileImg', fileImg);
-        formDataToSend.append("fileSize", fileSize); //음악파일 크기
-        formDataToSend.append("filePath1", filePath1); //음악파일 경로
-        formDataToSend.append("filePath2", filePath2); //이미지 경로
-        formDataToSend.append("playTime", playTime); //재생길이
+        formDataToSend.append("fileSize", fileSize);
+        formDataToSend.append("filePath1", filePath1);
+        formDataToSend.append("filePath2", filePath2);
+        formDataToSend.append("playTime", playTime);
 
-        Object.entries(formData).forEach(([key, value]) => { //file데이터와 text데이터 같이 백에 전달
-            formDataToSend.append(key, value); // 나머지 필드 추가
+        Object.entries(formData).forEach(([key, value]) => {
+            formDataToSend.append(key, value);
         });
         console.log("업로드1", formData);
         console.log("업로드 파일: ")
@@ -114,7 +114,7 @@ const Upload = () => {
 
         try{
             const response = await axios.post("http://localhost:8787/music/upload", formDataToSend, {
-                withCredentials: true,  // 세션 공유
+                withCredentials: true,
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 }
@@ -127,48 +127,72 @@ const Upload = () => {
     }
 
     return (
-        <>
-            <div className={styles.container}>
-                <form onSubmit={goUpload}>
-                    <div className={styles.title}>
-                        <input type={"text"} name={"title"} placeholder={"Title"} onChange={handleChange} required/>
-                    </div>
-                    <div>
-                        <div className={styles.genre}>
-                            <DropdownButton
-                                id="dropdown-genre-button"
-                                title={myGenre}
-                                size="sm"
-                                variant="light"
-                                name={"genre"}
-                                onSelect={handleGenre}
-                            >
-                                <Dropdown.Item eventKey="팝">팝</Dropdown.Item>
-                                <Dropdown.Item eventKey="힙합">힙합</Dropdown.Item>
-                                <Dropdown.Item eventKey="발라드">발라드</Dropdown.Item>
-                                <Dropdown.Item eventKey="인디">인디</Dropdown.Item>
-                                <Dropdown.Item eventKey="R&B">R&B</Dropdown.Item>
-                            </DropdownButton>
-                        </div>
-                    </div>
-                    <div>
-                        <textarea name={"lyrics"} placeholder={"input Lyrics here"} rows="100" cols="40"
-                                onChange={handleChange} className={styles.lyrics} required/>
-                    </div>
-                    <div className={styles.box}>
-                        <input type={"file"} accept={"audio/*"} name={"mp3"} onChange={handleMp3Change} required/>
-                        <input type={"file"} accept={"image/*"} name={"image"} onChange={handleImgChange} required/>
-                    </div>
-                    <div>
-                        <br/><button type={"submit"}>Upload</button>
-                    </div>
-                    <div>
-                        <h3>test</h3>
-                        <pre className={styles.test}>{formData.lyrics}</pre>
-                    </div>
-                </form>
-            </div>
-        </>
+        <div className={styles.container}>
+            <form onSubmit={goUpload} className={styles.formContainer}>
+                <div className={styles.title}>
+                    <input
+                        type="text"
+                        name="title"
+                        placeholder="Song Title"
+                        onChange={handleChange}
+                        required
+                        className={styles.input}
+                    />
+                </div>
+
+                <div className={styles.genre}>
+                    <DropdownButton
+                        id="dropdown-genre-button"
+                        title={myGenre}
+                        size="sm"
+                        variant="light"
+                        name="genre"
+                        onSelect={handleGenre}
+                        className={styles.genreDropdown}
+                    >
+                        <Dropdown.Item eventKey="팝">팝</Dropdown.Item>
+                        <Dropdown.Item eventKey="힙합">힙합</Dropdown.Item>
+                        <Dropdown.Item eventKey="발라드">발라드</Dropdown.Item>
+                        <Dropdown.Item eventKey="인디">인디</Dropdown.Item>
+                        <Dropdown.Item eventKey="R&B">R&B</Dropdown.Item>
+                    </DropdownButton>
+                </div>
+
+                <div>
+                    <textarea
+                        name="lyrics"
+                        placeholder="Input Lyrics here"
+                        rows="6"
+                        onChange={handleChange}
+                        className={styles.lyrics}
+                        required
+                    />
+                </div>
+
+                <div className={styles.fileInputs}>
+                    <input
+                        type="file"
+                        accept="audio/*"
+                        name="mp3"
+                        onChange={handleMp3Change}
+                        required
+                        className={styles.input}
+                    />
+                    <input
+                        type="file"
+                        accept="image/*"
+                        name="image"
+                        onChange={handleImgChange}
+                        required
+                        className={styles.input}
+                    />
+                </div>
+
+                <div className={styles.uploadBtnContainer}>
+                    <button type="submit" className={styles.uploadBtn}>Upload</button>
+                </div>
+            </form>
+        </div>
     );
 };
 
