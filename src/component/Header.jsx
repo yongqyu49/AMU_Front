@@ -75,6 +75,28 @@ const Header = () => {
                     </div>
                 </div>
             </div>
+            <div className={styles.modal}>
+                <div className={styles.container}>
+                    <div className={styles.scontainer}>
+                        <div className={styles.providerButtons}>
+                            <div className={styles.form_row}></div>
+                            <div className={styles.form_row}></div>
+                            <div className={styles.form_row}></div>
+                        </div>
+                        <div >
+                            <span>or</span>
+                        </div>
+                        <div className={styles.auth_method_separator}>
+                            <div>
+                                <div>
+                                    <input type={"text"}/>
+                                </div>
+                            </div>
+                            <div className={styles.form_buttons}></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </>
     );
 };
