@@ -10,6 +10,8 @@
   -webkit-font-smoothing: subpixel-antialiased;
   transition: height 0.2s ease-in-out;
   position: fixed;
+  top: 0;
+  left: 0;
   z-index: 1000;
   color: #999;
   cursor: default;
