@@ -89,7 +89,6 @@
   color: #fff !important;
   background-color: #111;
   border-bottom: none;
-
   display: block;
   padding: 12px 0;
   height: 46px;
@@ -173,11 +172,12 @@
   float: left;
 }
 
-.login_link, .signup_link {
+.signin_link, .signup_link , .logout_link {
   float: left;
-  padding: 12px 28px 12px 10px;
+  padding: 12px 12px 12px 12px;
   color: #ccc;
   height: 46px;
+  cursor: pointer;
 }
 
 @media (max-width: 1239px) {
@@ -193,7 +193,7 @@ a {
 .header_user_nav_button {
   box-sizing: border-box;
   float: left;
-  padding: 12px 28px 12px 10px;
+  padding: 12px 12px 12px 12px;
   position: relative;
   color: #ccc;
   height: 46px;
@@ -244,47 +244,6 @@ a {
   background-position: 50% 50%;
 }
 
-/*로그인창*/
-.modal {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: hsla(0, 0%, 94.9%, .9);
-  border: 1px solid black;
-}
-
-.container {
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 50px;
-  background-color: white;
-}
-.scontainer {
-}
-
-.provider-buttons {
-
-}
-
-.form_row {
-  width: 400px;
-  height: 40px;
-  border: 1px solid black;
-  margin-bottom: 20px;
-}
-
-.auth_method_separator {
-
-}
-
-.form_buttons {
-  width: 400px;
-  height: 50px;
-  background-color: orangered;
-  color: white;
-}
 
 
 
