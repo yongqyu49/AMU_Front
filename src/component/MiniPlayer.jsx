@@ -11,6 +11,9 @@ const MiniPlayer = ({ selectedTrack }) => {
     const [duration, setDuration] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
     const [showPlayer, setShowPlayer] = useState(false);
+    const [volume, setVolume] = useState(1); // 초기 볼륨 (1 = 100%)
+    const [isMuted, setIsMuted] = useState(false); // 음소거 상태
+    const [showVolumeModal, setShowVolumeModal] = useState(false);
 
     // Blob 데이터를 가져오고 Object URL 생성
     useEffect(() => {
@@ -112,19 +115,79 @@ const MiniPlayer = ({ selectedTrack }) => {
     };
 
     const togglePlayer = () => {
-        console.log("togglePlayer");
         setShowPlayer(!showPlayer); // Player 슬라이드 상태 변경
     };
+
+    const handleVolumeChange = (e) => {
+        const newVolume = parseFloat(e.target.value);
+        setVolume(newVolume);
+        if (audio) {
+            audio.volume = newVolume;
+        }
+        setIsMuted(newVolume === 0);
+    };
+
+    const toggleMute = () => {
+        if (audio) {
+            if (isMuted) {
+                audio.volume = volume;
+            } else {
+                audio.volume = 0;
+            }
+            setIsMuted(!isMuted);
+        }
+    };
+
+    const getVolumeIcon = () => {
+        if (isMuted || volume === 0) {
+            return '🔇'; // 음소거 아이콘
+        } else if (volume > 0 && volume <= 0.5) {
+            return '🔈'; // 작은 소리 아이콘
+        } else {
+            return '🔊'; // 큰 소리 아이콘
+        }
+    };
+
+    const likeThis = () => {
+        axios.get(`http://localhost:8787/music/isLiked/${selectedTrack.musicCode}`
+            , { withCredentials: true })
+        .then((response) => {
+            if (response.data === true) {
+                axios.post(`http://localhost:8787/music/unlike`, {
+                    musicCode: selectedTrack.musicCode,
+                }, { withCredentials: true })
+                    .then(() => {
+                        alert("좋아요 취소");
+                    })
+                    .catch(error => {
+                        console.error("Failed to unlike:", error);
+                    })
+            } else {
+                axios.post(`http://localhost:8787/music/like`, {
+                    musicCode: selectedTrack.musicCode,
+                }, { withCredentials: true })
+                    .then(() => {
+                        alert("좋아요 등록");
+                    })
+                    .catch(error => {
+                        console.error("Failed to like:", error);
+                    })           
+            }
+        })
+        .catch(error => {
+            console.error("Failed to like process:", error);
+        })
+    }
 
     return (
         <>
             {/* Player 컴포넌트 */}
             <div
-                    className={`${styles.a} ${
+                className={`${styles.a} ${
                     showPlayer ? styles.show : ""
                 }`}
-                >
-              <Player selectedTrack={selectedTrack}/>
+            >
+                <Player selectedTrack={selectedTrack}/>
             </div>
             <div className={styles.play_controls}>
                 <section className={styles.mini_player_container}>
@@ -146,10 +209,12 @@ const MiniPlayer = ({ selectedTrack }) => {
                             </button>
 
                             {/* 현재 시간 / 총 시간 */}
-                            <div>
-                            <span>
-                                {formatTime(currentTime)} / {formatTime(duration)}
-                            </span>
+                            <div style={{
+                                marginLeft: "20px",
+                            }}>
+                                <span>
+                                    {formatTime(currentTime)} / {formatTime(duration)}
+                                </span>
                             </div>
 
                             {/* 재생 위치 조절 */}
@@ -165,9 +230,30 @@ const MiniPlayer = ({ selectedTrack }) => {
                                 <div className={styles.volume}>
                                     <div className={styles.visually_hidden}></div>
                                     <div className={styles.volume_icon_wrapper}>
-                                        <button type={"button"} className={styles.volume_icon}></button>
+                                        <div
+                                            className={styles.volume_control}
+                                            onMouseEnter={() => setShowVolumeModal(true)}
+                                            onMouseLeave={() => setShowVolumeModal(false)}
+                                        >
+                                            <button type={"button"} className={styles.volume_icon}
+                                                    onClick={toggleMute}>{getVolumeIcon()}</button>
+                                            {showVolumeModal && (
+                                                <div className={styles.volume_modal}>
+                                                    <input
+                                                        type="range"
+                                                        min="0"
+                                                        max="1"
+                                                        step="0.01"
+                                                        value={isMuted ? 0 : volume}
+                                                        onChange={handleVolumeChange}
+                                                    />
+                                                    <span>{Math.round(volume * 100)}%</span>
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
-                                    <div className={styles.sc_hidden}>Use shift and the arrow up and down keys to change
+                                    <div className={styles.sc_hidden}>Use shift and the arrow up and down keys to
+                                        change
                                         the
                                         volume.
                                     </div>
@@ -187,7 +273,16 @@ const MiniPlayer = ({ selectedTrack }) => {
                                 <div className={styles.playback_sound_badge}>
                                     <Link to={"/"} className={styles.playback_sound_badge_link}>
                                         <div className={styles.sc_media_image}>
-                                            <span className={styles.image_full}></span>
+                                            <span
+                                                className={styles.image_full}
+                                                style={{
+                                                    backgroundImage: selectedTrack?.imgPath
+                                                        ? `url(http://localhost:8787/${selectedTrack.imgPath})`
+                                                        : "none", // 이미지 경로가 없으면 숨김 처리
+                                                }}
+                                            >
+
+                                            </span>
                                         </div>
                                     </Link>
                                     <div className={styles.playback_sound_badge_title_context_container}>
@@ -202,16 +297,17 @@ const MiniPlayer = ({ selectedTrack }) => {
                                         </Link>
                                     </div>
                                     <div className={styles.playback_sound_badge_actions}>
-                                        <button type={"button"} className={styles.sc_button_icon}>Like</button>
-                                        <button type={"button"} className={styles.sc_button_follow}>Follow</button>
-                                        <Link to={"/"} className={styles.playback_sound_badge_action_link}></Link>
+                                        <button type={"button"} className={styles.sc_button_follow} onClick={likeThis}
+                                        style={{
+                                            display: selectedTrack ? "block" : "none"
+                                        }}>Like</button>
                                     </div>
                                 </div>
                             </div>
 
                             {/* 현재 트랙 제목 */}
                             <div>
-                                <button type={"button"} onClick={togglePlayer}>slide</button>
+                                <button type={"button"} onClick={togglePlayer} className={styles.slide_button}>☰</button>
                             </div>
                         </div>
                     </div>
