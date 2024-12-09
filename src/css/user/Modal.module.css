@@ -1,0 +1,126 @@
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5); /* 배경 반투명 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.modal_modal {
+    background: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    z-index: 3000;
+}
+
+
+.modal_close_button {
+    background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+Q2xvc2U8L3RpdGxlPjxwYXRoIGQ9Ik0xMCA4LjU0NUwzLjQ1NSAyIDIgMy40NTUgOC41NDUgMTAgMiAxNi41NDUgMy40NTUgMTggMTAgMTEuNDU1IDE2LjU0NSAxOCAxOCAxNi41NDUgMTEuNDU1IDEwIDE4IDMuNDU1IDE2LjU0NSAyIDEwIDguNTQ1eiIgZmlsbD0iIzMzMyIgZmlsbC1ydWxlPSJldmVub2RkIi8+PC9zdmc+Cg==) 50% no-repeat;
+    background-size: 75%;
+    top: 4px;
+    right: 4px;
+    width: 20px;
+    height: 20px;
+    border-radius: 0;
+    z-index: 2;
+    text-indent: 20px;
+    border: 0;
+    color: #333;
+    cursor: pointer;
+    float: right;
+}
+
+.modal_content {
+    position: relative;
+    height: 100%;
+}
+
+.profile_settings {
+
+}
+
+.g_modal_title {
+    font-size: 22px;
+    line-height: 1;
+    padding-bottom: 9px;
+    border-bottom: 1px solid #f2f2f2;
+    margin-bottom: 24px;
+    -webkit-font-smoothing: antialiased;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-break: normal;
+}
+
+.sc_media {
+    overflow: hidden;
+}
+
+.profile_settings_avatar {
+    margin-right: 18px;
+    float: left;
+}
+
+.edit_image {
+    width: 260px;
+    position: relative;
+}
+
+.edit_image_select {
+    display: flex;
+    justify-content: center;
+}
+
+.image_outline {
+    height: 260px;
+    width: 260px;
+    background: none;
+    display: block;
+    border-radius: 50%;
+    text-align: center;
+    position: relative;
+}
+
+.sc_artwork {
+    background-image: url(https://i1.sndcdn.com/avatars-001409788575-cf97t4-t500x500.jpg);
+    width: 260px;
+    height: 260px;
+    opacity: 1;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .1);
+    display: block;
+    text-align: center;
+    position: relative;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    transition: opacity .2s linear;
+    background-size: cover;
+    background-position: 50% 50%;
+}
+
+.edit_image_button {
+    opacity: 1;
+    overflow: hidden;
+    transition: opacity .1s linear;
+    min-width: 31px;
+    background-color: hsla(0, 0%, 100%, .8);
+    border-color: rgba(0, 0, 0, .1);
+    background-clip: padding-box;
+    position: absolute;
+    bottom: 10%;
+}
+
+.profile_settings_base_fields {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    overflow: hidden;
+}

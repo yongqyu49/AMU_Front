@@ -57,7 +57,7 @@ const Header = () => {
                             {isLoggedIn ? (
                                 // 로그인된 경우: userInfo 링크만 보여줌
                                 <>
-                                    <Link to="/userInfo" className={styles.header_user_nav_button}>
+                                    <Link to="/profile" className={styles.header_user_nav_button}>
                                         <div className={styles.header_user_nav_item}>
                                             <span className={styles.header_user_nav_avatar}></span>
                                         </div>
