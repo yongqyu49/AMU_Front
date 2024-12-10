@@ -8,7 +8,6 @@ import useGetUserInfo from "../../hooks/useGetUserInfo";
 const Profile = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const userInfo = useGetUserInfo();
-    console.log("프로필" + userInfo);
 
     // 모달 열기
     const openModal = () => {
@@ -90,19 +89,16 @@ const Profile = () => {
                                 <div className={styles.user_info_bar_tabs}>
                                     <ul className={styles.profile_tabs}>
                                         <li className={styles.g_tabs_item}>
-                                            <Link to={""} className={styles.g_tabs_link}>All</Link>
-                                        </li>
-                                        <li className={styles.g_tabs_item}>
-                                            <Link to={""} className={styles.g_tabs_link}>Popular tracks</Link>
-                                        </li>
-                                        <li className={styles.g_tabs_item}>
-                                            <Link to={""} className={styles.g_tabs_link}>Tracks</Link>
-                                        </li>
-                                        <li className={styles.g_tabs_item}>
-                                            <Link to={""} className={styles.g_tabs_link}>Albums</Link>
+                                            <Link to={""} className={styles.g_tabs_link}>Upload</Link>
                                         </li>
                                         <li className={styles.g_tabs_item}>
                                             <Link to={""} className={styles.g_tabs_link}>Playlist</Link>
+                                        </li>
+                                        <li className={styles.g_tabs_item}>
+                                            <Link to={""} className={styles.g_tabs_link}>Favorite</Link>
+                                        </li>
+                                        <li className={styles.g_tabs_item}>
+                                            <Link to={""} className={styles.g_tabs_link}>Review</Link>
                                         </li>
                                     </ul>
                                 </div>

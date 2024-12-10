@@ -11,7 +11,6 @@ const useGetUserInfo = () => {
                 withCredentials: true,
             })
             .then((response) => {
-                console.log("User info fetched:", response.data); // 로그로 확인
                 setUserInfo(response.data);
             })
             .catch((err) => {
