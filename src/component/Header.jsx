@@ -2,12 +2,14 @@ import styles from '../css/Header.module.css';
 import { Link } from 'react-router-dom';
 import useAuth from "../hooks/useAuth";
 import axios from "axios";
+import useGetUserInfo from "../hooks/useGetUserInfo";
 import SignIn from "./user/SignIn.jsx"
 import {useState} from "react";
 import SignUp from "./user/SignUp.jsx";
 
 const Header = () => {
     const isLoggedIn = useAuth();
+    const userInfo = useGetUserInfo();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpen1, setIsModalOpen1] = useState(false);
 
@@ -70,7 +72,9 @@ const Header = () => {
                                 <>
                                     <Link to="/profile" className={styles.header_user_nav_button}>
                                         <div className={styles.header_user_nav_item}>
-                                            <span className={styles.header_user_nav_avatar}></span>
+                                            <span className={styles.header_user_nav_avatar} style={{
+                                                backgroundImage: `url(http://localhost:8787/${userInfo.profileImg})`
+                                            }}></span>
                                         </div>
                                     </Link>
                                     <span className={styles.logout_link} onClick={signOut}>Sign out</span>

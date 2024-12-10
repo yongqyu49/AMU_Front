@@ -1,10 +1,14 @@
 import styles from "../../css/user/Profile.module.css";
 import { Link } from "react-router-dom";
 import Modal from "./Modal";
-import { useState } from "react";
+import {useState} from "react";
+import useGetUserInfo from "../../hooks/useGetUserInfo";
+// import axios from "axios";
 
 const Profile = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const userInfo = useGetUserInfo();
+    console.log("프로필" + userInfo);
 
     // 모달 열기
     const openModal = () => {
@@ -12,9 +16,26 @@ const Profile = () => {
     };
 
     // 모달 닫기
-    const closeModal = () => {
+    const closeModal = (refresh = false) => {
         setIsModalVisible(false);
+        if (refresh) {
+            window.location.reload();
+
+            // axios
+            //     .get("http://localhost:8787/user/current", { withCredentials: true })
+            //     .then((response) => {
+            //         setUserInfo(response.data); // 최신 데이터로 갱신
+            //     })
+            //     .catch((error) => {
+            //         console.error("Failed to refresh user info:", error);
+            //     });
+        }
     };
+
+    // `userInfo`가 아직 로드되지 않은 경우 로딩 표시
+    if (!userInfo) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <>
@@ -39,7 +60,13 @@ const Profile = () => {
                                             <div className={styles.edit_image}>
                                                 <div className={styles.edit_image_select}>
                                                     <div className={styles.image_outline}>
-                                                        <span className={styles.user_sc_artwork}></span>
+                                                        <span className={styles.user_sc_artwork}
+                                                              style={{
+                                                                  backgroundImage: `url(http://localhost:8787/${userInfo.profileImg})`,
+                                                                  backgroundSize: "cover",
+                                                                  backgroundPosition: "center"
+                                                              }}
+                                                        ></span>
                                                     </div>
                                                     <button type={"button"} className={styles.edit_image_button}>
                                                         Upload image
@@ -48,10 +75,10 @@ const Profile = () => {
                                             </div>
                                         </div>
                                         <div className={styles.profile_header_info_content}>
-                                            <h2 className={styles.profile_header_info_username}>최용규</h2>
+                                            <h2 className={styles.profile_header_info_username}>{userInfo.id}</h2>
                                             <div style={{ display: "inline-block" }}></div>
                                             <br />
-                                            <h3 style={{ marginTop: "4px" }}>Q</h3>
+                                            <h3 style={{ marginTop: "4px" }}>{userInfo.artist}</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -93,7 +120,7 @@ const Profile = () => {
                             </div>
                         </div>
                         {/* 모달 컴포넌트 */}
-                        {isModalVisible && <Modal closeModal={closeModal} />}
+                        {isModalVisible && <Modal closeModal={closeModal} userInfo={userInfo} />}
                     </div>
                 </div>
             </div>
