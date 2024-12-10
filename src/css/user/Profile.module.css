@@ -145,7 +145,6 @@
     font-size: 24px;
     line-height: 37px;
     padding: 4px 7px;
-    background-color: rgba(0, 0, 0, .8);
     margin-top: 0;
     display: inline-block;
     position: relative;
@@ -398,7 +397,6 @@
 .image_outline {
     height: 100%;
     width: 100%;
-    background-image: linear-gradient(135deg, #846170, #70929c);
     text-align: center;
     position: relative;
     background-repeat: no-repeat;
