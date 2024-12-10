@@ -1,12 +1,17 @@
 import styles from "../../css/user/Profile.module.css";
-import { Link } from "react-router-dom";
 import Modal from "./Modal";
-import {useState} from "react";
+import React, {useState} from "react";
 import useGetUserInfo from "../../hooks/useGetUserInfo";
+import MyUpload from "./MyUpload";
+import MyPlaylist from "./MyPlaylist";
+import MyReview from "./MyReview";
+import MyFavorite from "./MyFavorite";
 // import axios from "axios";
 
 const Profile = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [activeTab, setActiveTab] = useState("upload");
+
     const userInfo = useGetUserInfo();
 
     // 모달 열기
@@ -35,6 +40,22 @@ const Profile = () => {
     if (!userInfo) {
         return <div>Loading...</div>;
     }
+
+    const renderContent = () => {
+        switch (activeTab) {
+            case "upload":
+                return <MyUpload />;
+            case "playlist":
+                return <MyPlaylist />;
+            case "favorite":
+                return <MyFavorite />;
+            case "review":
+                return <MyReview />;
+            default:
+                return <p>알 수 없는 탭입니다.</p>;
+        }
+    };
+
 
     return (
         <>
@@ -89,21 +110,29 @@ const Profile = () => {
                                 <div className={styles.user_info_bar_tabs}>
                                     <ul className={styles.profile_tabs}>
                                         <li className={styles.g_tabs_item}>
-                                            <Link to={""} className={styles.g_tabs_link}>Upload</Link>
+                                            <div onClick={() => setActiveTab("upload")} className={styles.tab_header} style={{cursor: "pointer"}}>
+                                                Upload
+                                            </div>
                                         </li>
                                         <li className={styles.g_tabs_item}>
-                                            <Link to={""} className={styles.g_tabs_link}>Playlist</Link>
+                                            <div onClick={() => setActiveTab("playlist")} className={styles.tab_header} style={{cursor: "pointer"}}>
+                                                Playlist
+                                            </div>
                                         </li>
                                         <li className={styles.g_tabs_item}>
-                                            <Link to={""} className={styles.g_tabs_link}>Favorite</Link>
+                                            <div onClick={() => setActiveTab("favorite")} className={styles.tab_header} style={{cursor: "pointer"}}>
+                                                Favorite
+                                            </div>
                                         </li>
                                         <li className={styles.g_tabs_item}>
-                                            <Link to={""} className={styles.g_tabs_link}>Review</Link>
+                                            <div onClick={() => setActiveTab("review")} className={styles.tab_header} style={{cursor: "pointer"}}>
+                                                Review
+                                            </div>
                                         </li>
                                     </ul>
                                 </div>
                                 <div className={styles.user_info_bar_buttons}>
-                                    <div className={styles.sc_button_group}>
+                                <div className={styles.sc_button_group}>
                                         <button
                                             type={"button"}
                                             className={styles.sc_button_edit}
@@ -115,8 +144,64 @@ const Profile = () => {
                                 </div>
                             </div>
                         </div>
+                        <div className={styles.fluid_fixed}>
+                            <div className={styles.main}>
+                                <div className={styles.heading}>
+                                    <div>
+                                        <div></div>
+                                    </div>
+                                </div>
+                                <div className={styles.tab}></div>
+                                <div className={styles.content}>
+                                    <div>
+                                        <div></div>
+                                        <div></div>
+                                        <div>
+                                            <ul className={styles.loading_list}>
+                                                <li className={styles.mix_item}>
+                                                    <div>
+                                                        <div className={styles.mixed_module}>
+                                                            <div className={styles.mixed_module_title}>
+                                                            </div>
+                                                            <div className={styles.mixed_music_container}>
+                                                                {/*{playlistShowPrev && (*/}
+                                                                {/*    <button*/}
+                                                                {/*        className={styles.prev_button}*/}
+                                                                {/*        onClick={() => slide("prev", playlistSliderRef, updatePlaylistButtonVisibility)}*/}
+                                                                {/*    >*/}
+                                                                {/*        &#9664;*/}
+                                                                {/*    </button>*/}
+                                                                {/*)}*/}
+                                                                <div className={styles.slider}>
+                                                                    <div className={styles.slider_peek_container}>
+                                                                        <div className={styles.slider_panel}>
+                                                                            {/*요소*/}
+                                                                            <div className={styles.tab_render}>{renderContent()}</div>
+                                                                            {/*요소*/}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                {/*{playlistShowNext && (*/}
+                                                                {/*    <button*/}
+                                                                {/*        className={styles.next_button}*/}
+                                                                {/*        onClick={() => slide("next", playlistSliderRef, updatePlaylistButtonVisibility)}*/}
+                                                                {/*    >*/}
+                                                                {/*        &#9654;*/}
+                                                                {/*    </button>*/}
+                                                                {/*)}*/}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                         {/* 모달 컴포넌트 */}
-                        {isModalVisible && <Modal closeModal={closeModal} userInfo={userInfo} />}
+                        {isModalVisible && <Modal closeModal={closeModal} userInfo={userInfo}/>}
                     </div>
                 </div>
             </div>

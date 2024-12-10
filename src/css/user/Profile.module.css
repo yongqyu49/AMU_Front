@@ -150,6 +150,14 @@
     position: relative;
 }
 
+.vertical_bar {
+
+}
+
+.user_info_bar_tabs {
+
+}
+
 .user_info_bar {
     position: relative;
     padding-top: 15px;
@@ -177,7 +185,6 @@
 }
 
 .user_info_bar_buttons {
-    position: absolute;
     right: 0;
     bottom: 9px;
 }
@@ -356,10 +363,10 @@
 }
 
 .slider_panel {
-    transform: translate3d(0px, 0px, 0px);
-    margin-right: -20px;
-    backface-visibility: hidden;
-    display: flex;
+    /*transform: translate3d(0px, 0px, 0px);*/
+    /*margin-right: -20px;*/
+    /*backface-visibility: hidden;*/
+    /*display: flex;*/
 }
 
 .slider_panel_slide {
