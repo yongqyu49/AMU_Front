@@ -6,25 +6,25 @@ import Dropdown from "react-bootstrap/Dropdown";
 
 const Upload = () => {
     const [empty, setEmpty] = useState("none");
-    const [myGenre, setMyGenre] = useState("Genre");
+    const [myGenre, setMyGenre] = useState("장르");
     const handleGenre = (eventKey) => {
         setMyGenre(eventKey);
-        if (eventKey === "POP") {
-            eventKey = 1
+        if(eventKey === "팝"){
+            eventKey=1
             setEmpty("");
-        } else if (eventKey === "Hip-hop") {
-            eventKey = 2
+        }else if(eventKey === "힙합"){
+            eventKey=2
             setEmpty("");
-        } else if (eventKey === "Ballad") {
-            eventKey = 3
+        }else if(eventKey === "발라드"){
+            eventKey=3
             setEmpty("");
-        } else if (eventKey === "Indie") {
-            eventKey = 4
+        }else if(eventKey === "인디"){
+            eventKey=4
             setEmpty("");
-        } else if (eventKey === "R&B") {
-            eventKey = 5
+        }else if(eventKey === "R&B"){
+            eventKey=5
             setEmpty("");
-        } else {
+        }else{
             setEmpty("none");
         }
         setFormData({
@@ -57,7 +57,7 @@ const Upload = () => {
     const handleChange = (e) => {
         const newFormData = {
             ...formData,
-            [e.target.name]: e.target.value,
+            [e.target.name]:e.target.value,
         };
         setFormData(newFormData);
         console.log(newFormData);
@@ -66,44 +66,44 @@ const Upload = () => {
     const goUpload = async (e) => {
         e.preventDefault();
 
-        if (!fileMp3 || !fileImg) {
+        if(!fileMp3 || !fileImg){
             alert("파일을 입력해주세요");
             return;
         }
-        if (empty === "none") {
+        if(empty === "none"){
             alert("장르를 선택해주세요");
             return;
         }
 
         const fileSize = fileMp3.size.toString();
 
-        const uploadDir1 = "C:/AMU_asset/AMU_Img/";
-        const uploadDir2 = "C:/AMU_asset/AMU_Music/";
+        const uploadDir1 = "C:/AMU_asset/AMU_Music/";
+        const uploadDir2 = "C:/AMU_asset/AMU_Img/";
 
         const filePath1 = `${uploadDir1}${fileMp3.name}`;
         const filePath2 = `${uploadDir2}${fileImg.name}`;
 
         let playTime = 0;
         if (fileMp3.type.startsWith("audio/")) {
-            const audio = new Audio(URL.createObjectURL(fileMp3));
-            await new Promise((resolve) => {
-                audio.addEventListener("loadedmetadata", () => {
-                    playTime = Math.round(audio.duration);
-                    resolve();
+            const audio = new Audio(URL.createObjectURL(fileMp3)); //URL을 임시적으로 DOMString으로 변환
+            await new Promise((resolve) => { //비동기 작업을 위한 Promise 사용
+                audio.addEventListener("loadedmetadata", () => { //오디오의 메타데이터가 로드된 후 실행
+                    playTime = Math.round(audio.duration); // 재생 길이 (초 단위)
+                    resolve(); //Promise를 성공상태로 전환
                 });
             });
         }
 
-        const formDataToSend = new FormData();
+        const formDataToSend = new FormData(); //폼데이타 생성
         formDataToSend.append('fileMp3', fileMp3);
         formDataToSend.append('fileImg', fileImg);
-        formDataToSend.append("fileSize", fileSize);
-        formDataToSend.append("filePath1", filePath1);
-        formDataToSend.append("filePath2", filePath2);
-        formDataToSend.append("playTime", playTime);
+        formDataToSend.append("fileSize", fileSize); //음악파일 크기
+        formDataToSend.append("filePath1", filePath1); //음악파일 경로
+        formDataToSend.append("filePath2", filePath2); //이미지 경로
+        formDataToSend.append("playTime", playTime); //재생길이
 
-        Object.entries(formData).forEach(([key, value]) => {
-            formDataToSend.append(key, value);
+        Object.entries(formData).forEach(([key, value]) => { //file데이터와 text데이터 같이 백에 전달
+            formDataToSend.append(key, value); // 나머지 필드 추가
         });
         console.log("업로드1", formData);
         console.log("업로드 파일: ")
@@ -112,99 +112,60 @@ const Upload = () => {
             console.log();
         }
 
-        try {
+        try{
             const response = await axios.post("http://localhost:8787/music/upload", formDataToSend, {
-                withCredentials: true,
+                withCredentials: true,  // 세션 공유
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 }
             });
             const result = response.data;
             console.log("업로드 성공 front: ", result);
-        } catch (error) {
+            window.location.href = "/mainPage";
+        }catch(error) {
             console.error("업로드 실패 front: ", error)
         }
     }
 
     return (
-        <div className={styles.container}>
-            <form onSubmit={goUpload} className={styles.formContainer}>
-                <div className={styles.title}>
-                    <input
-                        type="text"
-                        name="title"
-                        placeholder="Song Title"
-                        onChange={handleChange}
-                        required
-                        className={styles.input}
-                    />
-                </div>
-
-                <div className={styles.genre}>
-                    <DropdownButton
-                        id="dropdown-genre-button"
-                        title={myGenre}
-                        size="sm"
-                        variant="light"
-                        name="genre"
-                        onSelect={handleGenre}
-                        className={styles.genreDropdown}
-                    >
-                        <Dropdown.Item eventKey="팝">POP</Dropdown.Item>
-                        <Dropdown.Item eventKey="힙합">Hip-hop</Dropdown.Item>
-                        <Dropdown.Item eventKey="발라드">Ballad</Dropdown.Item>
-                        <Dropdown.Item eventKey="인디">Indie</Dropdown.Item>
-                        <Dropdown.Item eventKey="R&B">R&B</Dropdown.Item>
-                    </DropdownButton>
-                </div>
-
-                <div>
-            <textarea
-                name="lyrics"
-                placeholder="Input Lyrics here"
-                rows="6"
-                onChange={handleChange}
-                className={styles.lyrics}
-                required
-            />
-                </div>
-
-                {/* Add text here */}
-                <div className={styles.fileSizeInfo}>
-                    For best quality, use WAV, FLAC, AIFF, or ALAC. The maximum file size is 4GB uncompressed.
-                </div>
-
-                <div className={styles.fileInputs}>
-                    <div className={styles.fileInputWrapper}>
-                        <div className={styles.fileInputIcon}>🎵</div>
-                        <div className={styles.fileInputText}>Upload your audio files</div>
-                        <input
-                            type="file"
-                            accept="audio/*"
-                            name="mp3"
-                            onChange={handleMp3Change}
-                            required
-                        />
+        <>
+            <div className={styles.container}>
+                <form onSubmit={goUpload}>
+                    <div className={styles.title}>
+                        <input type={"text"} name={"title"} placeholder={"Title"} onChange={handleChange} required/>
                     </div>
-
-                    <div className={styles.fileInputWrapper}>
-                        <div className={styles.fileInputIcon}>💿</div>
-                        <div className={styles.fileInputText}>Upload your image files</div>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            name="image"
-                            onChange={handleImgChange}
-                            required
-                        />
+                    <div>
+                        <div className={styles.genre}>
+                            <DropdownButton
+                                id="dropdown-genre-button"
+                                title={myGenre}
+                                size="sm"
+                                variant="light"
+                                name={"genre"}
+                                onSelect={handleGenre}
+                            >
+                                <Dropdown.Item eventKey="팝">팝</Dropdown.Item>
+                                <Dropdown.Item eventKey="힙합">힙합</Dropdown.Item>
+                                <Dropdown.Item eventKey="발라드">발라드</Dropdown.Item>
+                                <Dropdown.Item eventKey="인디">인디</Dropdown.Item>
+                                <Dropdown.Item eventKey="R&B">R&B</Dropdown.Item>
+                            </DropdownButton>
+                        </div>
                     </div>
-                </div>
-
-                <div className={styles.uploadBtnContainer}>
-                    <button type="submit" className={styles.uploadBtn}>Upload</button>
-                </div>
-            </form>
-        </div>
+                    <div>
+                        <textarea name={"lyrics"} placeholder={"input Lyrics here"} rows="100" cols="40"
+                                onChange={handleChange} className={styles.lyrics} required/>
+                    </div>
+                    <div className={styles.box}>
+                        <input type={"file"} accept={"audio/*"} name={"mp3"} onChange={handleMp3Change} required/>
+                        <input type={"file"} accept={"image/*"} name={"image"} onChange={handleImgChange} required/>
+                    </div>
+                    <div>
+                        <br/><button type={"submit"}>Upload</button>
+                    </div>
+                </form>
+            </div>
+        </>
     );
 };
 
