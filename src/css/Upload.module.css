@@ -4,10 +4,11 @@
     align-items: center;
     justify-content: center;
     width: 100%;
+    height: 100vh;
     padding: 20px;
     box-sizing: border-box;
     background-color: #f4f4f4;
-    margin-top: 30px;
+    margin-top: 0;
 }
 
 .formContainer {
@@ -31,17 +32,46 @@
 
 .lyrics {
     resize: none;
-    width: 740px;
+    width: 100%;
+    max-width: 740px;
+    min-width: 300px;
     height: 150px;
     padding: 12px;
     font-size: 14px;
+    box-sizing: border-box;
 }
 
 .genreDropdown {
     width: 100%;
-    padding: 10px;
+    padding: 15px;
     margin: 10px 0;
-    font-size: 14px;
+    font-size: 16px;
+    border-radius: 8px;
+    background-color: #f4f4f4;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.genreDropdown .dropdown-toggle {
+    padding: 20px 40px;
+    font-size: 20px;
+    background-color: #f4f4f4;
+    color: #333;
+    border-radius: 8px;
+    border: none;
+    text-align: center;
+    width: 100%;
+    cursor: default;
+    transition: all 0.3s ease;
+}
+
+.genreDropdown .dropdown-toggle:hover {
+    background-color: #e0e0e0;
+    cursor: default;
+}
+
+.genreDropdown .dropdown-toggle:active {
+    cursor: default;
 }
 
 .fileInputs {
@@ -52,12 +82,45 @@
     margin-top: 20px;
 }
 
-.fileInputs input {
+.fileInputWrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     width: 48%;
-    padding: 60px;
-    font-size: 14px;
+    height: 150px;
+    border: 2px dashed #ddd;
     border-radius: 8px;
-    border: 1px solid #ddd;
+    background-color: #fafafa;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.fileInputWrapper:hover {
+    background-color: #f0f0f0;
+    border-color: #aaa;
+}
+
+.fileInputWrapper input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.fileInputText {
+    font-size: 14px;
+    color: #666;
+}
+
+.fileInputIcon {
+    font-size: 36px;
+    color: #666;
+    margin-bottom: 10px;
 }
 
 .uploadBtn {
