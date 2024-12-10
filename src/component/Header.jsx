@@ -57,7 +57,7 @@ const Header = () => {
                             {isLoggedIn ? (
                                 // 로그인된 경우: userInfo 링크만 보여줌
                                 <>
-                                    <Link to="/userInfo" className={styles.header_user_nav_button}>
+                                    <Link to="/profile" className={styles.header_user_nav_button}>
                                         <div className={styles.header_user_nav_item}>
                                             <span className={styles.header_user_nav_avatar}></span>
                                         </div>
@@ -71,6 +71,28 @@ const Header = () => {
                                     <Link to="/signUp" className={styles.signup_link}>Signup</Link>
                                 </>
                             )}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className={styles.modal}>
+                <div className={styles.container}>
+                    <div className={styles.scontainer}>
+                        <div className={styles.providerButtons}>
+                            <div className={styles.form_row}></div>
+                            <div className={styles.form_row}></div>
+                            <div className={styles.form_row}></div>
+                        </div>
+                        <div >
+                            <span>or</span>
+                        </div>
+                        <div className={styles.auth_method_separator}>
+                            <div>
+                                <div>
+                                    <input type={"text"}/>
+                                </div>
+                            </div>
+                            <div className={styles.form_buttons}></div>
                         </div>
                     </div>
                 </div>
