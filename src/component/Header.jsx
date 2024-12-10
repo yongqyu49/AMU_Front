@@ -2,12 +2,14 @@ import styles from '../css/Header.module.css';
 import { Link } from 'react-router-dom';
 import useAuth from "../hooks/useAuth";
 import axios from "axios";
-import SignIn from "./user/SignIn.jsx"
-import {useState} from "react";
+import useGetUserInfo from "../hooks/useGetUserInfo";
+import SignIn from "./user/SignIn.jsx";
+import { useState } from "react";
 import SignUp from "./user/SignUp.jsx";
 
 const Header = () => {
     const isLoggedIn = useAuth();
+    const userInfo = useGetUserInfo();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpen1, setIsModalOpen1] = useState(false);
 
@@ -16,16 +18,16 @@ const Header = () => {
         axios.post("http://localhost:8787/user/signOut", {}, {
             withCredentials: true
         })
-        .then(response => {
-            console.log("로그아웃 성공:", response);
-            alert("로그아웃 되었습니다.");
-            window.location.href = "/";
-        })
-        .catch(error => {
-            console.error("로그아웃 중 오류 발생:", error);
-            alert("로그아웃 중 오류가 발생했습니다.");
-        });
-    }
+            .then(response => {
+                console.log("로그아웃 성공:", response);
+                alert("로그아웃 되었습니다.");
+                window.location.href = "/";
+            })
+            .catch(error => {
+                console.error("로그아웃 중 오류 발생:", error);
+                alert("로그아웃 중 오류가 발생했습니다.");
+            });
+    };
 
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
@@ -39,7 +41,7 @@ const Header = () => {
                 <div className={styles.header_inner}>
                     <div className={styles.header_left}>
                         <div className={styles.header_logo}>
-                            <Link to="/" className={styles.header_logo_link}/>
+                            <Link to="/" className={styles.header_logo_link} />
                         </div>
                         <nav className={styles.header_nav}>
                             <ul className={styles.header_nav_ul}>
@@ -66,19 +68,21 @@ const Header = () => {
                         </div>
                         <div className={styles.header_user_nav}>
                             {isLoggedIn ? (
-                                // 로그인된 경우: userInfo 링크만 보여줌
                                 <>
                                     <Link to="/profile" className={styles.header_user_nav_button}>
                                         <div className={styles.header_user_nav_item}>
-                                            <span className={styles.header_user_nav_avatar}></span>
+                                            <span
+                                                className={styles.header_user_nav_avatar}
+                                                style={{
+                                                    backgroundImage: `url(http://localhost:8787/${userInfo?.profileImg || 'default-profile.png'})`
+                                                }}
+                                            ></span>
                                         </div>
                                     </Link>
                                     <span className={styles.logout_link} onClick={signOut}>Sign out</span>
                                 </>
                             ) : (
-                                // 로그인되지 않은 경우: Login 및 Signup 링크 보여줌
                                 <>
-
                                     <span onClick={openModal} className={styles.signin_link}>SignIn</span>
                                     <span onClick={openModal1} className={styles.signup_link}>SignUp</span>
                                 </>

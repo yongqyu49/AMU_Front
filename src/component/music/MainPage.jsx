@@ -103,39 +103,28 @@ const MainPage = ({ setSelectedTrack }) => { //구조분해할당
                 </div>
                 <div className={styles.catalog}>
                     {/*요소*/}
-                    {playlist.map((track) => (
-                        <div className={styles.slider_panel_slide} key={track.musicCode}>
-                            <div className={styles.playable_tile}>
-                                <div className={styles.playable_artwork}>
-                                    <div className={styles.playable_artwork_image} onClick={() => handleTrackClick(track)}>
-                                        <div className={styles.artwork} style={{
-                                            backgroundImage: `url(http://localhost:8787/music/getMusic/image/${track.musicCode})`,
-                                            backgroundSize: 'cover',
-                                            backgroundPosition: 'center',
-                                            width: '100%',
-                                            height: '100%'
-                                        }}>
-                                        </div>
-                                    </div>
+                    <div className={styles.album_grid}>
+                        {playlist.map((track) => (
+                            <div className={styles.album_card} key={track.musicCode}>
+                                <div
+                                    className={styles.album_artwork}
+                                    style={{
+                                        backgroundImage: `url(http://localhost:8787/music/getMusic/image/${track.musicCode})`,
+                                        backgroundSize: 'cover',
+                                        backgroundPosition: 'center',
+                                    }}
+                                    onClick={() => handleTrackClick(track)}
+                                />
+                                <div className={styles.album_details}>
+                                    <h4 className={styles.album_title}>{track.title}</h4>
+                                    <p className={styles.album_artist}>{track.artist}</p>
                                 </div>
-                                <div className={styles.playable_tile_description}>
-                                    <div className={styles.playable_tile_description_container}>
-                                        {track.title}
-                                    </div>
-                                    <div className={styles.playable_tile_username_container}>
-                                        {/* 이미지 경로 디버깅을 위한 출력 */}
-                                        <p>이미지 경로: {track.imgPath}</p><br/>
-                                        <p>음악 경로: {track.mp3Path}</p><br/>
-                                        <p>Artist: {track.artist}</p><br/>
-                                        <p>Views: {track.views}</p><br/>
-                                        <p>date: {track.releaseDate}</p><br/>
-                                        <p>fileSize: {track.fileSize}</p><br/>
-                                        <p>runTime: {track.runtime}sec</p><br/>
-                                    </div>
+                                <div className={styles.album_more}>
+                                    <span className={styles.album_more_icon}>...</span>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                     {/*요소*/}
                 </div>
                 <div className={styles.page}>
