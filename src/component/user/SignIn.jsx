@@ -1,7 +1,8 @@
 import {useState} from "react";
 import axios from "axios";
+import styles from '../../css/Signln.module.css';
 
-const SignIn = () => {
+const SignIn = ({ isOpen, onClose }) => {
 
     const [formData, setFormData] = useState({
         id: '',
@@ -43,14 +44,54 @@ const SignIn = () => {
             });
     }
 
+    if (!isOpen) return null; // 모달이 열리지 않았으면 렌더링하지 않음
+
     return (
-        <div>
-            <form onSubmit={doSignIn} style={{paddingTop: "100px"}}>
-                <input type={"text"} name={"id"} placeholder={"id"} onChange={handleChange} />
-                <input type={"password"} name={"password"} placeholder={"password"} onChange={handleChange} />
-                <button type={"submit"}>Login</button>
-            </form>
-        </div>
+            <div>
+                <form onSubmit={doSignIn}>
+                    <div className={styles.modal}>
+                        <div className={styles.container}>
+                            <button className={styles.modal_close_button} onClick={onClose}></button>
+                            <div className={styles.scontainer}>
+                                <div className={styles.providerButtons}>
+                                    <div className={styles.form_row} style={{
+                                        backgroundColor: "#3578e5"
+                                    }}>
+                                        <button className={styles.buttons_text} style={{color: "white"}}>Continue with
+                                            Facebook
+                                        </button>
+                                    </div>
+                                    <div className={styles.form_row}>
+                                        <button className={styles.buttons_text}>Continue with Google</button>
+                                    </div>
+                                    <div className={styles.form_row} style={{backgroundColor: "black"}}>
+                                        <button className={styles.buttons_text} style={{color: "white"}}>Continue with
+                                            Apple
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className={styles.auth_method_separator}>
+                                    <span>-------- or --------</span>
+                                </div>
+                                <div className={styles.form_row}>
+                                    <input type={"text"} name={"id"} className={styles.login_email} onChange={handleChange}
+                                           placeholder={"ID"} required/>
+                                </div>
+                                <div className={styles.form_row}>
+                                    <input type={"password"} name={"password"} className={styles.login_email}
+                                           onChange={handleChange} placeholder={"PW"} required/>
+                                </div>
+                                <div className={styles.form_buttons}>
+                                    <button type={"submit"} className={styles.buttons_text} style={{
+                                        color: "white"
+                                    }}>Login
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
     );
 }
 

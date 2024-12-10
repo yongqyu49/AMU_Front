@@ -10,6 +10,8 @@
   -webkit-font-smoothing: subpixel-antialiased;
   transition: height 0.2s ease-in-out;
   position: fixed;
+  top: 0;
+  left: 0;
   z-index: 1000;
   color: #999;
   cursor: default;
@@ -87,7 +89,6 @@
   color: #fff !important;
   background-color: #111;
   border-bottom: none;
-
   display: block;
   padding: 12px 0;
   height: 46px;
@@ -171,11 +172,12 @@
   float: left;
 }
 
-.login_link, .signup_link {
+.signin_link, .signup_link , .logout_link {
   float: left;
-  padding: 12px 28px 12px 10px;
+  padding: 12px 12px 12px 12px;
   color: #ccc;
   height: 46px;
+  cursor: pointer;
 }
 
 @media (max-width: 1239px) {
@@ -191,7 +193,7 @@ a {
 .header_user_nav_button {
   box-sizing: border-box;
   float: left;
-  padding: 12px 28px 12px 10px;
+  padding: 12px 12px 12px 12px;
   position: relative;
   color: #ccc;
   height: 46px;
@@ -241,3 +243,23 @@ a {
   background-size: cover;
   background-position: 50% 50%;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

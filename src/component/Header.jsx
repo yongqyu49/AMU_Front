@@ -3,10 +3,15 @@ import { Link } from 'react-router-dom';
 import useAuth from "../hooks/useAuth";
 import axios from "axios";
 import useGetUserInfo from "../hooks/useGetUserInfo";
+import SignIn from "./user/SignIn.jsx"
+import {useState} from "react";
+import SignUp from "./user/SignUp.jsx";
 
 const Header = () => {
     const isLoggedIn = useAuth();
     const userInfo = useGetUserInfo();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpen1, setIsModalOpen1] = useState(false);
 
     const signOut = () => {
         console.log("로그아웃 시도");
@@ -23,6 +28,12 @@ const Header = () => {
             alert("로그아웃 중 오류가 발생했습니다.");
         });
     }
+
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
+
+    const openModal1 = () => setIsModalOpen1(true);
+    const closeModal1 = () => setIsModalOpen1(false);
 
     return (
         <>
@@ -66,19 +77,22 @@ const Header = () => {
                                             }}></span>
                                         </div>
                                     </Link>
-                                    <button type={"button"} className={styles.signout_link} onClick={signOut}>Signout</button>
+                                    <span className={styles.logout_link} onClick={signOut}>Sign out</span>
                                 </>
                             ) : (
                                 // 로그인되지 않은 경우: Login 및 Signup 링크 보여줌
                                 <>
-                                    <Link to="/signIn" className={styles.login_link}>Login</Link>
-                                    <Link to="/signUp" className={styles.signup_link}>Signup</Link>
+
+                                    <span onClick={openModal} className={styles.signin_link}>SignIn</span>
+                                    <span onClick={openModal1} className={styles.signup_link}>SignUp</span>
                                 </>
                             )}
                         </div>
                     </div>
                 </div>
             </div>
+            <SignIn isOpen={isModalOpen} onClose={closeModal} />
+            <SignUp isOpen1={isModalOpen1} onClose1={closeModal1} />
         </>
     );
 };
