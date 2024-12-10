@@ -2,9 +2,11 @@ import styles from '../css/Header.module.css';
 import { Link } from 'react-router-dom';
 import useAuth from "../hooks/useAuth";
 import axios from "axios";
+import useGetUserInfo from "../hooks/useGetUserInfo";
 
 const Header = () => {
     const isLoggedIn = useAuth();
+    const userInfo = useGetUserInfo();
 
     const signOut = () => {
         console.log("로그아웃 시도");
@@ -59,7 +61,9 @@ const Header = () => {
                                 <>
                                     <Link to="/profile" className={styles.header_user_nav_button}>
                                         <div className={styles.header_user_nav_item}>
-                                            <span className={styles.header_user_nav_avatar}></span>
+                                            <span className={styles.header_user_nav_avatar} style={{
+                                                backgroundImage: `url(http://localhost:8787/${userInfo.profileImg})`
+                                            }}></span>
                                         </div>
                                     </Link>
                                     <button type={"button"} className={styles.signout_link} onClick={signOut}>Signout</button>
