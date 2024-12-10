@@ -77,8 +77,8 @@ const Upload = () => {
 
         const fileSize = fileMp3.size.toString();
 
-        const uploadDir1 = "C:/AMU_asset/AMU_Img/";
-        const uploadDir2 = "C:/AMU_asset/AMU_Music/";
+        const uploadDir1 = "C:/AMU_asset/AMU_Music/";
+        const uploadDir2 = "C:/AMU_asset/AMU_Img/";
 
         const filePath1 = `${uploadDir1}${fileMp3.name}`;
         const filePath2 = `${uploadDir2}${fileImg.name}`;
@@ -121,6 +121,7 @@ const Upload = () => {
             });
             const result = response.data;
             console.log("업로드 성공 front: ", result);
+            window.location.href = "/mainPage";
         }catch(error) {
             console.error("업로드 실패 front: ", error)
         }
@@ -161,10 +162,6 @@ const Upload = () => {
                     </div>
                     <div>
                         <br/><button type={"submit"}>Upload</button>
-                    </div>
-                    <div>
-                        <h3>test</h3>
-                        <pre className={styles.test}>{formData.lyrics}</pre>
                     </div>
                 </form>
             </div>
