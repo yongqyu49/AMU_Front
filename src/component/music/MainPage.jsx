@@ -124,10 +124,12 @@ const MainPage = ({ setSelectedTrack }) => { //구조분해할당
                                 </div>
 
                                 {activeMenu === track.musicCode && (
-                                    <div className={`${styles.more_menu} ${activeMenu === track.musicCode ? "active" : ""}`}>
-                                        <div className={styles.more_menu_item}>Add to Playlist</div>
-                                        <div className={styles.more_menu_item}>Share</div>
-                                        <div className={styles.more_menu_item}>View Details</div>
+                                    <div
+                                        className={`${styles.more_menu} ${activeMenu === track.musicCode ? "active" : ""}`}>
+                                        <div className={styles.more_menu_item}>Views: {track.views}</div>
+                                        <div className={styles.more_menu_item}>Likes: {track.likes}</div>
+                                        <div className={styles.more_menu_item}>FileSize: {track.fileSize}</div>
+                                        <div className={styles.more_menu_item}>RunTime: {track.runtime}</div>
                                     </div>
                                 )}
                             </div>
