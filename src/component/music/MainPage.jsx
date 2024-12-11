@@ -13,6 +13,7 @@ const MainPage = ({ setSelectedTrack }) => { //구조분해할당
 
     const [myGenre, setMyGenre] = useState("전체");
     const [mySort, setMySort] = useState("이름순");
+    const [playlist, setPlaylist] = useState([]);
 
     const handleGenre = (eventKey) => {
         setMyGenre(eventKey);
@@ -28,31 +29,47 @@ const MainPage = ({ setSelectedTrack }) => { //구조분해할당
             eventKey=5
         }else{
             eventKey=0
-            console.log("전체")
+            console.log("���체")
         }
     }
     const handleSort = (eventKey) => {
         setMySort(eventKey);
-        if(eventKey === "이름순"){
-            eventKey=1
-        }else if(eventKey === "최신순"){
-            eventKey=2
-        }else if(eventKey === "인기순"){
-            eventKey=3
-        }else if(eventKey === "좋아요순"){
-            eventKey=4
-        }else{
-            eventKey=0
-        }
-    }
+        let sortType;
 
-    // ##########
-    const [playlist, setPlaylist] = useState([]);
+        switch(eventKey) {
+            case "이름순":
+                sortType = "name";
+                break;
+            case "최신순":
+                sortType = "date";
+                break;
+            case "인기순":
+                sortType = "views";
+                break;
+            case "좋아요순":
+                sortType = "likes";
+                break;
+            default:
+                sortType = "name";
+        }
+
+        axios.get(`http://localhost:8787/music/sort/${sortType}`)
+            .then((response) => {
+                setPlaylist(response.data);
+            })
+            .catch((error) => {
+                console.error('정렬중 오류:', error);
+            });
+    }
 
     useEffect(() => {
         axios.post('http://localhost:8787/music/list')
             .then((response) => {
                 setPlaylist(response.data);
+                return axios.get(`http://localhost:8787/music/sort/name`);
+            })
+            .then((sortResponse) => {
+                setPlaylist(sortResponse.data);
             })
             .catch((error) => {
                 console.error('Failed to fetch music list:', error);
@@ -104,8 +121,8 @@ const MainPage = ({ setSelectedTrack }) => { //구조분해할당
                 <div className={styles.catalog}>
                     {/*요소*/}
                     <div className={styles.album_grid}>
-                        {playlist.map((track) => (
-                            <div className={styles.album_card} key={track.musicCode}>
+                        {playlist.map((track, index) => (
+                            <div className={styles.album_card} key={`${track.musicCode}-${index}`}>
                                 <div
                                     className={styles.album_artwork}
                                     style={{
@@ -116,7 +133,9 @@ const MainPage = ({ setSelectedTrack }) => { //구조분해할당
                                     onClick={() => handleTrackClick(track)}
                                 />
                                 <div className={styles.album_details}>
-                                    <h4 className={styles.album_title}>{track.title}</h4>
+                                    <h4 className={styles.album_title}>
+                                        {track.title}
+                                        </h4>
                                     <p className={styles.album_artist}>{track.artist}</p>
                                 </div>
                                 <div className={styles.album_more}>
