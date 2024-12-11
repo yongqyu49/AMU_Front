@@ -2,17 +2,20 @@ import styles from '../../css/music/Contents.module.css';
 import { Link } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import SideBar from "../SideBar";
 
 const Contents = ({ setSelectedTrack }) => {
     const [playlist, setPlaylist] = useState([]);
     const [latestMusic, setLatestMusic] = useState([]);
+    const [myUpload, setMyUpload] = useState([]);
     const playlistSliderRef = useRef(null);
     const latestMusicSliderRef = useRef(null);
+    const myUploadSliderRef = useRef(null);
     const [playlistShowNext, setPlaylistShowNext] = useState(true);
     const [playlistShowPrev, setPlaylistShowPrev] = useState(false);
     const [latestShowNext, setLatestShowNext] = useState(true);
     const [latestShowPrev, setLatestShowPrev] = useState(false);
+    const [myUploadShowNext, setMyUploadShowNext] = useState(true);
+    const [myUploadShowPrev, setMyUploadShowPrev] = useState(false);
 
 
     useEffect(() => {
@@ -31,6 +34,18 @@ const Contents = ({ setSelectedTrack }) => {
                 setLatestMusic(response.data);
             })
             .catch((error) => {
+            });
+    }, []);
+
+    useEffect(() => {
+        axios.get("http://localhost:8787/user/myUpload", {
+            withCredentials: true,
+        })
+            .then((response) => {
+                setMyUpload(response.data);
+            })
+            .catch((error) => {
+                console.error("Failed to fetch my upload list:", error);
             });
     }, []);
 
@@ -58,6 +73,16 @@ const Contents = ({ setSelectedTrack }) => {
         setLatestShowNext(scrollLeft + offsetWidth < scrollWidth);
     };
 
+    const updateMyUploadButtonVisibility = () => {
+        const slider = myUploadSliderRef.current;
+        if (!slider) return;
+
+        const { scrollLeft, scrollWidth, offsetWidth } = slider;
+
+        setMyUploadShowPrev(scrollLeft > 0);
+        setMyUploadShowNext(scrollLeft + offsetWidth < scrollWidth);
+    };
+
     const slide = (direction, sliderRef, updateVisibility) => {
         const slider = sliderRef.current;
 
@@ -77,7 +102,8 @@ const Contents = ({ setSelectedTrack }) => {
     useEffect(() => {
         updatePlaylistButtonVisibility();
         updateLatestButtonVisibility();
-    }, [playlist, latestMusic]);
+        updateMyUploadButtonVisibility();
+    }, [playlist, latestMusic, myUpload]);
 
     return (
         <>
@@ -124,12 +150,19 @@ const Contents = ({ setSelectedTrack }) => {
                                                                             {playlist.map((track) => (
                                                                                 <div className={styles.slider_panel_slide}
                                                                                     key={track.musicCode}>
-                                                                                    <div className={styles.playable_tile}>
-                                                                                        <div className={styles.playable_artwork}>
-                                                                                            <div className={styles.playable_artwork_link} onClick={() => handleTrackClick(track)}>
-                                                                                                <div className={styles.playable_artwork_image}>
-                                                                                                    <div className={styles.image_outline}>
-                                                                                                        <span className={styles.artwork}
+                                                                                    <div
+                                                                                        className={styles.playable_tile}>
+                                                                                        <div
+                                                                                            className={styles.playable_artwork}>
+                                                                                            <div
+                                                                                                className={styles.playable_artwork_link}
+                                                                                                onClick={() => handleTrackClick(track)}>
+                                                                                                <div
+                                                                                                    className={styles.playable_artwork_image}>
+                                                                                                    <div
+                                                                                                        className={styles.image_outline}>
+                                                                                                        <span
+                                                                                                            className={styles.artwork}
                                                                                                             style={{
                                                                                                                 backgroundImage: `url(http://localhost:8787/${track.imgPath})`
                                                                                                             }}>
@@ -137,22 +170,29 @@ const Contents = ({ setSelectedTrack }) => {
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
-                                                                                            <div className={styles.playable_tile_overlay}></div>
-                                                                                            <div className={styles.playable_tile_play_button}>
-                                                                                                <Link to={`/music`} className={styles.play_button}>
-                                                                                                    Play
-                                                                                                </Link>
+                                                                                            <div
+                                                                                                className={styles.playable_tile_overlay}></div>
+                                                                                            <div
+                                                                                                className={styles.playable_tile_play_button}>
+                                                                                                <Link to="/music"
+                                                                                                      className={styles.play_button}>Play</Link>
                                                                                             </div>
-                                                                                            <div className={styles.playable_tile_action}>
+                                                                                            <div
+                                                                                                className={styles.playable_tile_action}>
 
                                                                                             </div>
                                                                                         </div>
-                                                                                        <div className={styles.playable_tile_description}>
-                                                                                            <div className={styles.playable_tile_description_container}>
-                                                                                                <Link to={`/music/${String(track.musicCode)}`} className={styles.playable_audible_tile}>{track.musicCode}</Link>
+                                                                                        <div
+                                                                                            className={styles.playable_tile_description}>
+                                                                                            <div
+                                                                                                className={styles.playable_tile_description_container}>
+                                                                                                <Link to="/music"
+                                                                                                      className={styles.playable_audible_tile}>{track.title}</Link>
                                                                                             </div>
-                                                                                            <div className={styles.playable_tile_username_container}>
-                                                                                                <Link to="/music" className={styles.playable_tile_username}>{track.artist}</Link>
+                                                                                            <div
+                                                                                                className={styles.playable_tile_username_container}>
+                                                                                                <Link to="/music"
+                                                                                                      className={styles.playable_tile_username}>{track.artist}</Link>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -211,13 +251,21 @@ const Contents = ({ setSelectedTrack }) => {
                                                                                                     className={styles.playable_artwork_image}>
                                                                                                     <div
                                                                                                         className={styles.image_outline}>
-                                                                                                    <span
+                                                                                                    {/* <span
                                                                                                         className={styles.artwork}
                                                                                                         style={{
                                                                                                             backgroundImage: `url(http://localhost:8787/${track.imgPath})`
                                                                                                         }}>
 
-                                                                                                    </span>
+                                                                                                    </span> */}
+                                                                                                        <div
+                                                                                                                className={styles.artwork}
+                                                                                                                style={{
+                                                                                                                    backgroundImage: `url(http://localhost:8787/music/getMusic/image/${track.musicCode})`,
+                                                                                                                    backgroundSize: 'cover',
+                                                                                                                    backgroundPosition: 'center',
+                                                                                                                }}  
+                                                                                                            />
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
@@ -266,12 +314,112 @@ const Contents = ({ setSelectedTrack }) => {
                                                         </div>
                                                     </div>
                                                 </li>
+
+                                                <li className={styles.mix_item}>
+                                                    <div>
+                                                        <div className={styles.mixed_module}>
+                                                            <div className={styles.mixed_module_title}>
+                                                                <h2>나의 업로드</h2>
+                                                            </div>
+                                                            <div className={styles.mixed_music_container}>
+                                                                {myUploadShowPrev  && (
+                                                                    <button
+                                                                        className={styles.prev_button}
+                                                                        onClick={() => slide("prev", myUploadSliderRef, updateMyUploadButtonVisibility)}
+                                                                    >
+                                                                        &#9664;
+                                                                    </button>
+                                                                )}
+                                                                <div className={styles.slider}
+                                                                     ref={myUploadSliderRef}>
+                                                                    <div className={styles.slider_peek_container}>
+                                                                        <div className={styles.slider_panel}>
+
+                                                                            {/*요소*/}
+                                                                            {myUpload.map((track) => (
+                                                                                <div
+                                                                                    className={styles.slider_panel_slide}
+                                                                                    key={track.musicCode}>
+                                                                                    <div
+                                                                                        className={styles.playable_tile}>
+                                                                                        <div
+                                                                                            className={styles.playable_artwork}>
+                                                                                            <div
+                                                                                                className={styles.playable_artwork_link}
+                                                                                                onClick={() => handleTrackClick(track)}>
+                                                                                                <div
+                                                                                                    className={styles.playable_artwork_image}>
+                                                                                                    <div
+                                                                                                        className={styles.image_outline}>
+                                                                                                    {/* <span
+                                                                                                        className={styles.artwork}
+                                                                                                        style={{
+                                                                                                            backgroundImage: `url(http://localhost:8787/${track.imgPath})`
+                                                                                                        }}>
+
+                                                                                                    </span> */}
+                                                                                                        <div
+                                                                                                                className={styles.artwork}
+                                                                                                                style={{
+                                                                                                                    backgroundImage: `url(http://localhost:8787/music/getMusic/image/${track.musicCode})`,
+                                                                                                                    backgroundSize: 'cover',
+                                                                                                                    backgroundPosition: 'center',
+                                                                                                                }}  
+                                                                                                            />
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div
+                                                                                                className={styles.playable_tile_overlay}></div>
+                                                                                            <div
+                                                                                                className={styles.playable_tile_play_button}>
+                                                                                                <Link to="/music"
+                                                                                                      className={styles.play_button}>Play</Link>
+                                                                                            </div>
+                                                                                            <div
+                                                                                                className={styles.playable_tile_action}>
+
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div
+                                                                                            className={styles.playable_tile_description}>
+                                                                                            <div
+                                                                                                className={styles.playable_tile_description_container}>
+                                                                                                <Link to="/music"
+                                                                                                      className={styles.playable_audible_tile}>{track.title}</Link>
+                                                                                            </div>
+                                                                                            <div
+                                                                                                className={styles.playable_tile_username_container}>
+                                                                                                <Link to="/music"
+                                                                                                      className={styles.playable_tile_username}>{track.artist}</Link>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            ))}
+                                                                            {/*요소*/}
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                {myUploadShowNext  && (
+                                                                    <button
+                                                                        className={styles.next_button}
+                                                                        onClick={() => slide("next", myUploadSliderRef, updateMyUploadButtonVisibility)}
+                                                                    >
+                                                                        &#9654;
+                                                                    </button>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
                                             </ul>
+
 
                                         </div>
                                     </div>
                                 </div>
-                                <SideBar />
                             </div>
                         </div>
                     </div>

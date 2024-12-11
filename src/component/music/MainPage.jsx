@@ -10,6 +10,7 @@ const MainPage = ({ setSelectedTrack }) => { //구조분해할당
     const [myGenre, setMyGenre] = useState("전체");
     const [mySort, setMySort] = useState("이름순");
     const [playlist, setPlaylist] = useState([]);
+    const [activeMenu, setActiveMenu] = useState(null);
 
     const handleGenre = (eventKey) => {
         setMyGenre(eventKey);
@@ -25,7 +26,6 @@ const MainPage = ({ setSelectedTrack }) => { //구조분해할당
             eventKey=5
         }else{
             eventKey=0
-            console.log("���체")
         }
     }
 
