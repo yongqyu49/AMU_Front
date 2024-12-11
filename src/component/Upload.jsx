@@ -77,11 +77,11 @@ const Upload = () => {
 
         const fileSize = fileMp3.size.toString();
 
-        const uploadDir1 = "C:/AMU_asset/AMU_Music/";
-        const uploadDir2 = "C:/AMU_asset/AMU_Img/";
+        // const uploadDir1 = "AMU_Music/";
+        // const uploadDir2 = "AMU_Img/";
 
-        const filePath1 = `${uploadDir1}${fileMp3.name}`;
-        const filePath2 = `${uploadDir2}${fileImg.name}`;
+        const fileName1 = `${fileMp3.name}`;
+        const fileName2 = `${fileImg.name}`;
 
         let playTime = 0;
         if (fileMp3.type.startsWith("audio/")) {
@@ -98,8 +98,8 @@ const Upload = () => {
         formDataToSend.append('fileMp3', fileMp3);
         formDataToSend.append('fileImg', fileImg);
         formDataToSend.append("fileSize", fileSize); //음악파일 크기
-        formDataToSend.append("filePath1", filePath1); //음악파일 경로
-        formDataToSend.append("filePath2", filePath2); //이미지 경로
+        formDataToSend.append("filePath1", fileName1); //음악파일 이름
+        formDataToSend.append("filePath2", fileName2); //이미지 이름
         formDataToSend.append("playTime", playTime); //재생길이
 
         Object.entries(formData).forEach(([key, value]) => { //file데이터와 text데이터 같이 백에 전달
@@ -109,10 +109,10 @@ const Upload = () => {
         console.log("업로드 파일: ")
         for (let [key, value] of formDataToSend.entries()) {
             console.log(key, value);
-            console.log();
         }
 
         try{
+            console.log("업로드 시작");
             const response = await axios.post("http://localhost:8787/music/upload", formDataToSend, {
                 withCredentials: true,  // 세션 공유
                 headers: {
