@@ -3,11 +3,11 @@ import axios from "axios";
 import styles from "../../css/user/MyUpload.module.css";
 import {Link} from "react-router-dom";
 
-const MyUpload = ({setSelectedTrack}) => {
+const MyUpload = ({setSelectedTrack, id}) => {
     const [myFavoriteList, setMyFavoriteList] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:8787/user/myFavorite", {
+        axios.get(`http://localhost:8787/user/myFavorite/${id}`, {
             withCredentials: true,
         })
             .then((response) => {
@@ -16,7 +16,7 @@ const MyUpload = ({setSelectedTrack}) => {
             .catch((error) => {
                 console.error("Failed to fetch my upload list:", error);
             });
-    }, []);
+    }, [id]);
 
     const handleTrackClick = (track) => {
         setSelectedTrack(track); // 선택된 노래 설정
@@ -50,10 +50,10 @@ const MyUpload = ({setSelectedTrack}) => {
                         </div>
                         <div className={styles.playable_tile_description}>
                             <div className={styles.playable_tile_description_container}>
-                                <Link to="/music" className={styles.playable_audible_tile}>{track.title}</Link>
+                                <Link to={`/music/${track.musicCode}`} className={styles.playable_audible_tile}>{track.title}</Link>
                             </div>
                             <div className={styles.playable_tile_username_container}>
-                                <Link to="/music" className={styles.playable_tile_username}>{track.artist}</Link>
+                                <Link to={`/profile/${String(track.id)}`} className={styles.playable_tile_username}>{track.artist}</Link>
                             </div>
                         </div>
                     </div>
