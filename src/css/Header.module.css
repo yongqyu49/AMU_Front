@@ -244,6 +244,62 @@ a {
   background-position: 50% 50%;
 }
 
+.searchDropdown {
+  position: absolute; /* 입력창 아래에 나타나도록 설정 */
+  max-height: 200px; /* 최대 높이 설정 */
+  overflow-y: auto; /* 세로 스크롤 활성화 */
+  overflow-x: hidden; /* 가로 스크롤 숨김 */
+  background-color: #fff; /* 배경 흰색 */
+  border: 1px solid #ccc; /* 테두리 추가 */
+  border-radius: 8px; /* 둥근 모서리 */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 약간의 그림자 */
+  margin-top: 5px; /* 입력창과의 간격 */
+  z-index: 100; /* 다른 요소 위에 표시 */
+  padding: 8px 0; /* 리스트 내부 간격 */
+}
+
+.searchResult {
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  transition: background-color 0.2s, color 0.2s;
+  text-decoration: none; /* 밑줄 제거 */
+}
+
+.searchResult:hover {
+  background-color: #f5f5f5;
+  color: #0073e6; /* 호버 시 텍스트 색상 */
+}
+
+.selected {
+  background-color: #0073e6; /* 선택된 항목의 배경색 */
+  color: #fff; /* 선택된 항목의 텍스트 색상 */
+}
+
+.searchDropdown::-webkit-scrollbar {
+  width: 6px; /* 스크롤바 너비 */
+}
+
+.searchDropdown::-webkit-scrollbar-track {
+  background: #f9f9f9; /* 스크롤바 트랙 배경 */
+  border-radius: 6px; /* 둥근 트랙 */
+}
+
+.searchDropdown::-webkit-scrollbar-thumb {
+  background: #ccc; /* 스크롤바 색상 */
+  border-radius: 6px; /* 둥근 스크롤바 */
+}
+
+.searchDropdown::-webkit-scrollbar-thumb:hover {
+  background: #aaa; /* 호버 시 스크롤바 색상 */
+}
+
+.searchResult.selected {
+  background-color: #0073e6; /* 선택된 항목의 배경색 */
+  color: #fff; /* 텍스트 색상 */
+}
+
 
 
 
