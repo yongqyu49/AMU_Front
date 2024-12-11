@@ -1,59 +1,64 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
-import styles from "../../css/playlist/TrackList.module.css";
+import styles from "../../css/user/MyUpload.module.css";
+import {Link} from "react-router-dom";
 
-const MyPlaylist = () => {
-    const [myUploadList, setMyUploadList] = useState([]);
+const MyPlaylist = ({setSelectedTrack}) => {
+    const [myPlaylistList, setMyPlaylistList] = useState([]);
 
-    axios.get("http://localhost:8787/upload/myUpload", {
-        withCredentials: true,
-    })
-        .then((response) => {
-            setMyUploadList(response.data);
+    useEffect(() => {
+        axios.get("http://localhost:8787/user/myPlaylist", {
+            withCredentials: true,
         })
-        .catch((error) => {
-            console.error("Failed to fetch my upload list:", error);
-        });
+            .then((response) => {
+                setMyPlaylistList(response.data);
+            })
+            .catch((error) => {
+                console.error("Failed to fetch my upload list:", error);
+            });
+    }, []);
+
+    const handleTrackClick = (track) => {
+        setSelectedTrack(track); // 선택된 노래 설정
+    };
 
     return (
-        <div>
-            {myUploadList.length > 0 ? (
-                myUploadList.map((track, index) => (
-                    <div key={index}>
-                        <div className={styles.playlist_panel_render_wrapper}>
-                            <div className={styles.player_queue_item}>
-                                <div>
-                                    <img
-                                        src={track ? `http://localhost:8787/${track.imgPath}` : ""}
-                                        alt="album cover"
-                                        className={styles.album_cover}
-                                    />
-                                </div>
-                                <div className={styles.item_overlay}>
-
-                                </div>
-
-                            </div>
-                            <div className={styles.song_info}>
-                                <div className={styles.song_title}>{track.title}</div>
-                                <div className={styles.byline_wrapper}>
-                                    <div className={styles.artist_wrapper}>{track.artist}</div>
+        <div style={{display: "flex"}}>
+            {myPlaylistList.map((playlist) => (
+                <div className={styles.slider_panel_slide} key={playlist.musicCode}>
+                    <div className={styles.playable_tile}>
+                        <div className={styles.playable_artwork}>
+                            <div className={styles.playable_artwork_link}
+                                 onClick={() => handleTrackClick(playlist)}>
+                                <div className={styles.playable_artwork_image}>
+                                    <div className={styles.image_outline}>
+                                        <span className={styles.artwork}
+                                              style={{
+                                                  backgroundImage: `url(http://localhost:8787/${playlist.imgPath})`
+                                              }}>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                            <div className={styles.style_scope}>
+                            <div className={styles.playable_tile_overlay}></div>
+                            <div className={styles.playable_tile_play_button}>
+                                <Link to="/music" className={styles.play_button}>Play</Link>
+                            </div>
+                            <div className={styles.playable_tile_action}>
 
                             </div>
-                            <div className={styles.duration_wrapper}>
-                                <span className={styles.runtime}>{track.runtime}</span>
-                            </div>
-
                         </div>
-
+                        <div className={styles.playable_tile_description}>
+                            <div className={styles.playable_tile_description_container}>
+                                <Link to="/music" className={styles.playable_audible_tile}>{playlist.title}</Link>
+                            </div>
+                            <div className={styles.playable_tile_username_container}>
+                                <Link to="/music" className={styles.playable_tile_username}>{playlist.artist}</Link>
+                            </div>
+                        </div>
                     </div>
-                ))
-            ) : (
-                <p>다음 트랙이 없습니다.</p>
-            )}
+                </div>
+            ))}
         </div>
     )
 }

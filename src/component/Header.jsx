@@ -49,7 +49,7 @@ const Header = () => {
                                     <Link to="/mainPage" className={styles.header_nav_link}>Home</Link>
                                 </li>
                                 <li className={styles.header_nav_li}>
-                                    <Link to="/feed" className={styles.header_nav_link}>Feed</Link>
+                                    <Link to="/music" className={styles.header_nav_link}>Feed</Link>
                                 </li>
                             </ul>
                         </nav>
