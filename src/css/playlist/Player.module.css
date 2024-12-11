@@ -172,3 +172,54 @@
     color: #555;
 }
 
+/*리뷰작성 부분*/
+.review_text {
+    width: 100%;
+    min-height: 50px;
+    max-height: 300px;
+    overflow: hidden;
+    resize: none;
+    padding: 10px;
+    font-size: 16px;
+    line-height: 1.5;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.charCounter {
+    text-align: right;
+    margin-top: 5px;
+    font-size: 14px;
+    color: #666;
+}
+
+.review_button {
+    width: 100px;
+    height: 30px;
+    border-radius: 5px;
+    border: 0;
+    float: right;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
