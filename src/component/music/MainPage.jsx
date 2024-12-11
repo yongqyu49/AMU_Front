@@ -2,10 +2,6 @@ import styles from '../../css/music/MainPage.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
-import heart1 from '../../img/heart1.png';
-import heart2 from '../../img/heart2.png';
-import heart3 from '../../img/heart3.png';
-import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -13,6 +9,7 @@ const MainPage = ({ setSelectedTrack }) => { //구조분해할당
 
     const [myGenre, setMyGenre] = useState("전체");
     const [mySort, setMySort] = useState("이름순");
+    const [activeMenu, setActiveMenu] = useState(null);
 
     const handleGenre = (eventKey) => {
         setMyGenre(eventKey);
@@ -31,6 +28,7 @@ const MainPage = ({ setSelectedTrack }) => { //구조분해할당
             console.log("전체")
         }
     }
+
     const handleSort = (eventKey) => {
         setMySort(eventKey);
         if(eventKey === "이름순"){
@@ -61,9 +59,12 @@ const MainPage = ({ setSelectedTrack }) => { //구조분해할당
 
     const handleTrackClick = (track) => {
         console.log("Contents.jsx 이미지 클릭 track: " + track.title);
-        setSelectedTrack(track); // 선택된 노래 설정 //props.setSelectedTrack(track)
+        setSelectedTrack(track); // 선택된 노래 설정
     };
 
+    const toggleMenu = (trackId) => {
+        setActiveMenu(activeMenu === trackId ? null : trackId); // 토글 방식
+    };
 
     return (
         <>
@@ -75,7 +76,6 @@ const MainPage = ({ setSelectedTrack }) => { //구조분해할당
                             title={myGenre}
                             size="sm"
                             variant="light"
-                            // name={"genre"}
                             onSelect={handleGenre}
                         >
                             <Dropdown.Item eventKey="전체">전체</Dropdown.Item>
@@ -102,7 +102,7 @@ const MainPage = ({ setSelectedTrack }) => { //구조분해할당
                     </div>
                 </div>
                 <div className={styles.catalog}>
-                    {/*요소*/}
+                    {/* 요소 */}
                     <div className={styles.album_grid}>
                         {playlist.map((track) => (
                             <div className={styles.album_card} key={track.musicCode}>
@@ -119,16 +119,24 @@ const MainPage = ({ setSelectedTrack }) => { //구조분해할당
                                     <h4 className={styles.album_title}>{track.title}</h4>
                                     <p className={styles.album_artist}>{track.artist}</p>
                                 </div>
-                                <div className={styles.album_more}>
+                                <div className={styles.album_more} onClick={() => toggleMenu(track.musicCode)}>
                                     <span className={styles.album_more_icon}>...</span>
                                 </div>
+
+                                {activeMenu === track.musicCode && (
+                                    <div className={`${styles.more_menu} ${activeMenu === track.musicCode ? "active" : ""}`}>
+                                        <div className={styles.more_menu_item}>Add to Playlist</div>
+                                        <div className={styles.more_menu_item}>Share</div>
+                                        <div className={styles.more_menu_item}>View Details</div>
+                                    </div>
+                                )}
                             </div>
                         ))}
                     </div>
-                    {/*요소*/}
+                    {/* 요소 */}
                 </div>
                 <div className={styles.page}>
-
+                    {/* 페이지 내용 */}
                 </div>
             </div>
         </>
