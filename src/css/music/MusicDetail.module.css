@@ -106,7 +106,6 @@
 }
 
 .sc_artwork {
-    background-image: url(https://i1.sndcdn.com/artworks-Ux4Ju9ta3ltuDyto-J9zydg-t500x500.jpg);
     width: 100%;
     height: 100%;
     opacity: 1;
@@ -257,7 +256,6 @@
 }
 
 .sc_artwork_placeholder {
-    background-image: url(https://i1.sndcdn.com/avatars-001409788575-cf97t4-t120x120.jpg);
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -347,7 +345,6 @@
 }
 
 .sc_avatar_artists {
-    background-image: url(https://i1.sndcdn.com/avatars-KEhjNFomTTHONdQX-DTmGSg-t200x200.jpg);
     width: 100%;
     height: 100%;
     opacity: 1;

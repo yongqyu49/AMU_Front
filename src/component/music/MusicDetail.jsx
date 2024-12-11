@@ -1,4 +1,4 @@
-import styles from "../../css/music/MyDetail.module.css";
+import styles from "../../css/music/MusicDetail.module.css";
 import {Link, useParams} from "react-router-dom";
 import SideBar from "../SideBar";
 import {useEffect, useState} from "react";
@@ -8,17 +8,15 @@ const MusicDetail = () => {
     const { musicCode } = useParams(); // URL에서 musicCode 가져오기
     const [musicDetail, setMusicDetail] = useState(null); // 음악 정보를 저장할 상태
     const [comments, setComments] = useState([]); // 댓글 데이터를 저장할 상태
-    console.log(musicCode)
+    const [reviewCounts, setReviewCounts] = useState();
 
-    // 데이터 가져오기
     useEffect(() => {
         const fetchMusicDetail = async () => {
             try {
                 const response = await axios.get(`http://localhost:8787/music/${musicCode}`, {
-                    withCredentials: true, // 인증이 필요한 경우
+                    withCredentials: true,
                 });
                 setMusicDetail(response.data);
-                console.log("musicDetail: " + musicDetail)
             } catch (error) {
                 console.error("음악 정보를 가져오는 중 오류 발생:", error);
             }
@@ -27,7 +25,7 @@ const MusicDetail = () => {
         const fetchComments = async () => {
             try {
                 const response = await axios.get(`http://localhost:8787/music/${musicCode}/comments`, {
-                    withCredentials: true, // 인증이 필요한 경우
+                    withCredentials: true,
                 });
                 setComments(response.data);
             } catch (error) {
@@ -35,6 +33,18 @@ const MusicDetail = () => {
             }
         };
 
+        const fetchCommentCounts = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8787/music/${musicCode}/commentCounts`, {
+                    withCredentials: true,
+                });
+                setReviewCounts(response.data);
+            } catch (error) {
+                console.error("댓글 정보를 가져오는 중 오류 발생:", error);
+            }
+        };
+
+        fetchCommentCounts();
         fetchMusicDetail();
         fetchComments();
     }, [musicCode]); // musicCode가 변경될 때마다 호출
@@ -65,7 +75,8 @@ const MusicDetail = () => {
                                 <div className={styles.listen_artwork_wrapper}>
                                     <div className={styles.listen_artwork_wrapper_artwork}>
                                         <div className={styles.image_light_outline}>
-                                            <span className={styles.sc_artwork}></span>
+                                            <img className={styles.sc_artwork}
+                                                  src={musicDetail ? `http://localhost:8787/${musicDetail.imgPath}` : ""}/>
                                         </div>
                                     </div>
                                 </div>
@@ -78,10 +89,10 @@ const MusicDetail = () => {
                                         </div>
                                         <div className={styles.soundTitle_usernameTitleContainer}>
                                             <div className={styles.soundTitle_titleHeroContainer}>
-                                                <h1 className={styles.soundTitle_title}>Too Sweet - 셔누 Shownu</h1>
+                                                <h1 className={styles.soundTitle_title}>{musicDetail.title}</h1>
                                             </div>
                                             <div className={styles.soundTitle_usernameHeroContainer}>
-                                                <h2 className={styles.soundTitle_username}>셔누</h2>
+                                                <h2 className={styles.soundTitle_username}>{musicDetail.artist}</h2>
                                             </div>
                                         </div>
                                     </div>
@@ -127,7 +138,11 @@ const MusicDetail = () => {
                                                         <Link to={""} className={styles.g_avatar_link}>
                                                             <div className={styles.g_avatar_badge_avatar}>
                                                                 <div className={styles.sc_avatar_outline}>
-                                                                    <span className={styles.sc_avatar_artists}></span>
+                                                                    <span className={styles.sc_avatar_artists}
+                                                                          style={{
+                                                                              backgroundImage: `url(http://localhost:8787/${musicDetail?.profileImg || 'default-profile.png'})`
+                                                                          }}
+                                                                    ></span>
                                                                 </div>
                                                             </div>
                                                         </Link>
@@ -137,7 +152,7 @@ const MusicDetail = () => {
                                                     <div className={styles.userBadge_title}>
                                                         <h3 className={styles.userBadge_username}>
                                                             <Link to={""} className={styles.userBadge_username_username_link}>
-                                                                셔누
+                                                                {musicDetail.artist}
                                                             </Link>
                                                         </h3>
                                                     </div>
@@ -155,7 +170,7 @@ const MusicDetail = () => {
                                                 <div className={styles.commentsList_header}>
                                                     <h3 className={styles.commentsList_title}>
                                                         <span className={styles.sc_classic}></span>
-                                                        <span>4 comments</span>
+                                                        <span>{reviewCounts} comments</span>
                                                     </h3>
                                                     <div className={styles.commentsList_sortSelect}>
                                                         <div>
@@ -167,108 +182,48 @@ const MusicDetail = () => {
                                                 </div>
                                             </div>
                                             <ul className={styles.lazyLoading_list}>
-                                                <li className={styles.commentsList_item}>
-                                                    <div className={styles.commentItem}>
-                                                        <div className={styles.commentItem_read}>
-                                                            <div className={styles.commentItem_avatarWrapper}>
-                                                                <Link to={""} className={styles.commentItem_avatar}>
-                                                                    <div
-                                                                        className={styles.sc_artwork_placeholder}></div>
-                                                                </Link>
-                                                            </div>
-                                                            <div className={styles.commentItem_content}>
-                                                                <div className={styles.commentItem_commentInfo}>
-                                                                    <span>
+                                                {comments.map((comment) => {
+                                                    return (
+                                                        <li className={styles.commentsList_item} key={comment.reviewId}>
+                                                            <div className={styles.commentItem}>
+                                                                <div className={styles.commentItem_read}>
+                                                                    <div className={styles.commentItem_avatarWrapper}>
+                                                                        <Link to={""} className={styles.commentItem_avatar}>
+                                                                            <div className={styles.sc_artwork_placeholder}
+                                                                                 style={{
+                                                                                     backgroundImage: `url(http://localhost:8787/${comment?.profileImg || 'default-profile.png'})`
+                                                                                 }}
+                                                                            ></div>
+                                                                        </Link>
+                                                                    </div>
+                                                                    <div className={styles.commentItem_content}>
+                                                                        <div className={styles.commentItem_commentInfo}>
                                                                         <span>
-                                                                            <Link to={"/profile"}
-                                                                                  className={styles.commentItem_username}>QQ</Link>
-                                                                        </span>
-                                                                    </span>
-                                                                </div>
-                                                                <div className={styles.commentItem_commentWrapper}>
-                                                                    <div className={styles.commentItem_bodyContainer}>
-                                                                        <div className={styles.commentItem_body}>
                                                                             <span>
-                                                                                <p>ㄴ어리ㅏㅓㄴ리ㅏㅓ니ㅏ런이러ㅣㅓㅣ</p>
+                                                                                <Link to={"/profile"}
+                                                                                      className={styles.commentItem_username}>{comment.id}</Link>
+                                                                                </span>
                                                                             </span>
                                                                         </div>
-                                                                        {/*<div className={styles.commentItem_controls}>*/}
-                                                                        {/*    <Link to={""} className={styles.commentItem_replyButton}>Reply</Link>*/}
-                                                                        {/*</div>*/}
+                                                                        <div className={styles.commentItem_commentWrapper}>
+                                                                            <div
+                                                                                className={styles.commentItem_bodyContainer}>
+                                                                                <div className={styles.commentItem_body}>
+                                                                                    <span>
+                                                                                        <p>{comment.reviewContents}</p>
+                                                                                    </span>
+                                                                                </div>
+                                                                                {/*<div className={styles.commentItem_controls}>*/}
+                                                                                {/*    <Link to={""} className={styles.commentItem_replyButton}>Reply</Link>*/}
+                                                                                {/*</div>*/}
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li className={styles.commentsList_item}>
-                                                    <div className={styles.commentItem}>
-                                                        <div className={styles.commentItem_read}>
-                                                            <div className={styles.commentItem_avatarWrapper}>
-                                                                <Link to={""} className={styles.commentItem_avatar}>
-                                                                    <div
-                                                                        className={styles.sc_artwork_placeholder}></div>
-                                                                </Link>
-                                                            </div>
-                                                            <div className={styles.commentItem_content}>
-                                                                <div className={styles.commentItem_commentInfo}>
-                                                                    <span>
-                                                                        <span>
-                                                                            <Link to={"/profile"}
-                                                                                  className={styles.commentItem_username}>QQ</Link>
-                                                                        </span>
-                                                                    </span>
-                                                                </div>
-                                                                <div className={styles.commentItem_commentWrapper}>
-                                                                    <div className={styles.commentItem_bodyContainer}>
-                                                                        <div className={styles.commentItem_body}>
-                                                                            <span>
-                                                                                <p>ㄴ어리ㅏㅓㄴ리ㅏㅓ니ㅏ런이러ㅣㅓㅣ</p>
-                                                                            </span>
-                                                                        </div>
-                                                                        {/*<div className={styles.commentItem_controls}>*/}
-                                                                        {/*    <Link to={""} className={styles.commentItem_replyButton}>Reply</Link>*/}
-                                                                        {/*</div>*/}
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li className={styles.commentsList_item}>
-                                                    <div className={styles.commentItem}>
-                                                        <div className={styles.commentItem_read}>
-                                                            <div className={styles.commentItem_avatarWrapper}>
-                                                                <Link to={""} className={styles.commentItem_avatar}>
-                                                                    <div
-                                                                        className={styles.sc_artwork_placeholder}></div>
-                                                                </Link>
-                                                            </div>
-                                                            <div className={styles.commentItem_content}>
-                                                                <div className={styles.commentItem_commentInfo}>
-                                                                    <span>
-                                                                        <span>
-                                                                            <Link to={"/profile"}
-                                                                                  className={styles.commentItem_username}>QQ</Link>
-                                                                        </span>
-                                                                    </span>
-                                                                </div>
-                                                                <div className={styles.commentItem_commentWrapper}>
-                                                                    <div className={styles.commentItem_bodyContainer}>
-                                                                        <div className={styles.commentItem_body}>
-                                                                            <span>
-                                                                                <p>ㄴ어리ㅏㅓㄴ리ㅏㅓ니ㅏ런이러ㅣㅓㅣ</p>
-                                                                            </span>
-                                                                        </div>
-                                                                        {/*<div className={styles.commentItem_controls}>*/}
-                                                                        {/*    <Link to={""} className={styles.commentItem_replyButton}>Reply</Link>*/}
-                                                                        {/*</div>*/}
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
+                                                        </li>
+                                                    )
+                                                })}
                                             </ul>
                                             <div className={styles.paging}>
                                             </div>
