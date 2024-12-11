@@ -12,6 +12,7 @@ const MyReview = ({setSelectedTrack}) => {
         })
             .then((response) => {
                 setMyReviewList(response.data);
+                console.log(myReviewList)
             })
             .catch((error) => {
                 console.error("Failed to fetch my upload list:", error);
@@ -25,7 +26,7 @@ const MyReview = ({setSelectedTrack}) => {
     return (
         <div style={{display: "flex"}}>
             {myReviewList.map((review) => (
-                <div className={styles.slider_panel_slide} key={review.musicCode}>
+                <div className={styles.slider_panel_slide} key={review.reviewId}>
                     <div className={styles.playable_tile}>
                         <div className={styles.playable_artwork}>
                             <div className={styles.playable_artwork_link}
@@ -50,10 +51,10 @@ const MyReview = ({setSelectedTrack}) => {
                         </div>
                         <div className={styles.playable_tile_description}>
                             <div className={styles.playable_tile_description_container}>
-                                <Link to="/music" className={styles.playable_audible_tile}>{review.title}</Link>
+                                <Link to="/music" className={styles.playable_audible_tile}>{review.reviewContents}</Link>
                             </div>
                             <div className={styles.playable_tile_username_container}>
-                                <Link to="/music" className={styles.playable_tile_username}>{review.artist}</Link>
+                                <Link to="/music" className={styles.playable_tile_username}>{review.reviewContents}</Link>
                             </div>
                         </div>
                     </div>
