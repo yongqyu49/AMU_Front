@@ -2,6 +2,7 @@ import styles from '../../css/music/Contents.module.css';
 import { Link } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import SideBar from "../SideBar";
 
 const Contents = ({ setSelectedTrack }) => {
     const [playlist, setPlaylist] = useState([]);
@@ -186,7 +187,7 @@ const Contents = ({ setSelectedTrack }) => {
                                                                                             className={styles.playable_tile_description}>
                                                                                             <div
                                                                                                 className={styles.playable_tile_description_container}>
-                                                                                                <Link to="/music"
+                                                                                                <Link to={`/music/${track.musicCode}`}
                                                                                                       className={styles.playable_audible_tile}>{track.title}</Link>
                                                                                             </div>
                                                                                             <div
@@ -261,7 +262,7 @@ const Contents = ({ setSelectedTrack }) => {
                                                                                                         <div
                                                                                                                 className={styles.artwork}
                                                                                                                 style={{
-                                                                                                                    backgroundImage: `url(http://localhost:8787/music/getMusic/image/${track.musicCode})`,
+                                                                                                                    backgroundImage: `url(http://localhost:8787/${track.imgPath})`,
                                                                                                                     backgroundSize: 'cover',
                                                                                                                     backgroundPosition: 'center',
                                                                                                                 }}  
@@ -361,7 +362,7 @@ const Contents = ({ setSelectedTrack }) => {
                                                                                                         <div
                                                                                                                 className={styles.artwork}
                                                                                                                 style={{
-                                                                                                                    backgroundImage: `url(http://localhost:8787/music/getMusic/image/${track.musicCode})`,
+                                                                                                                    backgroundImage: `url(http://localhost:8787/${track.imgPath})`,
                                                                                                                     backgroundSize: 'cover',
                                                                                                                     backgroundPosition: 'center',
                                                                                                                 }}  
@@ -420,6 +421,7 @@ const Contents = ({ setSelectedTrack }) => {
                                         </div>
                                     </div>
                                 </div>
+                                <SideBar/>
                             </div>
                         </div>
                     </div>
