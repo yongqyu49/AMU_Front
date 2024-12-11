@@ -150,7 +150,7 @@ const Contents = ({ setSelectedTrack }) => {
                                                                             {/*요소*/}
                                                                             {playlist.map((track) => (
                                                                                 <div className={styles.slider_panel_slide}
-                                                                                    key={track.musicCode}>
+                                                                                     key={track.musicCode}>
                                                                                     <div
                                                                                         className={styles.playable_tile}>
                                                                                         <div
@@ -192,7 +192,7 @@ const Contents = ({ setSelectedTrack }) => {
                                                                                             </div>
                                                                                             <div
                                                                                                 className={styles.playable_tile_username_container}>
-                                                                                                <Link to="/music"
+                                                                                                <Link to={`/profile/${String(track.id)}`}
                                                                                                       className={styles.playable_tile_username}>{track.artist}</Link>
                                                                                             </div>
                                                                                         </div>
