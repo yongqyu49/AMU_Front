@@ -1,5 +1,6 @@
 .contents_container {
     padding-top: 46px;
+    /* margin-top: 46px; */
 }
 
 @media (max-width: 1079px) {
@@ -172,7 +173,7 @@
 .image_outline {
     height: 100%;
     width: 100%;
-    background-image: linear-gradient(135deg, #846170, #70929c);
+    /* background-image: linear-gradient(135deg, #846170, #70929c); */
     text-align: center;
     position: relative;
     background-repeat: no-repeat;

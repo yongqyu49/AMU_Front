@@ -26,7 +26,6 @@ const MainPage = ({ setSelectedTrack }) => { //구조분해할당
             eventKey=5
         }else{
             eventKey=0
-            console.log("���체")
         }
     }
 
