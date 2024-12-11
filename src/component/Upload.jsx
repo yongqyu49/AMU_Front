@@ -121,7 +121,6 @@ const Upload = () => {
             });
             const result = response.data;
             console.log("업로드 성공 front: ", result);
-            window.location.href = "/mainPage";
         }catch(error) {
             console.error("업로드 실패 front: ", error)
         }
@@ -132,7 +131,7 @@ const Upload = () => {
             <div className={styles.container}>
                 <form onSubmit={goUpload}>
                     <div className={styles.title}>
-                        <input type={"text"} name={"title"} placeholder={"Title"} onChange={handleChange} required/>
+                        <input type={"text"} name={"title"} placeholder={"Title"} onChange={handleChange} required className={styles.input}/>
                     </div>
                     <div>
                         <div className={styles.genre}>
@@ -143,6 +142,7 @@ const Upload = () => {
                                 variant="light"
                                 name={"genre"}
                                 onSelect={handleGenre}
+                                className={styles.genreDropdown}
                             >
                                 <Dropdown.Item eventKey="팝">팝</Dropdown.Item>
                                 <Dropdown.Item eventKey="힙합">힙합</Dropdown.Item>
@@ -153,15 +153,42 @@ const Upload = () => {
                         </div>
                     </div>
                     <div>
-                        <textarea name={"lyrics"} placeholder={"input Lyrics here"} rows="100" cols="40"
-                                onChange={handleChange} className={styles.lyrics} required/>
+                        <textarea name={"lyrics"} placeholder={"input Lyrics here"} rows="6"
+                                  onChange={handleChange} className={styles.lyrics} required/>
                     </div>
-                    <div className={styles.box}>
-                        <input type={"file"} accept={"audio/*"} name={"mp3"} onChange={handleMp3Change} required/>
-                        <input type={"file"} accept={"image/*"} name={"image"} onChange={handleImgChange} required/>
+                    {/* Add text here */}
+                    <div className={styles.fileSizeInfo}>
+                        For best quality, use WAV, FLAC, AIFF, or ALAC. The maximum file size is 4GB uncompressed.
                     </div>
-                    <div>
-                        <br/><button type={"submit"}>Upload</button>
+
+                    <div className={styles.fileInputs}>
+                        <div className={styles.fileInputWrapper}>
+                            <div className={styles.fileInputIcon}>🎵</div>
+                            <div className={styles.fileInputText}>Upload your audio files</div>
+                            <input
+                                type="file"
+                                accept={"audio/*"}
+                                name={"mp3"}
+                                onChange={handleMp3Change}
+                                required
+                            />
+                        </div>
+
+                        <div className={styles.fileInputWrapper}>
+                            <div className={styles.fileInputIcon}>💿</div>
+                            <div className={styles.fileInputText}>Upload your image files</div>
+                            <input
+                                type="file"
+                                accept={"image/*"}
+                                name={"image"}
+                                onChange={handleImgChange}
+                                required
+                            />
+                        </div>
+                    </div>
+
+                    <div className={styles.uploadBtnContainer}>
+                        <button type="submit" className={styles.uploadBtn}>Upload</button>
                     </div>
                 </form>
             </div>
