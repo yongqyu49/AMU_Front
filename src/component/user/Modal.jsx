@@ -176,4 +176,4 @@ const Modal = ({ closeModal, userInfo }) => {
     );
 };
 
-export default Modal;
+export default Modal
