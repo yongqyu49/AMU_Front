@@ -121,6 +121,7 @@ const Upload = () => {
             });
             const result = response.data;
             console.log("업로드 성공 front: ", result);
+            window.location.href = "/";
         }catch(error) {
             console.error("업로드 실패 front: ", error)
         }

@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import styles from "../../css/Signln.module.css";
 
-const SignUp = ({ isOpen1, onClose1 }) => {
+const SignUp = ({ isOpen1, onClose1, openSignIn }) => {
     const [formData, setFormData] = useState({
         id: '',
         password: '',
@@ -30,8 +30,8 @@ const SignUp = ({ isOpen1, onClose1 }) => {
         axios.post("http://localhost:8787/user/signUp", formData)
             .then(response => {
                 alert("회원가입 성공! 로그인 페이지로 이동합니다.");
-                // 예: 로그인 페이지로 리다이렉션
-                window.location.href = "/signIn";
+                onClose1();
+                openSignIn();
             })
             .catch(error => {
                 alert("회원가입 중 오류가 발생했습니다.");

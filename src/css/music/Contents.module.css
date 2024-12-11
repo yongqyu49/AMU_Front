@@ -1,6 +1,5 @@
-.contents_container {
-    padding-top: 46px;
-    /* margin-top: 46px; */
+.content {
+    margin-top: 46px;
 }
 
 @media (max-width: 1079px) {
