@@ -1,18 +1,19 @@
 import styles from "../../css/user/Profile.module.css";
 import Modal from "./Modal";
 import React, {useState} from "react";
-import useGetUserInfo from "../../hooks/useGetUserInfo";
 import MyUpload from "./MyUpload";
 import MyPlaylist from "./MyPlaylist";
 import MyReview from "./MyReview";
 import MyFavorite from "./MyFavorite";
+import {useParams} from "react-router-dom";
+import useGetUserGetParam from "../../hooks/useUserGetParam";
 // import axios from "axios";
 
 const Profile = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [activeTab, setActiveTab] = useState("upload");
-
-    const userInfo = useGetUserInfo();
+    const {artist} = useParams();
+    const userInfo = useGetUserGetParam({artist: artist});
 
     // 모달 열기
     const openModal = () => {

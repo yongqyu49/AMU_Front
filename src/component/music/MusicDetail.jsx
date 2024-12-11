@@ -3,51 +3,83 @@ import {Link, useParams} from "react-router-dom";
 import SideBar from "../SideBar";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import useGetUserInfo from "../../hooks/useGetUserInfo";
 
 const MusicDetail = () => {
-    const { musicCode } = useParams(); // URL에서 musicCode 가져오기
+    const {musicCode} = useParams(); // URL에서 musicCode 가져오기
     const [musicDetail, setMusicDetail] = useState(null); // 음악 정보를 저장할 상태
     const [comments, setComments] = useState([]); // 댓글 데이터를 저장할 상태
     const [reviewCounts, setReviewCounts] = useState();
+    const userInfo = useGetUserInfo();
+    const [inputText, setInputText] = useState()
+
+    const input_review = (e) => {
+        setInputText(e.target.value)
+    }
+
+    const fetchMusicDetail = async () => {
+        try {
+            const response = await axios.get(`http://localhost:8787/music/${musicCode}`, {
+                withCredentials: true,
+            });
+            setMusicDetail(response.data);
+        } catch (error) {
+            console.error("음악 정보를 가져오는 중 오류 발생:", error);
+        }
+    };
+
+    const fetchComments = async () => {
+        try {
+            const response = await axios.get(`http://localhost:8787/music/${musicCode}/comments`, {
+                withCredentials: true,
+            });
+            setComments(response.data);
+        } catch (error) {
+            console.error("댓글 정보를 가져오는 중 오류 발생:", error);
+        }
+    };
+
+    const fetchCommentCounts = async () => {
+        try {
+            const response = await axios.get(`http://localhost:8787/music/${musicCode}/commentCounts`, {
+                withCredentials: true,
+            });
+            setReviewCounts(response.data);
+        } catch (error) {
+            console.error("댓글 정보를 가져오는 중 오류 발생:", error);
+        }
+    };
 
     useEffect(() => {
-        const fetchMusicDetail = async () => {
-            try {
-                const response = await axios.get(`http://localhost:8787/music/${musicCode}`, {
-                    withCredentials: true,
-                });
-                setMusicDetail(response.data);
-            } catch (error) {
-                console.error("음악 정보를 가져오는 중 오류 발생:", error);
-            }
-        };
-
-        const fetchComments = async () => {
-            try {
-                const response = await axios.get(`http://localhost:8787/music/${musicCode}/comments`, {
-                    withCredentials: true,
-                });
-                setComments(response.data);
-            } catch (error) {
-                console.error("댓글 정보를 가져오는 중 오류 발생:", error);
-            }
-        };
-
-        const fetchCommentCounts = async () => {
-            try {
-                const response = await axios.get(`http://localhost:8787/music/${musicCode}/commentCounts`, {
-                    withCredentials: true,
-                });
-                setReviewCounts(response.data);
-            } catch (error) {
-                console.error("댓글 정보를 가져오는 중 오류 발생:", error);
-            }
-        };
-
         fetchCommentCounts();
         fetchMusicDetail();
         fetchComments();
     }, [musicCode]); // musicCode가 변경될 때마다 호출
+
+    const writeReview = (event) => {
+        event.preventDefault();
+        const reviewContents = inputText.valueOf()
+
+        if (!reviewContents.trim()) {
+            alert("리뷰 내용을 입력해주세요.");
+            return;
+        }
+
+        axios.post(`http://localhost:8787/music/review/upload`, {
+            reviewContents,
+            musicCode: musicCode,
+        }, {withCredentials: true})
+            .then(() => {
+                event.target.querySelector("input").value = ""; // 입력 창 초기화
+                fetchComments();
+                fetchCommentCounts()
+            })
+            .catch(error => {
+                if (error.response && error.response.data) {
+                    alert(error.response.data); // 서버에서 반환한 에러 메시지 표시
+                }
+            });
+    }
 
     if (!musicDetail) {
         return <div>Loading...</div>; // 데이터가 로드되기 전 로딩 표시
@@ -113,12 +145,13 @@ const MusicDetail = () => {
                                             <div className={styles.commentForm}>
                                                 <div className={styles.commentForm_wrapper}>
                                                     <div className={styles.commentForm_avatar}>
-                                                        <span className={styles.sc_artwork_placeholder}></span>
+                                                        <img className={styles.sc_artwork_placeholder}
+                                                             src={userInfo ? `http://localhost:8787/${userInfo.profileImg}` : ""}/>
                                                     </div>
-                                                    <div className={styles.commentForm_inputWrapper}>
-                                                        <input type={"text"} name={"comment"} className={styles.commentForm_input} />
+                                                    <form onSubmit={writeReview} className={styles.commentForm_inputWrapper}>
+                                                        <input type={"text"} onChange={input_review} className={styles.commentForm_input} placeholder={"Leave Comment!"}/>
                                                         <button type={"submit"} className={styles.commentForm_submit_button}/>
-                                                    </div>
+                                                    </form>
                                                 </div>
                                                 <div className={styles.commentForm_inputMessage}>
                                                     Comment must not exceed 1000 characters
@@ -135,7 +168,7 @@ const MusicDetail = () => {
                                             <div className={styles.userBadge_avatar}>
                                                 <div className={styles.g_avatar_badge}>
                                                     <div className={styles.g_avatar_badge_body}>
-                                                        <Link to={""} className={styles.g_avatar_link}>
+                                                        <Link to={`/profile/${musicDetail.artist}`} className={styles.g_avatar_link}>
                                                             <div className={styles.g_avatar_badge_avatar}>
                                                                 <div className={styles.sc_avatar_outline}>
                                                                     <span className={styles.sc_avatar_artists}
@@ -151,7 +184,7 @@ const MusicDetail = () => {
                                                 <div className={styles.userBadge_content}>
                                                     <div className={styles.userBadge_title}>
                                                         <h3 className={styles.userBadge_username}>
-                                                            <Link to={""} className={styles.userBadge_username_username_link}>
+                                                            <Link to={`/profile/${musicDetail.artist}`} className={styles.userBadge_username_username_link}>
                                                                 {musicDetail.artist}
                                                             </Link>
                                                         </h3>

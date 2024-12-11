@@ -9,7 +9,7 @@ const Main = (props) => {
     return (
         <>
             <Header />
-            <main>
+            <main style={{margin: "30px"}}>
                 {React.cloneElement(props.children, { setSelectedTrack })}
             </main>
             <MiniPlayer selectedTrack={selectedTrack} />
