@@ -69,7 +69,7 @@ const Header = () => {
                         <div className={styles.header_user_nav}>
                             {isLoggedIn ? (
                                 <>
-                                    <Link to="/profile" className={styles.header_user_nav_button}>
+                                    <Link to={`/profile/${userInfo.id}`} className={styles.header_user_nav_button}>
                                         <div className={styles.header_user_nav_item}>
                                             <span
                                                 className={styles.header_user_nav_avatar}
