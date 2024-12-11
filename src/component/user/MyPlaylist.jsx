@@ -3,11 +3,11 @@ import axios from "axios";
 import styles from "../../css/user/MyUpload.module.css";
 import {Link} from "react-router-dom";
 
-const MyPlaylist = ({setSelectedTrack}) => {
+const MyPlaylist = ({setSelectedTrack, id}) => {
     const [myPlaylistList, setMyPlaylistList] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:8787/user/myPlaylist", {
+        axios.get(`http://localhost:8787/user/myPlaylist/${id}`, {
             withCredentials: true,
         })
             .then((response) => {
@@ -16,7 +16,7 @@ const MyPlaylist = ({setSelectedTrack}) => {
             .catch((error) => {
                 console.error("Failed to fetch my upload list:", error);
             });
-    }, []);
+    }, [id]);
 
     const handleTrackClick = (track) => {
         setSelectedTrack(track); // 선택된 노래 설정

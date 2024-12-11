@@ -192,7 +192,7 @@ const Contents = ({ setSelectedTrack }) => {
                                                                                             </div>
                                                                                             <div
                                                                                                 className={styles.playable_tile_username_container}>
-                                                                                                <Link to="/music"
+                                                                                                <Link to={`/profile/${String(track.id)}`}
                                                                                                       className={styles.playable_tile_username}>{track.artist}</Link>
                                                                                             </div>
                                                                                         </div>

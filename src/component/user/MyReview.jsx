@@ -3,21 +3,20 @@ import axios from "axios";
 import styles from "../../css/user/MyUpload.module.css";
 import {Link} from "react-router-dom";
 
-const MyReview = ({setSelectedTrack}) => {
+const MyReview = ({setSelectedTrack, id}) => {
     const [myReviewList, setMyReviewList] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:8787/user/myReview", {
+        axios.get(`http://localhost:8787/user/myReview/${id}`, {
             withCredentials: true,
         })
             .then((response) => {
                 setMyReviewList(response.data);
-                console.log(myReviewList)
             })
             .catch((error) => {
                 console.error("Failed to fetch my upload list:", error);
             });
-    }, []);
+    }, [id]);
 
     const handleTrackClick = (track) => {
         setSelectedTrack(track); // 선택된 노래 설정

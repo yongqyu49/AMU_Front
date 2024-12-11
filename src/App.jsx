@@ -21,7 +21,7 @@ function App() {
                 <Route path="/mainPage" element={<Layout><MainPage /></Layout>}/>
                 <Route path="/upload" element={<Layout><Upload /></Layout>} />
                 <Route path="/feed" element={<Layout><Player /></Layout>} />
-                <Route path="/profile/:artist" element={<Layout><Profile /></Layout>} />
+                <Route path="/profile/:id" element={<Layout><Profile /></Layout>} />
                 <Route path="/music/:musicCode" element={<Layout><MusicDetail /></Layout>} />
                 <Route path="*" element={<NotFound />} />
             </Routes>

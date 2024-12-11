@@ -9,7 +9,7 @@ import SignUp from "./user/SignUp.jsx";
 
 const Header = () => {
     const isLoggedIn = useAuth();
-    const userInfo = useGetUserInfo();
+    const { userInfo, isLoading } = useGetUserInfo();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpen1, setIsModalOpen1] = useState(false);
 
@@ -34,6 +34,15 @@ const Header = () => {
 
     const openModal1 = () => setIsModalOpen1(true);
     const closeModal1 = () => setIsModalOpen1(false);
+
+    // 로딩 중 표시
+    if (isLoading) {
+        return (
+            <div className={styles.header}>
+                <p>Loading...</p>
+            </div>
+        );
+    }
 
     return (
         <>
