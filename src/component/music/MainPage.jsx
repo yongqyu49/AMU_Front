@@ -78,9 +78,6 @@ const MainPage = ({ setSelectedTrack }) => { //구조분해할당
         setSelectedTrack(track); // 선택된 노래 설정
     };
 
-    const toggleMenu = (trackId) => {
-        setActiveMenu(activeMenu === trackId ? null : trackId); // 토글 방식
-    };
 
     return (
         <>
@@ -117,6 +114,7 @@ const MainPage = ({ setSelectedTrack }) => { //구조분해할당
                         </DropdownButton>
                     </div>
                 </div>
+                <h2>All Musics</h2>
                 <div className={styles.catalog}>
                     {/* 요소 */}
                     <div className={styles.album_grid}>
@@ -125,32 +123,30 @@ const MainPage = ({ setSelectedTrack }) => { //구조분해할당
                                 <div
                                     className={styles.album_artwork}
                                     style={{
-                                        // backgroundImage: `url(http://localhost:8787/music/getMusic/image/${track.musicCode})`,
                                         backgroundImage: `url(http://localhost:8787/${track.imgPath})`,
                                         backgroundSize: 'cover',
                                         backgroundPosition: 'center',
                                     }}
                                     onClick={() => handleTrackClick(track)}
-                                />
+                                >
+                                    <div className={styles.overlay}>
+                                        <p>Views: {track.views}</p>
+                                        <p>Likes: {track.likes}</p>
+                                        <p>FileSize: {track.fileSize > 1048576 
+                                                ? (track.fileSize / 1048576).toFixed(2) + ' MB' 
+                                                : (track.fileSize / 1024).toFixed(2) + ' KB'}</p>
+                                        <p>RunTime: {track.runtime > 60
+                                                ? (track.runtime / 60).toFixed(0).padStart(2, '0') + ':' + 
+                                                  (track.runtime % 60).toFixed(0).padStart(2, '0')
+                                                : '00:' + track.runtime.toFixed(0).padStart(2, '0')}</p>
+                                    </div>
+                                </div>
                                 <div className={styles.album_details}>
                                     <h4 className={styles.album_title}>
                                         {track.title}
-                                        </h4>
+                                    </h4>
                                     <p className={styles.album_artist}>{track.artist}</p>
                                 </div>
-                                <div className={styles.album_more} onClick={() => toggleMenu(track.musicCode)}>
-                                    <span className={styles.album_more_icon}>...</span>
-                                </div>
-
-                                {activeMenu === track.musicCode && (
-                                    <div
-                                        className={`${styles.more_menu} ${activeMenu === track.musicCode ? "active" : ""}`}>
-                                        <div className={styles.more_menu_item}>Views: {track.views}</div>
-                                        <div className={styles.more_menu_item}>Likes: {track.likes}</div>
-                                        <div className={styles.more_menu_item}>FileSize: {track.fileSize}</div>
-                                        <div className={styles.more_menu_item}>RunTime: {track.runtime}</div>
-                                    </div>
-                                )}
                             </div>
                         ))}
                     </div>

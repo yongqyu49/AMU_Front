@@ -69,13 +69,13 @@ const Contents = () => {
         }
         
         try {
-            // console.log("이미지 클릭");
-            // responseView = await axios.post(
-            //     "http://localhost:8787/music/view",
-            //     { musicCode: track.musicCode },
-            //     { headers: { "Content-Type": "application/json" }}
-            // );
-            // console.log("조회수 추가 성공", responseView?.data);
+            console.log("이미지 클릭");
+            responseView = await axios.post(
+                "http://localhost:8787/music/view",
+                { musicCode: track.musicCode },
+                { headers: { "Content-Type": "application/json" }}
+            );
+            console.log("조회수 추가 성공", responseView?.data);
 
             await axios.post(
                 "http://localhost:8787/playlist/addMusic",
