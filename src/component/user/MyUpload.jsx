@@ -5,12 +5,12 @@ import {Link} from "react-router-dom";
 import { usePlaylist } from '../PlaylistContext';
 import SideBar from "../SideBar";
 
-const MyUpload = ({setSelectedTrack, id}) => {
+const MyUpload = ({id}) => {
     const [myUploadList, setMyUploadList] = useState([]);
+    const { setSelectedTrack, addTrack, trackList } = usePlaylist();
     const myUploadSliderRef = useRef(null);
     const [myUploadShowNext, setMyUploadShowNext] = useState(true);
     const [myUploadShowPrev, setMyUploadShowPrev] = useState(false);
-    const { selectedTrack } = usePlaylist();
 
     useEffect(() => {
         axios.get(`http://localhost:8787/user/myUpload/${id}`, {
@@ -24,8 +24,27 @@ const MyUpload = ({setSelectedTrack, id}) => {
             });
     }, [id]);
 
-    const handleTrackClick = (track) => {
-        setSelectedTrack(track); // 선택된 노래 설정
+    const handleTrackClick = async (track) => {
+        if (!id) {
+            console.warn("사용자 ID가 설정되지 않았습니다. 로컬스토리지에 트랙을 저장할 수 없습니다.");
+            return; // ID가 없는 경우 실행 중단
+        }
+
+        setSelectedTrack(track); // 선택된 트랙 설정
+        addTrack(track); // 트랙 추가
+
+        let responseView;
+        try {
+            console.log("트랙 클릭");
+            responseView = await axios.post(
+                `http://localhost:8787/music/view?musicCode=${track.musicCode}`,
+                null,
+                { headers: { "Content-Type": "application/json" } }
+            );
+            console.log("조회수 추가 성공", responseView?.data);
+        } catch (error) {
+            console.log("조회수 추가 실패", responseView?.data);
+        }
     };
 
     const handleDelete = async (track) => {
@@ -35,20 +54,24 @@ const MyUpload = ({setSelectedTrack, id}) => {
                 null,
                 { headers: { "Content-Type": "application/json" }}
             );
-            
-            if (selectedTrack?.musicCode === track.musicCode) {
-                setSelectedTrack(null);
-            }
-            
+
             setMyUploadList(myUploadList.filter(item => item.musicCode !== track.musicCode));
-            
+
+            // 현재 재생 중인 곡 처리
+            if (track.musicCode === trackList.find((t) => t.musicCode === track.musicCode)?.musicCode) {
+                const nextIndex = trackList.findIndex((t) => t.musicCode === track.musicCode) + 1;
+                const nextTrack = trackList[nextIndex] || null;
+                setSelectedTrack(nextTrack);
+            }
+
             console.log("삭제 성공", response.data);
             alert("음악이 삭제되었습니다");
         } catch (error) {
             console.error("삭제 실패:", error);
             alert("삭제에 실패했습니다");
         }
-    }
+    };
+
 
     const updateMyUploadButtonVisibility = () => {
         const slider = myUploadSliderRef.current;

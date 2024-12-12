@@ -32,7 +32,6 @@ export const PlaylistProvider = ({ children }) => {
         const id = getId();
         if (!id) return;
 
-        // 로컬스토리지에서 재생 목록 가져오기
         const savedPlaylist = JSON.parse(localStorage.getItem(`playlist_${id}`)) || [];
 
         // 삭제할 트랙을 제외한 새로운 목록 생성
@@ -43,11 +42,31 @@ export const PlaylistProvider = ({ children }) => {
         // 로컬스토리지 업데이트
         localStorage.setItem(`playlist_${id}`, JSON.stringify(updatedTrackList));
 
-        // 일정 시간 후 상태 업데이트
+        // 시간 텀을 두고 상태 업데이트
         setTimeout(() => {
+            // 상태 업데이트
             setTrackList(updatedTrackList);
-            console.log("Track removed from localStorage and state:", trackToRemove);
-        }, 300); // 300ms의 텀을 추가
+
+            // 현재 재생 중인 곡이 삭제된 경우 처리
+            if (selectedTrack?.musicCode === trackToRemove.musicCode) {
+                const currentIndex = trackList.findIndex(
+                    (track) => track.musicCode === trackToRemove.musicCode
+                );
+
+                if (currentIndex >= 0 && currentIndex < trackList.length - 1) {
+                    // 다음 곡을 재생
+                    setSelectedTrack(trackList[currentIndex + 1]);
+                } else if (currentIndex > 0) {
+                    // 이전 곡을 재생
+                    setSelectedTrack(trackList[currentIndex - 1]);
+                } else {
+                    // 트랙 리스트가 비어 있으면 선택된 트랙 초기화
+                    setSelectedTrack(null);
+                }
+            }
+
+            console.log("Track removed and state updated after delay:", trackToRemove);
+        }, 300); // 300ms 지연
     };
 
 
