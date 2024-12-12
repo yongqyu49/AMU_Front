@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "../../css/playlist/TrackList.module.css";
 
-const TrackList = ({ trackList }) => {
+const TrackList = ({ trackList = [] }) => {
     return (
         <div>
             {trackList.length > 0 ? (

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import SideBar from "../SideBar";
+import usePlaylist from "../../hooks/usePlaylist";
 
 const Contents = ({ setSelectedTrack }) => {
     const [playlist, setPlaylist] = useState([]);
@@ -17,7 +18,7 @@ const Contents = ({ setSelectedTrack }) => {
     const [latestShowPrev, setLatestShowPrev] = useState(false);
     const [myUploadShowNext, setMyUploadShowNext] = useState(true);
     const [myUploadShowPrev, setMyUploadShowPrev] = useState(false);
-
+    const { fetchPlaylist } = usePlaylist();
 
     useEffect(() => {
         axios.post('http://localhost:8787/music/list')
@@ -50,9 +51,25 @@ const Contents = ({ setSelectedTrack }) => {
             });
     }, []);
 
-    const handleTrackClick = (track) => {
-        setSelectedTrack(track); // 선택된 노래 설정
+    const handleTrackClick = async (track) => {
+        setSelectedTrack(track);
+        try {
+            await axios.post(
+                "http://localhost:8787/playlist/addMusic",
+                { musicCode: track.musicCode },
+                { headers: { "Content-Type": "application/json" }, withCredentials: true }
+            );
+            alert("음악이 재생목록에 추가되었습니다.");
+            await fetchPlaylist();
+        } catch (error) {
+            if (error.response?.status === 409) {
+                alert("이미 재생목록에 포함된 음악입니다.");
+            } else {
+                console.error("Failed to add music:", error);
+            }
+        }
     };
+
 
     const updatePlaylistButtonVisibility = () => {
         const slider = playlistSliderRef.current;
