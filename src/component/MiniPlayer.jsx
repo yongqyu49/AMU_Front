@@ -3,8 +3,9 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import {Link} from "react-router-dom";
 import Player from "./playlist/Player";
+import {usePlaylist} from "./PlaylistContext";
 
-const MiniPlayer = ({ selectedTrack }) => {
+const MiniPlayer = () => {
     const [audioUrl, setAudioUrl] = useState(null); // Blob으로 생성된 Object URL
     const [audio, setAudio] = useState(null); // Audio 객체
     const [isPlaying, setIsPlaying] = useState(false);
@@ -14,6 +15,7 @@ const MiniPlayer = ({ selectedTrack }) => {
     const [volume, setVolume] = useState(1); // 초기 볼륨 (1 = 100%)
     const [isMuted, setIsMuted] = useState(false); // 음소거 상태
     const [showVolumeModal, setShowVolumeModal] = useState(false);
+    const {selectedTrack} = usePlaylist();
 
     // Blob 데이터를 가져오고 Object URL 생성
     useEffect(() => {
