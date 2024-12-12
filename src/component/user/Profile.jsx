@@ -7,6 +7,7 @@ import MyReview from "./MyReview";
 import MyFavorite from "./MyFavorite";
 import {useParams} from "react-router-dom";
 import useGetUserGetParam from "../../hooks/useUserGetParam";
+import userImg from "../../img/user.png";
 // import axios from "axios";
 
 const Profile = ({setSelectedTrack}) => {
@@ -83,9 +84,18 @@ const Profile = ({setSelectedTrack}) => {
                                                     <div className={styles.image_outline}>
                                                         <span className={styles.user_sc_artwork}
                                                               style={{
-                                                                  backgroundImage: `url(http://localhost:8787/${userInfo.profileImg})`,
-                                                                  backgroundSize: "cover",
-                                                                  backgroundPosition: "center"
+                                                                    backgroundImage: `url(${userInfo.profileImg ? `http://localhost:8787/${userInfo.profileImg}` : userImg})`,
+                                                                    ...(userInfo.profileImg 
+                                                                        ? {
+                                                                            backgroundSize: "cover",
+                                                                            backgroundPosition: "center"
+                                                                          }
+                                                                        : {
+                                                                            backgroundSize: "80%",
+                                                                            backgroundPosition: "center",
+                                                                            backgroundRepeat: "no-repeat"
+                                                                          }
+                                                                    )
                                                               }}
                                                         ></span>
                                                     </div>

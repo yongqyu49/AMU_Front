@@ -1,12 +1,16 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import axios from "axios";
 import styles from "../../css/user/MyUpload.module.css";
 import {Link} from "react-router-dom";
 import { usePlaylist } from '../PlaylistContext';
+import SideBar from "../SideBar";
 
 const MyUpload = ({id}) => {
     const [myUploadList, setMyUploadList] = useState([]);
     const { setSelectedTrack, addTrack, trackList } = usePlaylist();
+    const myUploadSliderRef = useRef(null);
+    const [myUploadShowNext, setMyUploadShowNext] = useState(true);
+    const [myUploadShowPrev, setMyUploadShowPrev] = useState(false);
 
     useEffect(() => {
         axios.get(`http://localhost:8787/user/myUpload/${id}`, {
@@ -68,6 +72,36 @@ const MyUpload = ({id}) => {
         }
     };
 
+
+    const updateMyUploadButtonVisibility = () => {
+        const slider = myUploadSliderRef.current;
+        if (!slider) return;
+
+        const { scrollLeft, scrollWidth, offsetWidth } = slider;
+
+        setMyUploadShowPrev(scrollLeft > 0);
+        setMyUploadShowNext(scrollLeft + offsetWidth < scrollWidth);
+    };
+
+    useEffect(() => {
+        updateMyUploadButtonVisibility();
+    }, [myUploadList]);
+
+    const slide = (direction, sliderRef, updateVisibility) => {
+        const slider = sliderRef.current;
+
+        if (!slider) return;
+
+        const slideAmount = slider.offsetWidth / 2;
+
+        if (direction === "next") {
+            slider.scrollBy({ left: slideAmount, behavior: "smooth" });
+        } else if (direction === "prev") {
+            slider.scrollBy({ left: -slideAmount, behavior: "smooth" });
+        }
+
+        setTimeout(updateVisibility, 300); // 애니메이션 완료 후 상태 업데이트
+    };
 
     return (
         <div style={{display: "flex"}}>

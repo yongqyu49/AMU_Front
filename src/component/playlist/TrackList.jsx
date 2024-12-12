@@ -86,7 +86,12 @@ const TrackList = () => {
                                 <button onClick={() => handleAdd(track)}>추가</button>
                             </div>
                         ) : (
-                            <span className={styles.runtime}>{track.runtime}</span>
+                            <span className={styles.runtime}>
+                                {track.runtime > 60
+                                                ? (track.runtime / 60).toFixed(0).padStart(2, '0') + ':' + 
+                                                  (track.runtime % 60).toFixed(0).padStart(2, '0')
+                                                : '00:' + track.runtime.toFixed(0).padStart(2, '0')}
+                            </span>
                         )}
                     </div>
                 </div>
