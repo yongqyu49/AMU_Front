@@ -32,7 +32,6 @@ const MainPage = ({ setSelectedTrack }) => { //구조분해할당
 
         axios.get(`http://localhost:8787/music/genre/${genreCode}`)
             .then((response) => {
-                console.log("장르 선별 성공", response.data);
                 setPlaylist(response.data);
             })
             .catch((error) => {
@@ -63,11 +62,9 @@ const MainPage = ({ setSelectedTrack }) => { //구조분해할당
 
         axios.get(`http://localhost:8787/music/sort/${sortType}`)
             .then((response) => {
-                console.log("정렬 성공", response.data);
                 setPlaylist(response.data);
             })
             .catch((error) => {
-                console.error('정렬중 오류:', error);
             });
     }
 
@@ -143,7 +140,6 @@ const MainPage = ({ setSelectedTrack }) => { //구조분해할당
                                 >
                                     <div className={styles.overlay}>
                                         <p>Views: {track.views}</p>
-                                        <p>Likes: {track.likes}</p>
                                         <p>FileSize: {track.fileSize > 1048576 
                                                 ? (track.fileSize / 1048576).toFixed(2) + ' MB' 
                                                 : (track.fileSize / 1024).toFixed(2) + ' KB'}</p>
