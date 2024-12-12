@@ -1,17 +1,13 @@
-import React, {useEffect, useState} from "react";
+import React, {memo, useState} from "react";
 import styles from "../../css/playlist/Player.module.css";
 import TrackList from "./TrackList";
 import Lyrics from "./Lyrics";
 import Reviews from "./Reviews";
 import {usePlaylist} from "../PlaylistContext";
 
-const Player = ({ selectedTrack }) => {
+const Player = memo(({ selectedTrack }) => {
     const [activeTab, setActiveTab] = useState("nextTracks");
     const { trackList } = usePlaylist();
-
-    useEffect(() => {
-        console.log("Current trackList in Player:", trackList);
-    }, [trackList]);
 
     // Tab rendering function
     const renderContent = () => {
@@ -52,6 +48,6 @@ const Player = ({ selectedTrack }) => {
             </div>
         </div>
     );
-};
+});
 
 export default Player;

@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import SideBar from "../SideBar";
-import usePlaylist from "../../hooks/usePlaylist";
+import {usePlaylist} from "../../component/PlaylistContext";
 
-const Contents = ({ setSelectedTrack }) => {
+const Contents = () => {
     const [playlist, setPlaylist] = useState([]);
     const [latestMusic, setLatestMusic] = useState([]);
     const [myUpload, setMyUpload] = useState([]);
@@ -18,6 +18,7 @@ const Contents = ({ setSelectedTrack }) => {
     const [latestShowPrev, setLatestShowPrev] = useState(false);
     const [myUploadShowNext, setMyUploadShowNext] = useState(true);
     const [myUploadShowPrev, setMyUploadShowPrev] = useState(false);
+    const {setSelectedTrack} = usePlaylist();
     const { fetchPlaylist } = usePlaylist();
 
     useEffect(() => {
@@ -206,7 +207,7 @@ const Contents = ({ setSelectedTrack }) => {
                                                                                                             style={{
                                                                                                                 backgroundImage: `url(http://localhost:8787/${track.imgPath})`
                                                                                                             }}
-                                                                                                            />
+                                                                                                         />
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
