@@ -10,12 +10,11 @@ const MiniPlayer = () => {
     const [audio, setAudio] = useState(null); // Audio 객체
     const [isPlaying, setIsPlaying] = useState(false);
     const [duration, setDuration] = useState(0);
-    const [currentTime, setCurrentTime] = useState(0);
     const [showPlayer, setShowPlayer] = useState(false);
     const [volume, setVolume] = useState(1); // 초기 볼륨 (1 = 100%)
     const [isMuted, setIsMuted] = useState(false); // 음소거 상태
     const [showVolumeModal, setShowVolumeModal] = useState(false);
-    const {selectedTrack} = usePlaylist();
+    const { selectedTrack, nextTrack, previousTrack, currentTime, setCurrentTime } = usePlaylist();
 
     // Blob 데이터를 가져오고 Object URL 생성
     useEffect(() => {
@@ -107,13 +106,18 @@ const MiniPlayer = () => {
     };
 
     const handleNextTrack = () => {
-        // setCurrentTrackIndex((prevIndex) => (prevIndex + 1) % playlist.length);
+        nextTrack();
         setIsPlaying(false); // 다음 곡으로 넘어갈 때 자동 재생
     };
 
     const handlePreviousTrack = () => {
-        // setCurrentTrackIndex((prevIndex) => (prevIndex - 1 + playlist.length) % playlist.length);
-        setIsPlaying(false);
+        if (currentTime > 3) {
+            setCurrentTime(0);
+            if (audio) audio.currentTime = 0;
+        } else {
+            previousTrack();
+            setIsPlaying(false);
+        }
     };
 
     const togglePlayer = () => {
@@ -205,9 +209,9 @@ const MiniPlayer = () => {
                             >
                                 {isPlaying ? 'Pause' : 'Play'}
                             </button>
-                            <button type={"button"} className={styles.play_controls_next} onClick={handleNextTrack}>Skip
-                                to
-                                next
+                            <button type={"button"} className={styles.play_controls_next}
+                                    onClick={handleNextTrack}>Skip
+                                to next
                             </button>
 
                             {/* 현재 시간 / 총 시간 */}
