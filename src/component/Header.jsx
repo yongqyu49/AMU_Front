@@ -109,9 +109,6 @@ const Header = () => {
                             <li className={styles.header_nav_li}>
                                 <Link to="/mainPage" className={styles.header_nav_link}>Home</Link>
                             </li>
-                            <li className={styles.header_nav_li}>
-                                <Link to="/music" className={styles.header_nav_link}>Feed</Link>
-                            </li>
                         </ul>
                     </nav>
                 </div>
@@ -122,6 +119,7 @@ const Header = () => {
                                 type="text"
                                 className={styles.header_search_input}
                                 placeholder="Search by title or artist"
+                                style={{ fontStyle: 'italic' }}
                                 value={query}
                                 onChange={handleInputChange}
                                 onClick={() => setShowDropdown(true)}
