@@ -100,12 +100,24 @@ const Upload = () => {
         const formDataToSend = new FormData(); //폼데이타 생성
         formDataToSend.append('fileMp3', fileMp3);
         formDataToSend.append('fileImg', fileImg);
+        formDataToSend.append("fileSize", fileSize); //음악파일 크기
+        formDataToSend.append("filePath1", fileName1); //음악파일 이름
+        formDataToSend.append("filePath2", fileName2); //이미지 이름
+        formDataToSend.append("playTime", playTime); //재생길이
 
-        Object.entries(formData).forEach(([key, value]) => {
-            formDataToSend.append(key, value);
+        Object.entries(formData).forEach(([key, value]) => { //file데이터와 text데이터 같이 백에 전달
+            formDataToSend.append(key, value); // 나머지 필드 추가
         });
+        
+        console.log("업로드1", formData);
+        console.log("업로드 파일: ")
+        for (let [key, value] of formDataToSend.entries()) {
+            console.log(key, value);
+        }
 
         try {
+            console.log("업로드 시작");
+            console.log("formDataToSend: ", formDataToSend);
             const response = await axios.post("http://localhost:8787/music/upload", formDataToSend, {
                 withCredentials: true,
                 headers: {
