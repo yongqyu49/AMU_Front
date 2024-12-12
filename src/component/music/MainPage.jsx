@@ -14,19 +14,30 @@ const MainPage = ({ setSelectedTrack }) => { //구조분해할당
 
     const handleGenre = (eventKey) => {
         setMyGenre(eventKey);
+        let genreCode;
+
         if(eventKey === "팝"){
-            eventKey=1
+            genreCode=1;
         }else if(eventKey === "힙합"){
-            eventKey=2
+            genreCode=2;
         }else if(eventKey === "발라드"){
-            eventKey=3
+            genreCode=3;
         }else if(eventKey === "인디"){
-            eventKey=4
+            genreCode=4;
         }else if(eventKey === "R&B"){
-            eventKey=5
+            genreCode=5;
         }else{
-            eventKey=0
+            genreCode=0;
         }
+
+        axios.get(`http://localhost:8787/music/genre/${genreCode}`)
+            .then((response) => {
+                console.log("장르 선별 성공", response.data);
+                setPlaylist(response.data);
+            })
+            .catch((error) => {
+                console.error('Failed to fetch music list:', error);
+            });
     }
 
     const handleSort = (eventKey) => {
@@ -52,6 +63,7 @@ const MainPage = ({ setSelectedTrack }) => { //구조분해할당
 
         axios.get(`http://localhost:8787/music/sort/${sortType}`)
             .then((response) => {
+                console.log("정렬 성공", response.data);
                 setPlaylist(response.data);
             })
             .catch((error) => {
