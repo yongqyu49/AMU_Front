@@ -62,9 +62,37 @@ const Contents = () => {
         addTrack(track); // 트랙 추가
     };
 
-    const handleViewClick = (e) => {
+        let responseView;
+
+        try{
+            console.log("이미지 클릭");
+            responseView = await axios.post(
+                `http://localhost:8787/music/view?musicCode=${track.musicCode}`,
+                null,
+                { headers: { "Content-Type": "application/json" }}
+            );
+            console.log("조회수 추가 성공", responseView?.data);
+        } catch(error){
+            console.log("조회수 추가 실패", responseView?.data);
+        }
         
-    }
+        try {
+            await axios.post(
+                "http://localhost:8787/playlist/addMusic",
+                { musicCode: track.musicCode },
+                { headers: { "Content-Type": "application/json" }, withCredentials: true }
+            );
+            alert("음악이 재생목록에 추가되었습니다.");
+            await fetchPlaylist();
+        } catch (error) {
+            // console.log("조회수 추가 실패", responseView?.data);
+            if (error.response?.status === 409) {
+                alert("이미 재생목록에 포함된 음악입니다.");
+            } else {
+                console.error("Failed to add music:", error);
+            }
+        }
+    };
 
     const updatePlaylistButtonVisibility = () => {
         const slider = playlistSliderRef.current;
@@ -177,9 +205,9 @@ const Contents = () => {
                                                                                                         <div
                                                                                                             className={styles.artwork}
                                                                                                             style={{
-                                                                                                                backgroundImage: `url(http://localhost:8787/${track.imgPath})`,
+                                                                                                                backgroundImage: `url(http://localhost:8787/${track.imgPath})`
                                                                                                             }}
-                                                                                                            />
+                                                                                                         />
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
@@ -199,7 +227,6 @@ const Contents = () => {
                                                                                             className={styles.playable_tile_description}>
                                                                                             <div
                                                                                                 className={styles.playable_tile_description_container}
-                                                                                                // onClick={() => handleViewClick()}
                                                                                                 >
                                                                                                 <Link to={`/music/${track.musicCode}`}
                                                                                                       className={styles.playable_audible_tile}>{track.title}</Link>
