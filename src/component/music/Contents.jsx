@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import SideBar from "../SideBar";
-import {usePlaylist} from "../../component/PlaylistContext";
+import {usePlaylist} from "../PlaylistContext";
 
 const Contents = () => {
     const [playlist, setPlaylist] = useState([]);
@@ -18,8 +18,8 @@ const Contents = () => {
     const [latestShowPrev, setLatestShowPrev] = useState(false);
     const [myUploadShowNext, setMyUploadShowNext] = useState(true);
     const [myUploadShowPrev, setMyUploadShowPrev] = useState(false);
-    const {setSelectedTrack} = usePlaylist();
-    const { fetchPlaylist } = usePlaylist();
+    const { setSelectedTrack, addTrack } = usePlaylist();
+    const id = localStorage.getItem("id");
 
     useEffect(() => {
         axios.post('http://localhost:8787/music/list')
@@ -31,29 +31,37 @@ const Contents = () => {
             });
     }, []);
 
-    useEffect(() => {
-        axios.post('http://localhost:8787/music/listLatest')
-            .then((response) => {
-                setLatestMusic(response.data);
-            })
-            .catch((error) => {
-            });
-    }, []);
-
-    useEffect(() => {
-        axios.get("http://localhost:8787/user/myUpload", {
-            withCredentials: true,
-        })
-            .then((response) => {
-                setMyUpload(response.data);
-            })
-            .catch((error) => {
-                console.error("Failed to fetch my upload list:", error);
-            });
-    }, []);
+    // useEffect(() => {
+    //     axios.post('http://localhost:8787/music/listLatest')
+    //         .then((response) => {
+    //             setLatestMusic(response.data);
+    //         })
+    //         .catch((error) => {
+    //         });
+    // }, []);
+    //
+    // useEffect(() => {
+    //     axios.get("http://localhost:8787/user/myUpload", {
+    //         withCredentials: true,
+    //     })
+    //         .then((response) => {
+    //             setMyUpload(response.data);
+    //         })
+    //         .catch((error) => {
+    //             console.error("Failed to fetch my upload list:", error);
+    //         });
+    // }, []);
 
     const handleTrackClick = async (track) => {
-        setSelectedTrack(track);
+        if (!id) {
+            console.warn("사용자 ID가 설정되지 않았습니다. 로컬스토리지에 트랙을 저장할 수 없습니다.");
+            return; // ID가 없는 경우 실행 중단
+        }
+
+        setSelectedTrack(track); // 선택된 트랙 설정
+        addTrack(track); // 트랙 추가
+    };
+
         let responseView;
 
         try{
@@ -69,14 +77,6 @@ const Contents = () => {
         }
         
         try {
-            console.log("이미지 클릭");
-            responseView = await axios.post(
-                "http://localhost:8787/music/view",
-                { musicCode: track.musicCode },
-                { headers: { "Content-Type": "application/json" }}
-            );
-            console.log("조회수 추가 성공", responseView?.data);
-
             await axios.post(
                 "http://localhost:8787/playlist/addMusic",
                 { musicCode: track.musicCode },

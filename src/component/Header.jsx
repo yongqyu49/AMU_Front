@@ -6,12 +6,14 @@ import axios from "axios";
 import useGetUserInfo from "../hooks/useGetUserInfo";
 import SignIn from "./user/SignIn.jsx";
 import SignUp from "./user/SignUp.jsx";
+import {usePlaylist} from "./PlaylistContext";
 
 const Header = () => {
     const isLoggedIn = useAuth();
     const { userInfo, isLoading } = useGetUserInfo();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpen1, setIsModalOpen1] = useState(false);
+    const { setTrackList, setSelectedTrack } = usePlaylist();
 
     const [query, setQuery] = useState("");
     const [results, setResults] = useState([]);
@@ -24,6 +26,14 @@ const Header = () => {
         })
             .then(() => {
                 alert("로그아웃 되었습니다.");
+
+                // PlaylistProvider 상태 초기화
+                setTrackList([]); // 재생목록 초기화
+                setSelectedTrack(null); // 선택된 노래 초기화
+
+                // 로컬스토리지에서 재생목록 삭제
+                localStorage.removeItem(`playlist_${userInfo.id}`);
+                localStorage.removeItem("id");
                 window.location.href = "/";
             })
             .catch(() => {

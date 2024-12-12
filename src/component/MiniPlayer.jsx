@@ -10,13 +10,12 @@ const MiniPlayer = () => {
     const [audio, setAudio] = useState(null); // Audio 객체
     const [isPlaying, setIsPlaying] = useState(false);
     const [duration, setDuration] = useState(0);
-    const [currentTime, setCurrentTime] = useState(0);
     const [showPlayer, setShowPlayer] = useState(false);
     const [volume, setVolume] = useState(1);
     const [isMuted, setIsMuted] = useState(false);
     const [showVolumeModal, setShowVolumeModal] = useState(false);
+    const { selectedTrack, nextTrack, previousTrack, currentTime, setCurrentTime } = usePlaylist();
     const [isLiked, setIsLiked] = useState(false); // 상태 추가
-    const {selectedTrack} = usePlaylist();
 
     useEffect(() => {
         if (selectedTrack) {
@@ -103,9 +102,19 @@ const MiniPlayer = () => {
         return `${minutes}:${seconds}`;
     };
 
+    const handleNextTrack = () => {
+        nextTrack();
+        setIsPlaying(false); // 다음 곡으로 넘어갈 때 자동 재생
+    };
+
     const handlePreviousTrack = () => {
-        // 이전 곡으로 이동하는 기능 구현
-        setIsPlaying(false);
+        if (currentTime > 3) {
+            setCurrentTime(0);
+            if (audio) audio.currentTime = 0;
+        } else {
+            previousTrack();
+            setIsPlaying(false);
+        }
     };
 
     const handleNextTrack = () => {
@@ -175,8 +184,9 @@ const MiniPlayer = () => {
                             >
                                 {isPlaying ? 'Pause' : 'Play'}
                             </button>
-                            <button type="button" className={styles.play_controls_next} onClick={handleNextTrack}>
-                                Skip to next
+                            <button type={"button"} className={styles.play_controls_next}
+                                    onClick={handleNextTrack}>Skip
+                                to next
                             </button>
 
                             <div style={{ marginLeft: '20px' }}>
