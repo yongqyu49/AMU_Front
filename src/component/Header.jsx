@@ -7,6 +7,8 @@ import useGetUserInfo from "../hooks/useGetUserInfo";
 import SignIn from "./user/SignIn.jsx";
 import SignUp from "./user/SignUp.jsx";
 import {usePlaylist} from "./PlaylistContext";
+import userImg from "../img/user.png";
+
 
 const Header = () => {
     const isLoggedIn = useAuth();
@@ -159,8 +161,19 @@ const Header = () => {
                                         <span
                                             className={styles.header_user_nav_avatar}
                                             style={{
-                                                backgroundImage: `url(http://localhost:8787/${userInfo?.profileImg || 'default-profile.png'})`
-                                            }}
+                                                backgroundImage: `url(${userInfo.profileImg ? `http://localhost:8787/${userInfo.profileImg}` : userImg})`,
+                                                ...(userInfo.profileImg 
+                                                    ? {
+                                                        backgroundSize: "cover",
+                                                        backgroundPosition: "center"
+                                                      }
+                                                    : {
+                                                        backgroundSize: "80%",
+                                                        backgroundPosition: "center",
+                                                        backgroundRepeat: "no-repeat"
+                                                      }
+                                                )
+                                          }}
                                         ></span>
                                     </div>
                                 </Link>
