@@ -3,7 +3,7 @@ li {
 }
 
 .playlist_panel_render_wrapper {
-    cursor: pointer;
+    cursor: move;
     display: flex;
     align-items: center;
     height: 56px;
@@ -104,8 +104,10 @@ li {
     color: #999;
 }
 
-
-
+.track_item.dragging {
+    opacity: 0.5;
+    cursor: grabbing;
+}
 
 
 
