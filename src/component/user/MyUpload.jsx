@@ -2,9 +2,11 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import styles from "../../css/user/MyUpload.module.css";
 import {Link} from "react-router-dom";
+import { usePlaylist } from '../PlaylistContext';
 
 const MyUpload = ({setSelectedTrack, id}) => {
     const [myUploadList, setMyUploadList] = useState([]);
+    const { selectedTrack } = usePlaylist();
 
     useEffect(() => {
         axios.get(`http://localhost:8787/user/myUpload/${id}`, {
@@ -22,6 +24,28 @@ const MyUpload = ({setSelectedTrack, id}) => {
         setSelectedTrack(track); // 선택된 노래 설정
     };
 
+    const handleDelete = async (track) => {
+        try {
+            const response = await axios.post(
+                `http://localhost:8787/music/delete?musicCode=${track.musicCode}`,
+                null,
+                { headers: { "Content-Type": "application/json" }}
+            );
+            
+            if (selectedTrack?.musicCode === track.musicCode) {
+                setSelectedTrack(null);
+            }
+            
+            setMyUploadList(myUploadList.filter(item => item.musicCode !== track.musicCode));
+            
+            console.log("삭제 성공", response.data);
+            alert("음악이 삭제되었습니다");
+        } catch (error) {
+            console.error("삭제 실패:", error);
+            alert("삭제에 실패했습니다");
+        }
+    }
+
     return (
         <div style={{display: "flex"}}>
             {myUploadList.map((track) => (
@@ -32,11 +56,14 @@ const MyUpload = ({setSelectedTrack, id}) => {
                                  onClick={() => handleTrackClick(track)}>
                                 <div className={styles.playable_artwork_image}>
                                     <div className={styles.image_outline}>
-                                        <span className={styles.artwork}
+                                        <div
+                                            className={styles.artwork}
                                             style={{
                                                 backgroundImage: `url(http://localhost:8787/${track.imgPath})`
-                                            }}>
-                                        </span>
+                                            }}
+                                        >
+                                            <button className={styles.overlay_button} onClick={() => handleDelete(track)}></button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
