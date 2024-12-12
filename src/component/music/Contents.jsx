@@ -70,6 +70,9 @@ const Contents = ({ setSelectedTrack }) => {
         }
     };
 
+    const handleViewClick = (e) => {
+        
+    }
 
     const updatePlaylistButtonVisibility = () => {
         const slider = playlistSliderRef.current;
@@ -167,7 +170,7 @@ const Contents = ({ setSelectedTrack }) => {
                                                                             {/*요소*/}
                                                                             {playlist.map((track) => (
                                                                                 <div className={styles.slider_panel_slide}
-                                                                                    key={track.musicCode}>
+                                                                                     key={track.musicCode}>
                                                                                     <div
                                                                                         className={styles.playable_tile}>
                                                                                         <div
@@ -206,7 +209,9 @@ const Contents = ({ setSelectedTrack }) => {
                                                                                         <div
                                                                                             className={styles.playable_tile_description}>
                                                                                             <div
-                                                                                                className={styles.playable_tile_description_container}>
+                                                                                                className={styles.playable_tile_description_container}
+                                                                                                // onClick={() => handleViewClick()}
+                                                                                                >
                                                                                                 <Link to={`/music/${track.musicCode}`}
                                                                                                       className={styles.playable_audible_tile}>{track.title}</Link>
                                                                                             </div>

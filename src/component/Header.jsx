@@ -136,9 +136,11 @@ const Header = () => {
                     </div>
                 </div>
                 <div className={styles.header_right}>
-                    <div className={styles.header_upsell}>
-                        <Link to="/upload" className={styles.upload_link}>Upload</Link>
-                    </div>
+                    {isLoggedIn && (
+                            <div className={styles.header_upsell}>
+                                <Link to="/upload" className={styles.upload_link}>Upload</Link>
+                            </div>
+                        )}
                     <div className={styles.header_user_nav}>
                         {isLoggedIn ? (
                             <>

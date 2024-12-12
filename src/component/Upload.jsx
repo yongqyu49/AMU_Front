@@ -77,9 +77,6 @@ const Upload = () => {
 
         const fileSize = fileMp3.size.toString();
 
-        // const uploadDir1 = "AMU_Music/";
-        // const uploadDir2 = "AMU_Img/";
-
         const fileName1 = `${fileMp3.name}`;
         const fileName2 = `${fileImg.name}`;
 
