@@ -81,7 +81,23 @@ const Upload = () => {
             return;
         }
 
-        const formDataToSend = new FormData();
+        const fileSize = fileMp3.size.toString();
+
+        const fileName1 = `${fileMp3.name}`;
+        const fileName2 = `${fileImg.name}`;
+
+        let playTime = 0;
+        if (fileMp3.type.startsWith("audio/")) {
+            const audio = new Audio(URL.createObjectURL(fileMp3)); //URL을 임시적으로 DOMString으로 변환
+            await new Promise((resolve) => { //비동기 작업을 위한 Promise 사용
+                audio.addEventListener("loadedmetadata", () => { //오디오의 메타데이터가 로드된 후 실행
+                    playTime = Math.round(audio.duration); // 재생 길이 (초 단위)
+                    resolve(); //Promise를 성공상태로 전환
+                });
+            });
+        }
+
+        const formDataToSend = new FormData(); //폼데이타 생성
         formDataToSend.append('fileMp3', fileMp3);
         formDataToSend.append('fileImg', fileImg);
 
@@ -98,8 +114,9 @@ const Upload = () => {
             });
             const result = response.data;
             console.log("업로드 성공 front: ", result);
-        } catch (error) {
-            console.error("업로드 실패 front: ", error);
+            window.location.href = "/";
+        }catch(error) {
+            console.error("업로드 실패 front: ", error)
         }
     };
 

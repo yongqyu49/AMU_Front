@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import SideBar from "../SideBar";
+import {usePlaylist} from "../../component/PlaylistContext";
 
-const Contents = ({ setSelectedTrack }) => {
+const Contents = () => {
     const [playlist, setPlaylist] = useState([]);
     const [latestMusic, setLatestMusic] = useState([]);
     const [myUpload, setMyUpload] = useState([]);
@@ -17,7 +18,8 @@ const Contents = ({ setSelectedTrack }) => {
     const [latestShowPrev, setLatestShowPrev] = useState(false);
     const [myUploadShowNext, setMyUploadShowNext] = useState(true);
     const [myUploadShowPrev, setMyUploadShowPrev] = useState(false);
-
+    const {setSelectedTrack} = usePlaylist();
+    const { fetchPlaylist } = usePlaylist();
 
     useEffect(() => {
         axios.post('http://localhost:8787/music/list')
@@ -50,8 +52,46 @@ const Contents = ({ setSelectedTrack }) => {
             });
     }, []);
 
-    const handleTrackClick = (track) => {
-        setSelectedTrack(track); // 선택된 노래 설정
+    const handleTrackClick = async (track) => {
+        setSelectedTrack(track);
+        let responseView;
+
+        try{
+            console.log("이미지 클릭");
+            responseView = await axios.post(
+                `http://localhost:8787/music/view?musicCode=${track.musicCode}`,
+                null,
+                { headers: { "Content-Type": "application/json" }}
+            );
+            console.log("조회수 추가 성공", responseView?.data);
+        } catch(error){
+            console.log("조회수 추가 실패", responseView?.data);
+        }
+        
+        try {
+            // console.log("이미지 클릭");
+            // responseView = await axios.post(
+            //     "http://localhost:8787/music/view",
+            //     { musicCode: track.musicCode },
+            //     { headers: { "Content-Type": "application/json" }}
+            // );
+            // console.log("조회수 추가 성공", responseView?.data);
+
+            await axios.post(
+                "http://localhost:8787/playlist/addMusic",
+                { musicCode: track.musicCode },
+                { headers: { "Content-Type": "application/json" }, withCredentials: true }
+            );
+            alert("음악이 재생목록에 추가되었습니다.");
+            await fetchPlaylist();
+        } catch (error) {
+            // console.log("조회수 추가 실패", responseView?.data);
+            if (error.response?.status === 409) {
+                alert("이미 재생목록에 포함된 음악입니다.");
+            } else {
+                console.error("Failed to add music:", error);
+            }
+        }
     };
 
     const updatePlaylistButtonVisibility = () => {
@@ -150,7 +190,7 @@ const Contents = ({ setSelectedTrack }) => {
                                                                             {/*요소*/}
                                                                             {playlist.map((track) => (
                                                                                 <div className={styles.slider_panel_slide}
-                                                                                    key={track.musicCode}>
+                                                                                     key={track.musicCode}>
                                                                                     <div
                                                                                         className={styles.playable_tile}>
                                                                                         <div
@@ -162,12 +202,12 @@ const Contents = ({ setSelectedTrack }) => {
                                                                                                     className={styles.playable_artwork_image}>
                                                                                                     <div
                                                                                                         className={styles.image_outline}>
-                                                                                                        <span
+                                                                                                        <div
                                                                                                             className={styles.artwork}
                                                                                                             style={{
                                                                                                                 backgroundImage: `url(http://localhost:8787/${track.imgPath})`
-                                                                                                            }}>
-                                                                                                        </span>
+                                                                                                            }}
+                                                                                                         />
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
@@ -186,7 +226,8 @@ const Contents = ({ setSelectedTrack }) => {
                                                                                         <div
                                                                                             className={styles.playable_tile_description}>
                                                                                             <div
-                                                                                                className={styles.playable_tile_description_container}>
+                                                                                                className={styles.playable_tile_description_container}
+                                                                                                >
                                                                                                 <Link to={`/music/${track.musicCode}`}
                                                                                                       className={styles.playable_audible_tile}>{track.title}</Link>
                                                                                             </div>
@@ -426,7 +467,6 @@ const Contents = ({ setSelectedTrack }) => {
                         </div>
                     </div>
                 </div>
-
             </div>
         </>
     );

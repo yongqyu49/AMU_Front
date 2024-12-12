@@ -3,10 +3,11 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import styles from '../css/MiniPlayer.module.css';
 import Player from './playlist/Player';
+import {usePlaylist} from "./PlaylistContext";
 
-const MiniPlayer = ({ selectedTrack }) => {
-    const [audioUrl, setAudioUrl] = useState(null);
-    const [audio, setAudio] = useState(null);
+const MiniPlayer = () => {
+    const [audioUrl, setAudioUrl] = useState(null); // Blob으로 생성된 Object URL
+    const [audio, setAudio] = useState(null); // Audio 객체
     const [isPlaying, setIsPlaying] = useState(false);
     const [duration, setDuration] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
@@ -15,6 +16,7 @@ const MiniPlayer = ({ selectedTrack }) => {
     const [isMuted, setIsMuted] = useState(false);
     const [showVolumeModal, setShowVolumeModal] = useState(false);
     const [isLiked, setIsLiked] = useState(false); // 상태 추가
+    const {selectedTrack} = usePlaylist();
 
     useEffect(() => {
         if (selectedTrack) {
