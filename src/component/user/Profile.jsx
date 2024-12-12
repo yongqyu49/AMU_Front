@@ -8,6 +8,7 @@ import MyFavorite from "./MyFavorite";
 import {useParams} from "react-router-dom";
 import useGetUserGetParam from "../../hooks/useUserGetParam";
 import userImg from "../../img/user.png";
+import SideBar from "../SideBar";
 // import axios from "axios";
 
 const Profile = ({setSelectedTrack}) => {
@@ -70,8 +71,15 @@ const Profile = ({setSelectedTrack}) => {
                                 <div className={styles.profile_header_edit}>
                                     <div className={styles.profile_header_chooser}>
                                         <div>
-                                            <button type={"button"} className={styles.profile_header_button}>
-                                                Upload header image
+                                            <button
+                                                type={"button"}
+                                                className={styles.sc_button_edit}
+                                                onClick={openModal}
+                                                style={{
+                                                    marginRight: "350px",
+                                                }}
+                                            >
+                                                Edit
                                             </button>
                                         </div>
                                     </div>
@@ -143,14 +151,8 @@ const Profile = ({setSelectedTrack}) => {
                                     </ul>
                                 </div>
                                 <div className={styles.user_info_bar_buttons}>
-                                <div className={styles.sc_button_group}>
-                                        <button
-                                            type={"button"}
-                                            className={styles.sc_button_edit}
-                                            onClick={openModal}
-                                        >
-                                            Edit
-                                        </button>
+                                    <div className={styles.sc_button_group}>
+
                                     </div>
                                 </div>
                             </div>
@@ -208,8 +210,8 @@ const Profile = ({setSelectedTrack}) => {
                                         </div>
                                     </div>
                                 </div>
+                                <SideBar/>
                             </div>
-
                         </div>
                         {/* 모달 컴포넌트 */}
                         {isModalVisible && <Modal closeModal={closeModal} userInfo={userInfo}/>}
