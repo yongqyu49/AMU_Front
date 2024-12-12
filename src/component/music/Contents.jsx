@@ -179,12 +179,15 @@ const Contents = ({ setSelectedTrack }) => {
                                                                                                     className={styles.playable_artwork_image}>
                                                                                                     <div
                                                                                                         className={styles.image_outline}>
-                                                                                                        <span
+                                                                                                        <div
                                                                                                             className={styles.artwork}
                                                                                                             style={{
-                                                                                                                backgroundImage: `url(http://localhost:8787/${track.imgPath})`
-                                                                                                            }}>
-                                                                                                        </span>
+                                                                                                                // backgroundImage: `url(http://localhost:8787/${track.imgPath})`
+                                                                                                                backgroundImage: `url(http://localhost:8787/music/getMusic/image/${track.musicCode})`,
+                                                                                                                backgroundSize: 'cover',
+                                                                                                                backgroundPosition: 'center',
+                                                                                                            }}
+                                                                                                            />
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
@@ -443,7 +446,6 @@ const Contents = ({ setSelectedTrack }) => {
                         </div>
                     </div>
                 </div>
-
             </div>
         </>
     );

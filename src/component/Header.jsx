@@ -164,8 +164,8 @@ const Header = () => {
                 </div>
             </div>
             <SignIn isOpen={isModalOpen} onClose={closeModal} />
-            <SignUp isOpen1={isModalOpen1} onClose1={closeModal1} />
-        </div>
+            <SignUp isOpen1={isModalOpen1} onClose1={closeModal1} openSignIn={openModal} />
+        </>
     );
 };
 
