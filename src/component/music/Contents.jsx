@@ -185,10 +185,7 @@ const Contents = ({ setSelectedTrack }) => {
                                                                                                         <div
                                                                                                             className={styles.artwork}
                                                                                                             style={{
-                                                                                                                // backgroundImage: `url(http://localhost:8787/${track.imgPath})`
-                                                                                                                backgroundImage: `url(http://localhost:8787/music/getMusic/image/${track.musicCode})`,
-                                                                                                                backgroundSize: 'cover',
-                                                                                                                backgroundPosition: 'center',
+                                                                                                                backgroundImage: `url(http://localhost:8787/${track.imgPath})`,
                                                                                                             }}
                                                                                                             />
                                                                                                     </div>
