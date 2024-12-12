@@ -60,10 +60,8 @@ const Contents = () => {
 
         setSelectedTrack(track); // 선택된 트랙 설정
         addTrack(track); // 트랙 추가
-    };
 
         let responseView;
-
         try{
             console.log("이미지 클릭");
             responseView = await axios.post(
@@ -74,23 +72,6 @@ const Contents = () => {
             console.log("조회수 추가 성공", responseView?.data);
         } catch(error){
             console.log("조회수 추가 실패", responseView?.data);
-        }
-        
-        try {
-            await axios.post(
-                "http://localhost:8787/playlist/addMusic",
-                { musicCode: track.musicCode },
-                { headers: { "Content-Type": "application/json" }, withCredentials: true }
-            );
-            alert("음악이 재생목록에 추가되었습니다.");
-            await fetchPlaylist();
-        } catch (error) {
-            // console.log("조회수 추가 실패", responseView?.data);
-            if (error.response?.status === 409) {
-                alert("이미 재생목록에 포함된 음악입니다.");
-            } else {
-                console.error("Failed to add music:", error);
-            }
         }
     };
 

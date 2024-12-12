@@ -117,11 +117,6 @@ const MiniPlayer = () => {
         }
     };
 
-    const handleNextTrack = () => {
-        // 다음 곡으로 이동하는 기능 구현
-        setIsPlaying(false);
-    };
-
     const toggleMute = () => {
         if (audio) {
             if (isMuted) {
