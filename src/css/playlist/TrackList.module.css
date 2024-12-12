@@ -3,7 +3,7 @@ li {
 }
 
 .playlist_panel_render_wrapper {
-    cursor: move;
+    cursor: pointer;
     display: flex;
     align-items: center;
     height: 56px;
@@ -11,8 +11,8 @@ li {
 }
 
 .player_queue_item {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     margin: 0 16px 0 0;
 
     flex: none;
@@ -70,5 +70,43 @@ li {
 }
 
 .duration_wrapper {
-
+    position: relative;
+    display: flex; /* 같은 행에 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    gap: 8px; /* runtime과 modal 사이 간격 */
 }
+
+.modal {
+    display: flex;
+    flex-direction: row; /* 가로로 버튼 정렬 */
+    gap: 8px; /* 버튼 간의 간격 */
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 4px 8px;
+    z-index: 10;
+}
+
+.modal button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #007bff;
+    font-size: 14px;
+}
+
+.modal button:hover {
+    text-decoration: underline;
+}
+
+.runtime {
+    font-size: 14px;
+    color: #999;
+}
+
+
+
+
+
+
+

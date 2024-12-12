@@ -258,7 +258,7 @@ const MiniPlayer = () => {
                                         </Link>
                                     </div>
                                     <div className={styles.playback_sound_badge_title}>
-                                        <Link to="/" className={styles.playback_sound_badge_title_link}>
+                                        <Link to={`/music/${selectedTrack?.musicCode}`} className={styles.playback_sound_badge_title_link}>
                                             <span className={styles.visually_hidden}></span>
                                             <span aria-hidden={true}>{selectedTrack?.title || 'No Track Selected'}</span>
                                         </Link>
