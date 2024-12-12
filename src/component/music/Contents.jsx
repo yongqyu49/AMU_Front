@@ -56,6 +56,7 @@ const Contents = () => {
     const handleTrackClick = async (track) => {
         if (!id) {
             console.warn("사용자 ID가 설정되지 않았습니다. 로컬스토리지에 트랙을 저장할 수 없습니다.");
+            setSelectedTrack(track);
             return; // ID가 없는 경우 실행 중단
         }
 
