@@ -9,7 +9,7 @@ const SignIn = ({ isOpen, onClose }) => {
         id: '',
         password: '',
     });
-    const { setTrackList, setId } = usePlaylist(); // PlaylistProvider와 연결
+    const { setTrackList } = usePlaylist(); // PlaylistProvider와 연결
 
     const handleChange = (e) => {
         const newFormData = {
@@ -19,7 +19,6 @@ const SignIn = ({ isOpen, onClose }) => {
         setFormData(newFormData);
         console.log(newFormData);
     };
-
 
     const doSignIn = (e) => {
         e.preventDefault();
@@ -39,7 +38,7 @@ const SignIn = ({ isOpen, onClose }) => {
                 // 로컬스토리지에 저장된 데이터 로드
                 let savedPlaylist = localStorage.getItem(`playlist_${id}`);
                 if (savedPlaylist) {
-                    alert(`저장된 재생목록 불러오기: ${JSON.stringify(savedPlaylist)}`);
+                    // alert(`저장된 재생목록 불러오기: ${JSON.stringify(savedPlaylist)}`);
                     setTrackList(JSON.parse(savedPlaylist));
                 } else {
                     console.log("저장된 재생목록 없음. 기본값으로 초기화.");
@@ -47,9 +46,7 @@ const SignIn = ({ isOpen, onClose }) => {
                     localStorage.setItem(`playlist_${id}`, JSON.stringify(savedPlaylist));
                     setTrackList(savedPlaylist);
                 }
-
-                alert("savedPlaylist: " + savedPlaylist)
-
+                // alert("savedPlaylist: " + savedPlaylist)
                 window.location.href = "/";
             })
             .catch(error => {

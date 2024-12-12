@@ -2,8 +2,10 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import styles from "../../css/user/MyUpload.module.css";
 import {Link} from "react-router-dom";
+import {usePlaylist} from "../PlaylistContext";
 
-const MyUpload = ({setSelectedTrack, id}) => {
+const MyUpload = ({id}) => {
+    const { setSelectedTrack, addTrack } = usePlaylist();
     const [myFavoriteList, setMyFavoriteList] = useState([]);
 
     useEffect(() => {
@@ -18,8 +20,27 @@ const MyUpload = ({setSelectedTrack, id}) => {
             });
     }, [id]);
 
-    const handleTrackClick = (track) => {
-        setSelectedTrack(track); // 선택된 노래 설정
+    const handleTrackClick = async (track) => {
+        if (!id) {
+            console.warn("사용자 ID가 설정되지 않았습니다. 로컬스토리지에 트랙을 저장할 수 없습니다.");
+            return; // ID가 없는 경우 실행 중단
+        }
+
+        setSelectedTrack(track); // 선택된 트랙 설정
+        addTrack(track); // 트랙 추가
+
+        let responseView;
+        try {
+            console.log("트랙 클릭");
+            responseView = await axios.post(
+                `http://localhost:8787/music/view?musicCode=${track.musicCode}`,
+                null,
+                { headers: { "Content-Type": "application/json" } }
+            );
+            console.log("조회수 추가 성공", responseView?.data);
+        } catch (error) {
+            console.log("조회수 추가 실패", responseView?.data);
+        }
     };
 
     return (

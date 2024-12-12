@@ -18,6 +18,20 @@ const MiniPlayer = () => {
     const { selectedTrack, nextTrack, previousTrack, currentTime, setCurrentTime } = usePlaylist();
     const [isLiked, setIsLiked] = useState(false); // 상태 추가
 
+    // 좋아요 상태 동기화
+    useEffect(() => {
+        if (selectedTrack) {
+            axios
+                .get(`http://localhost:8787/music/isLiked/${selectedTrack.musicCode}`, { withCredentials: true })
+                .then((response) => {
+                    setIsLiked(response.data); // 서버에서 반환된 좋아요 상태로 업데이트
+                })
+                .catch((error) => {
+                    console.error("Failed to fetch like status:", error);
+                });
+        }
+    }, [selectedTrack]); // selectedTrack 변경 시 좋아요 상태 업데이트
+
     useEffect(() => {
         if (selectedTrack) {
             if (audio) {
@@ -156,7 +170,44 @@ const MiniPlayer = () => {
     };
 
     const toggleLike = () => {
-        setIsLiked(!isLiked); // 하트 클릭 시 상태 반전
+        if (!selectedTrack) return;
+
+        axios
+            .get(`http://localhost:8787/music/isLiked/${selectedTrack.musicCode}`, { withCredentials: true })
+            .then((response) => {
+                if (response.data === true) {
+                    axios
+                        .post(
+                            `http://localhost:8787/music/unlike`,
+                            { musicCode: selectedTrack.musicCode },
+                            { withCredentials: true }
+                        )
+                        .then(() => {
+                            alert("좋아요 취소");
+                            setIsLiked(false);
+                        })
+                        .catch((error) => {
+                            console.error("Failed to unlike:", error);
+                        });
+                } else {
+                    axios
+                        .post(
+                            `http://localhost:8787/music/like`,
+                            { musicCode: selectedTrack.musicCode },
+                            { withCredentials: true }
+                        )
+                        .then(() => {
+                            alert("좋아요 등록");
+                            setIsLiked(true);
+                        })
+                        .catch((error) => {
+                            console.error("Failed to like:", error);
+                        });
+                }
+            })
+            .catch((error) => {
+                console.error("Failed to process like:", error);
+            });
     };
 
     useEffect(() => {
@@ -267,7 +318,10 @@ const MiniPlayer = () => {
                                         <button
                                             type="button"
                                             className={styles.sc_button_follow}
-                                            onClick={toggleLike} // 하트 버튼 클릭 시 상태 변경
+                                            style={{
+                                                display: selectedTrack ? "block" : "none"
+                                            }}
+                                            onClick={toggleLike}
                                         >
                                             {isLiked ? '🖤' : '🤍'}
                                         </button>
