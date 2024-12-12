@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 import Header from './Header';
 import MiniPlayer from './MiniPlayer';
 import React from 'react';
@@ -9,12 +9,12 @@ const Main = (props) => {
     return (
         <>
             <Header />
-            <main>
+            <main style={{ margin: "30px" }}>
                 {React.cloneElement(props.children, { setSelectedTrack })}
             </main>
             <MiniPlayer selectedTrack={selectedTrack} />
         </>
     );
-}
+};
 
 export default Main;
