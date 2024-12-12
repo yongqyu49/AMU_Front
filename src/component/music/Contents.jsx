@@ -340,11 +340,10 @@ const Contents = () => {
                                                     </div>
                                                 </li>
                                             </ul>
-
                                         </div>
+                                        <SideBar/>
                                     </div>
                                 </div>
-                                <SideBar/>
                             </div>
                         </div>
                     </div>

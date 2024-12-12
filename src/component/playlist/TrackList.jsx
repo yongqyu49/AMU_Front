@@ -116,7 +116,7 @@ const TrackList = () => {
                             <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
                                 <button onClick={() => handleDelete(track)}>삭제</button>
                                 {/*<button onClick={() => handleLike(track)}>좋아요</button>*/}
-                                <button onClick={() => handleAdd(track)}>추가</button>
+                                {/*<button onClick={() => handleAdd(track)}>추가</button>*/}
                             </div>
                         ) : (
                             <span className={styles.runtime}>
