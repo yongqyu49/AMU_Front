@@ -134,7 +134,7 @@ const MainPage = ({ setSelectedTrack }) => { //구조분해할당
                                 <div className={styles.album_details}>
                                     <h4 className={styles.album_title}>
                                         {track.title}
-                                        </h4>
+                                    </h4>
                                     <p className={styles.album_artist}>{track.artist}</p>
                                 </div>
                                 <div className={styles.album_more} onClick={() => toggleMenu(track.musicCode)}>
