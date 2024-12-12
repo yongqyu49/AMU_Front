@@ -168,7 +168,7 @@ const MusicDetail = () => {
                                             <div className={styles.userBadge_avatar}>
                                                 <div className={styles.g_avatar_badge}>
                                                     <div className={styles.g_avatar_badge_body}>
-                                                        <Link to={`/profile/${musicDetail.artist}`} className={styles.g_avatar_link}>
+                                                        <Link to={`/profile/${String(musicDetail.id)}`} className={styles.g_avatar_link}>
                                                             <div className={styles.g_avatar_badge_avatar}>
                                                                 <div className={styles.sc_avatar_outline}>
                                                                     <span className={styles.sc_avatar_artists}
@@ -184,7 +184,7 @@ const MusicDetail = () => {
                                                 <div className={styles.userBadge_content}>
                                                     <div className={styles.userBadge_title}>
                                                         <h3 className={styles.userBadge_username}>
-                                                            <Link to={`/profile/${musicDetail.artist}`} className={styles.userBadge_username_username_link}>
+                                                            <Link to={`/profile/${String(musicDetail.id)}`} className={styles.userBadge_username_username_link}>
                                                                 {musicDetail.artist}
                                                             </Link>
                                                         </h3>

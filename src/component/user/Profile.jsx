@@ -9,11 +9,11 @@ import {useParams} from "react-router-dom";
 import useGetUserGetParam from "../../hooks/useUserGetParam";
 // import axios from "axios";
 
-const Profile = () => {
+const Profile = ({setSelectedTrack}) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [activeTab, setActiveTab] = useState("upload");
-    const {artist} = useParams();
-    const userInfo = useGetUserGetParam({artist: artist});
+    const {id} = useParams();
+    const userInfo = useGetUserGetParam({id: id});
 
     // 모달 열기
     const openModal = () => {
@@ -45,13 +45,13 @@ const Profile = () => {
     const renderContent = () => {
         switch (activeTab) {
             case "upload":
-                return <MyUpload />;
+                return <MyUpload setSelectedTrack={setSelectedTrack} id={id} />;
             case "playlist":
-                return <MyPlaylist />;
+                return <MyPlaylist id={id} />;
             case "favorite":
-                return <MyFavorite />;
+                return <MyFavorite setSelectedTrack={setSelectedTrack} id={id} />;
             case "review":
-                return <MyReview />;
+                return <MyReview id={id} />;
             default:
                 return <p>알 수 없는 탭입니다.</p>;
         }
