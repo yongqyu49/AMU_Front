@@ -8,6 +8,7 @@ import {usePlaylist} from "./PlaylistContext";
 const MiniPlayer = () => {
     const [audioUrl, setAudioUrl] = useState(null); // Blob으로 생성된 Object URL
     const [audio, setAudio] = useState(null); // Audio 객체
+    const [audioVolume, setAudioVolume] = useState(1);
     const [isPlaying, setIsPlaying] = useState(false);
     const [duration, setDuration] = useState(0);
     const [showPlayer, setShowPlayer] = useState(false);
@@ -52,6 +53,7 @@ const MiniPlayer = () => {
             newAudio.onloadedmetadata = () => {
                 setDuration(newAudio.duration);
                 setCurrentTime(0);
+                newAudio.volume = isMuted ? 0 : volume;
                 setIsPlaying(true);
                 newAudio.play();
             };
@@ -117,12 +119,23 @@ const MiniPlayer = () => {
         }
     };
 
+    const handleVolumeChange = (e) => {
+        const newVolume = parseFloat(e.target.value);
+        setVolume(newVolume);
+        if (audio) {
+            audio.volume = newVolume;
+            setAudioVolume(newVolume);
+        }
+        setIsMuted(newVolume === 0);
+    };
+
     const toggleMute = () => {
         if (audio) {
             if (isMuted) {
-                audio.volume = volume;
+                audio.volume = audioVolume;
             } else {
                 audio.volume = 0;
+                setAudioVolume(0);
             }
             setIsMuted(!isMuted);
         }
@@ -138,15 +151,6 @@ const MiniPlayer = () => {
         }
     };
 
-    const handleVolumeChange = (e) => {
-        const newVolume = parseFloat(e.target.value);
-        setVolume(newVolume);
-        if (audio) {
-            audio.volume = newVolume;
-        }
-        setIsMuted(newVolume === 0);
-    };
-
     const togglePlayer = () => {
         setShowPlayer(!showPlayer);
     };
@@ -154,6 +158,12 @@ const MiniPlayer = () => {
     const toggleLike = () => {
         setIsLiked(!isLiked); // 하트 클릭 시 상태 반전
     };
+
+    useEffect(() => {
+        if (audio) {
+            audio.volume = isMuted ? 0 : volume;
+        }
+    }, [volume, isMuted]);
 
     return (
         <>
