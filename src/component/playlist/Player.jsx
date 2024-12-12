@@ -1,27 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, {memo, useState} from "react";
 import styles from "../../css/playlist/Player.module.css";
 import TrackList from "./TrackList";
 import Lyrics from "./Lyrics";
 import Reviews from "./Reviews";
-import axios from "axios";
-import useAuth from "../../hooks/useAuth";
+import {usePlaylist} from "../PlaylistContext";
 
-const Player = ({ selectedTrack }) => {
+const Player = memo(({ selectedTrack }) => {
     const [activeTab, setActiveTab] = useState("nextTracks");
-    const [trackList, setTrackList] = useState([]);
-    const isLoggedIn = useAuth();
-
-    // Fetch playlist on login
-    useEffect(() => {
-        if (isLoggedIn) {
-            axios.get("http://localhost:8787/music/getPlaylist", { withCredentials: true })
-                .then(response => {
-                    setTrackList(response.data)
-                    console.log("Playlist fetched successfully:", response.data);
-                })
-                .catch(error => console.error("Failed to fetch playlist:", error));
-        }
-    }, [isLoggedIn]);
+    const { trackList } = usePlaylist();
 
     // Tab rendering function
     const renderContent = () => {
@@ -62,6 +48,6 @@ const Player = ({ selectedTrack }) => {
             </div>
         </div>
     );
-};
+});
 
 export default Player;

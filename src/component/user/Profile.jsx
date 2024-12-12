@@ -9,7 +9,7 @@ import {useParams} from "react-router-dom";
 import useGetUserGetParam from "../../hooks/useUserGetParam";
 // import axios from "axios";
 
-const Profile = () => {
+const Profile = ({setSelectedTrack}) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [activeTab, setActiveTab] = useState("upload");
     const {id} = useParams();
@@ -45,11 +45,11 @@ const Profile = () => {
     const renderContent = () => {
         switch (activeTab) {
             case "upload":
-                return <MyUpload id={id} />;
+                return <MyUpload setSelectedTrack={setSelectedTrack} id={id} />;
             case "playlist":
                 return <MyPlaylist id={id} />;
             case "favorite":
-                return <MyFavorite id={id} />;
+                return <MyFavorite setSelectedTrack={setSelectedTrack} id={id} />;
             case "review":
                 return <MyReview id={id} />;
             default:
