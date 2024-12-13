@@ -190,7 +190,18 @@ const Contents = () => {
                                                                                                             style={{
                                                                                                                 backgroundImage: `url(http://localhost:8787/${track.imgPath})`
                                                                                                             }}
-                                                                                                         />
+                                                                                                        />
+                                                                                                        <div
+                                                                                                            className={styles.overlay}>
+                                                                                                            <p>Views: {track.views}</p>
+                                                                                                            <p>FileSize: {track.fileSize > 1048576
+                                                                                                                ? (track.fileSize / 1048576).toFixed(2) + ' MB'
+                                                                                                                : (track.fileSize / 1024).toFixed(2) + ' KB'}</p>
+                                                                                                            <p>RunTime: {track.runtime > 60
+                                                                                                                ? (track.runtime / 60).toFixed(0).padStart(2, '0') + ':' +
+                                                                                                                (track.runtime % 60).toFixed(0).padStart(2, '0')
+                                                                                                                : '00:' + track.runtime.toFixed(0).padStart(2, '0')}</p>
+                                                                                                        </div>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>

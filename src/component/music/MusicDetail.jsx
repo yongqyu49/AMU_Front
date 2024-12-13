@@ -4,6 +4,7 @@ import SideBar from "../SideBar";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import useGetUserInfo from "../../hooks/useGetUserInfo";
+import userImage from "../../img/user.png";
 
 const MusicDetail = () => {
     const {musicCode} = useParams(); // URL에서 musicCode 가져오기
@@ -107,8 +108,10 @@ const MusicDetail = () => {
                                 <div className={styles.listen_artwork_wrapper}>
                                     <div className={styles.listen_artwork_wrapper_artwork}>
                                         <div className={styles.image_light_outline}>
-                                            <img className={styles.sc_artwork}
-                                                  src={musicDetail ? `http://localhost:8787/${musicDetail.imgPath}` : ""}/>
+                                            <img
+                                                className={styles.sc_artwork}
+                                                src={musicDetail ? `http://localhost:8787/${musicDetail.imgPath}` : ""}
+                                            />
                                         </div>
                                     </div>
                                 </div>
@@ -145,8 +148,25 @@ const MusicDetail = () => {
                                             <div className={styles.commentForm}>
                                                 <div className={styles.commentForm_wrapper}>
                                                     <div className={styles.commentForm_avatar}>
-                                                        <img className={styles.sc_artwork_placeholder}
-                                                             src={userInfo ? `http://localhost:8787/${userInfo.profileImg}` : ""}/>
+                                                        {userInfo && userInfo.profileImg ? (
+                                                            // profileImg가 존재하면 <img> 태그 렌더링
+                                                            <img
+                                                                className={styles.sc_artwork_placeholder}
+                                                                src={`http://localhost:8787/${userInfo.profileImg}`}
+                                                                alt="Profile Image"
+                                                            />
+                                                        ) : (
+                                                            // 기본 이미지는 span 태그로 background-image 처리
+                                                            <span
+                                                                className={styles.sc_artwork_placeholder}
+                                                                style={{
+                                                                    backgroundImage: `url(${userImage})`,
+                                                                    backgroundSize: "cover",
+                                                                    backgroundPosition: "center",
+                                                                }}
+                                                                aria-label="Default User Image"
+                                                            />
+                                                        )}
                                                     </div>
                                                     <form onSubmit={writeReview} className={styles.commentForm_inputWrapper}>
                                                         <input type={"text"} onChange={input_review} className={styles.commentForm_input} placeholder={"Leave Comment!"}/>
@@ -221,7 +241,7 @@ const MusicDetail = () => {
                                                             <div className={styles.commentItem}>
                                                                 <div className={styles.commentItem_read}>
                                                                     <div className={styles.commentItem_avatarWrapper}>
-                                                                        <Link to={""} className={styles.commentItem_avatar}>
+                                                                        <Link to={`/profile/${String(comment.id)}`} className={styles.commentItem_avatar}>
                                                                             <div className={styles.sc_artwork_placeholder}
                                                                                  style={{
                                                                                      backgroundImage: `url(http://localhost:8787/${comment?.profileImg || 'default-profile.png'})`
@@ -233,7 +253,7 @@ const MusicDetail = () => {
                                                                         <div className={styles.commentItem_commentInfo}>
                                                                         <span>
                                                                             <span>
-                                                                                <Link to={"/profile"}
+                                                                                <Link to={`/profile/${String(comment.id)}`}
                                                                                       className={styles.commentItem_username}>{comment.id}</Link>
                                                                                 </span>
                                                                             </span>
