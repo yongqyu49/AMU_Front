@@ -291,11 +291,11 @@ a {
 }
 
 .prev_button {
-    right: 860px;
+    right: 810px;
 }
 
 .next_button {
-    left: 860px;
+    left: 810px;
 }
 
 .prev_button:hover,

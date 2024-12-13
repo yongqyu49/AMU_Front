@@ -143,7 +143,7 @@ const Modal = ({ closeModal, userInfo }) => {
                                                 <span className={styles.text_field_label}>Confirm Password</span>
                                             </label>
                                             <div className={styles.text_field_input}>
-                                                <input type={"text"} className={styles.display_name}
+                                                <input type={"password"} className={styles.display_name}
                                                        name={"display_confirm_password"}
                                                 />
                                             </div>

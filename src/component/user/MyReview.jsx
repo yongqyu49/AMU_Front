@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import styles from "../../css/user/MyUpload.module.css";
+import styles from "../../css/user/MyReview.module.css";
 import {Link} from "react-router-dom";
 
-const MyReview = ({setSelectedTrack, id}) => {
+const MyReview = ({id}) => {
     const [myReviewList, setMyReviewList] = useState([]);
 
     useEffect(() => {
@@ -18,48 +18,67 @@ const MyReview = ({setSelectedTrack, id}) => {
             });
     }, [id]);
 
-    const handleTrackClick = (track) => {
-        setSelectedTrack(track); // 선택된 노래 설정
-    };
-
     return (
-        <div style={{display: "flex"}}>
-            {myReviewList.map((review) => (
-                <div className={styles.slider_panel_slide} key={review.reviewId}>
-                    <div className={styles.playable_tile}>
-                        <div className={styles.playable_artwork}>
-                            <div className={styles.playable_artwork_link}
-                                 onClick={() => handleTrackClick(review)}>
-                                <div className={styles.playable_artwork_image}>
-                                    <div className={styles.image_outline}>
-                                        <span className={styles.artwork}
-                                              style={{
-                                                  backgroundImage: `url(http://localhost:8787/${review.imgPath})`
-                                              }}>
+        <ul className={styles.lazyLoading_list}>
+            {myReviewList.map((comment) => (
+                <li className={styles.commentsList_item} key={comment.reviewId}>
+                    <div className={styles.commentItem}>
+                        <div className={styles.commentItem_read}>
+                            <div className={styles.commentItem_avatarWrapper}>
+                                <Link to={""} className={styles.commentItem_avatar}>
+                                    <div className={styles.sc_artwork_placeholder}
+                                         style={{
+                                             backgroundImage: `url(http://localhost:8787/${comment?.imgPath})`
+                                         }}
+                                    ></div>
+                                </Link>
+
+                            </div>
+                            <div className={styles.commentItem_content}>
+                                <div className={styles.commentItem_commentInfo}>
+                                    <span>
+                                        <span>
+                                              <Link to={`/music/${(comment.musicCode)}`}
+                                                    className={styles.commentItem_username}>{comment.title}</Link>
                                         </span>
+                                    </span>
+                                </div>
+                                <div className={styles.commentItem_commentWrapper}>
+                                    <div className={styles.commentItem_bodyContainer}>
+                                        <div className={styles.commentItem_body}>
+                                            <Link to={`/profile/${String(comment.id)}`}
+                                                style={{
+                                                    color: "#333",
+                                                    fontSize: "13px",
+                                                    marginRight: "5px"
+                                                }}
+                                            >
+                                                {comment.artist}
+                                            </Link>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div className={styles.playable_tile_overlay}></div>
-                            <div className={styles.playable_tile_play_button}>
-                                <Link to="/music" className={styles.play_button}>Play</Link>
-                            </div>
-                            <div className={styles.playable_tile_action}>
-
-                            </div>
                         </div>
-                        <div className={styles.playable_tile_description}>
-                            <div className={styles.playable_tile_description_container}>
-                                <Link to="/music" className={styles.playable_audible_tile}>{review.reviewContents}</Link>
+                        <div>
+                            <div>
+                                <span style={{
+                                    color: "black",
+                                    fontSize: "13px",
+                                    fontWeight: "bold",
+                                    marginRight: "5px"
+                                }}>
+                                    {/*{comment.id}*/}
+                                </span>
                             </div>
-                            <div className={styles.playable_tile_username_container}>
-                                <Link to="/music" className={styles.playable_tile_username}>{review.reviewContents}</Link>
+                            <div>
+                                <span>{comment.reviewContents}</span>
                             </div>
                         </div>
                     </div>
-                </div>
+                </li>
             ))}
-        </div>
+        </ul>
     )
 }
 

@@ -498,3 +498,7 @@ a {
     text-overflow: ellipsis;
     word-break: normal;
 }
+
+.tab_header{
+    margin-right: 30px;
+}

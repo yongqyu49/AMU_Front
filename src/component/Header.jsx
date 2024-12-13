@@ -6,12 +6,16 @@ import axios from "axios";
 import useGetUserInfo from "../hooks/useGetUserInfo";
 import SignIn from "./user/SignIn.jsx";
 import SignUp from "./user/SignUp.jsx";
+import {usePlaylist} from "./PlaylistContext";
+import userImg from "../img/user.png";
+
 
 const Header = () => {
     const isLoggedIn = useAuth();
     const { userInfo, isLoading } = useGetUserInfo();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpen1, setIsModalOpen1] = useState(false);
+    const { setTrackList, setSelectedTrack } = usePlaylist();
 
     const [query, setQuery] = useState("");
     const [results, setResults] = useState([]);
@@ -24,6 +28,14 @@ const Header = () => {
         })
             .then(() => {
                 alert("로그아웃 되었습니다.");
+
+                // PlaylistProvider 상태 초기화
+                setTrackList([]); // 재생목록 초기화
+                setSelectedTrack(null); // 선택된 노래 초기화
+
+                // 로컬스토리지에서 재생목록 삭제
+                localStorage.removeItem(`playlist_${userInfo.id}`);
+                localStorage.removeItem("id");
                 window.location.href = "/";
             })
             .catch(() => {
@@ -97,9 +109,6 @@ const Header = () => {
                             <li className={styles.header_nav_li}>
                                 <Link to="/mainPage" className={styles.header_nav_link}>Home</Link>
                             </li>
-                            <li className={styles.header_nav_li}>
-                                <Link to="/music" className={styles.header_nav_link}>Feed</Link>
-                            </li>
                         </ul>
                     </nav>
                 </div>
@@ -110,6 +119,7 @@ const Header = () => {
                                 type="text"
                                 className={styles.header_search_input}
                                 placeholder="Search by title or artist"
+                                style={{ fontStyle: 'italic' }}
                                 value={query}
                                 onChange={handleInputChange}
                                 onClick={() => setShowDropdown(true)}
@@ -149,8 +159,19 @@ const Header = () => {
                                         <span
                                             className={styles.header_user_nav_avatar}
                                             style={{
-                                                backgroundImage: `url(http://localhost:8787/${userInfo?.profileImg || 'default-profile.png'})`
-                                            }}
+                                                backgroundImage: `url(${userInfo.profileImg ? `http://localhost:8787/${userInfo.profileImg}` : userImg})`,
+                                                ...(userInfo.profileImg 
+                                                    ? {
+                                                        backgroundSize: "cover",
+                                                        backgroundPosition: "center"
+                                                      }
+                                                    : {
+                                                        backgroundSize: "80%",
+                                                        backgroundPosition: "center",
+                                                        backgroundRepeat: "no-repeat"
+                                                      }
+                                                )
+                                          }}
                                         ></span>
                                     </div>
                                 </Link>

@@ -1,6 +1,7 @@
 import {useState} from "react";
 import axios from "axios";
 import styles from '../../css/Signln.module.css';
+import {usePlaylist} from "../PlaylistContext";
 
 const SignIn = ({ isOpen, onClose }) => {
 
@@ -8,6 +9,7 @@ const SignIn = ({ isOpen, onClose }) => {
         id: '',
         password: '',
     });
+    const { setTrackList } = usePlaylist(); // PlaylistProvider와 연결
 
     const handleChange = (e) => {
         const newFormData = {
@@ -17,7 +19,6 @@ const SignIn = ({ isOpen, onClose }) => {
         setFormData(newFormData);
         console.log(newFormData);
     };
-
 
     const doSignIn = (e) => {
         e.preventDefault();
@@ -30,8 +31,22 @@ const SignIn = ({ isOpen, onClose }) => {
             withCredentials: true
         })
             .then(response => {
-                console.log("로그인 성공:", response);
-                alert("로그인 성공!");
+                const id = response.data; // 로그인 성공 시 반환된 사용자 ID
+                console.log("로그인 성공 사용자 id: " + id)
+                localStorage.setItem("id", id); // 로그인 성공 시 사용자 ID 저장
+
+                // 로컬스토리지에 저장된 데이터 로드
+                let savedPlaylist = localStorage.getItem(`playlist_${id}`);
+                if (savedPlaylist) {
+                    // alert(`저장된 재생목록 불러오기: ${JSON.stringify(savedPlaylist)}`);
+                    setTrackList(JSON.parse(savedPlaylist));
+                } else {
+                    console.log("저장된 재생목록 없음. 기본값으로 초기화.");
+                    savedPlaylist = []; // 기본값 설정
+                    localStorage.setItem(`playlist_${id}`, JSON.stringify(savedPlaylist));
+                    setTrackList(savedPlaylist);
+                }
+                // alert("savedPlaylist: " + savedPlaylist)
                 window.location.href = "/";
             })
             .catch(error => {
