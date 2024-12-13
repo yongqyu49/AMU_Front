@@ -4,13 +4,16 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import {usePlaylist} from "../PlaylistContext";
 
-const MainPage = ({ setSelectedTrack }) => { //구조분해할당
+const MainPage = () => { //구조분해할당
 
     const [myGenre, setMyGenre] = useState("전체");
     const [mySort, setMySort] = useState("이름순");
     const [playlist, setPlaylist] = useState([]);
     const [activeMenu, setActiveMenu] = useState(null);
+    const { setSelectedTrack, addTrack } = usePlaylist();
 
     const handleGenre = (eventKey) => {
         setMyGenre(eventKey);
@@ -85,6 +88,7 @@ const MainPage = ({ setSelectedTrack }) => { //구조분해할당
     const handleTrackClick = (track) => {
         console.log("Contents.jsx 이미지 클릭 track: " + track.title);
         setSelectedTrack(track); // 선택된 노래 설정
+        addTrack(track);
     };
 
 
@@ -128,7 +132,8 @@ const MainPage = ({ setSelectedTrack }) => { //구조분해할당
                     {/* 요소 */}
                     <div className={styles.album_grid}>
                         {playlist.map((track, index) => (
-                            <div className={styles.album_card} key={`${track.musicCode}-${index}`}>
+                            <div className={styles.album_card} key={`${track.musicCode}-${index}`}
+                            onClick={() => handleTrackClick(track)}>
                                 <div
                                     className={styles.album_artwork}
                                     style={{
@@ -149,11 +154,17 @@ const MainPage = ({ setSelectedTrack }) => { //구조분해할당
                                                 : '00:' + track.runtime.toFixed(0).padStart(2, '0')}</p>
                                     </div>
                                 </div>
-                                <div className={styles.album_details}>
-                                    <h4 className={styles.album_title}>
-                                        {track.title}
-                                    </h4>
-                                    <p className={styles.album_artist}>{track.artist}</p>
+                                <div
+                                    className={styles.album_details}>
+                                    <div
+                                        className={styles.album_title}
+                                        >
+                                        <Link to={`/music/${track.musicCode}`}>{track.title}</Link>
+                                    </div>
+                                    <div
+                                        className={styles.album_artist}>
+                                        <Link to={`/profile/${String(track.id)}`}>{track.artist}</Link>
+                                    </div>
                                 </div>
                             </div>
                         ))}

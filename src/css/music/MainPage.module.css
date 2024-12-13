@@ -2,6 +2,8 @@
     margin-top: 30px;
     margin-left: 70px;
     font-weight: bold;
+    text-align: center;
+    display: none;
 }
 
 .container{
@@ -10,7 +12,7 @@
 
 .drop_down {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     background-color: #f0f0f0;
     padding: 10px 20px;
     border-radius: 5px;
@@ -26,7 +28,7 @@
     flex-wrap: wrap;
     gap: 20px;
     padding-bottom: 20px ;
-    margin: 170px 300px 0 300px;
+    margin: 50px 300px 0 300px;
 }
 
 .album_card {
