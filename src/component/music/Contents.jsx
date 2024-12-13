@@ -303,7 +303,6 @@ const Contents = () => {
                                                                                             </div>
                                                                                             <div
                                                                                                 className={styles.playable_tile_action}>
-
                                                                                             </div>
                                                                                         </div>
                                                                                         <div
