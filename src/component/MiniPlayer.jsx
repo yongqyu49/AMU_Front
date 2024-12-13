@@ -77,7 +77,17 @@ const MiniPlayer = () => {
             };
 
             newAudio.onended = () => {
-                setIsPlaying(false);
+                // 다음 곡으로 이동
+                if (selectedTrack) {
+                    nextTrack();
+
+                    // 마지막 곡인 경우 첫 번째 곡으로 이동
+                    setTimeout(() => {
+                        if (selectedTrack === null) {
+                            handleNextTrack();
+                        }
+                    }, 300);
+                }
             };
 
             return () => {

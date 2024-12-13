@@ -87,7 +87,7 @@ const Reviews = ({ selectedTrack }) => {
                             </div>
                             <div className={styles.review_content}>{review.reviewContents}</div>
                             <div className={styles.review_footer}>
-                                <span>좋아요: {review.reviewLike}</span>
+                                {/*<span>좋아요: {review.reviewLike}</span>*/}
                             </div>
                         </li>
                     ))

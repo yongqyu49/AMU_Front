@@ -172,15 +172,14 @@
 }
 
 .g_tabs_item:first-child {
-    margin-left: 0;
+    margin-left: 30px;
 }
 
 .g_tabs_item:last-child {
-    margin-left: 0;
 }
 
 .g_tabs_item {
-    margin: 0 12px -1px;
+    margin: 0 100px -1px 30px;
     float: left;
 }
 
@@ -501,4 +500,10 @@ a {
 
 .tab_header{
     margin-right: 30px;
+}
+
+.g_tabs_item.active .tab_header {
+    font-weight: bold; /* 텍스트 강조 */
+    color: #007bff; /* 활성화된 텍스트 색상 */
+    border-bottom: 2px solid #007bff; /* 아래쪽 강조선 */
 }

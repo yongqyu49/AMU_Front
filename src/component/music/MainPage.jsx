@@ -4,13 +4,17 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import {usePlaylist} from "../PlaylistContext";
+import {Link} from "react-router-dom";
 
-const MainPage = ({ setSelectedTrack }) => { //구조분해할당
+const MainPage = () => { //구조분해할당
 
     const [myGenre, setMyGenre] = useState("전체");
     const [mySort, setMySort] = useState("이름순");
     const [playlist, setPlaylist] = useState([]);
     const [activeMenu, setActiveMenu] = useState(null);
+    const { setSelectedTrack, addTrack } = usePlaylist();
+    const id = localStorage.getItem("id");
 
     const handleGenre = (eventKey) => {
         setMyGenre(eventKey);
@@ -82,9 +86,27 @@ const MainPage = ({ setSelectedTrack }) => { //구조분해할당
             });
     }, []);
 
-    const handleTrackClick = (track) => {
-        console.log("Contents.jsx 이미지 클릭 track: " + track.title);
-        setSelectedTrack(track); // 선택된 노래 설정
+    const handleTrackClick = async (track) => {
+        if (!id) {
+            console.warn("사용자 ID가 설정되지 않았습니다. 로컬스토리지에 트랙을 저장할 수 없습니다.");
+            return; // ID가 없는 경우 실행 중단
+        }
+
+        setSelectedTrack(track); // 선택된 트랙 설정
+        addTrack(track); // 트랙 추가
+
+        let responseView;
+        try {
+            console.log("트랙 클릭");
+            responseView = await axios.post(
+                `http://localhost:8787/music/view?musicCode=${track.musicCode}`,
+                null,
+                { headers: { "Content-Type": "application/json" } }
+            );
+            console.log("조회수 추가 성공", responseView?.data);
+        } catch (error) {
+            console.log("조회수 추가 실패", responseView?.data);
+        }
     };
 
 
@@ -150,10 +172,23 @@ const MainPage = ({ setSelectedTrack }) => { //구조분해할당
                                     </div>
                                 </div>
                                 <div className={styles.album_details}>
-                                    <h4 className={styles.album_title}>
+                                    <Link to={`/music/${track.musicCode}`} className={styles.album_title}
+                                          style={{
+                                              fontSize: "12px",
+                                              fontWeight: "bold",
+                                              color: "#333",
+                                              margin: "5px 0",
+                                              textDecoration: "none"
+                                        }}
+                                    >
                                         {track.title}
-                                    </h4>
-                                    <p className={styles.album_artist}>{track.artist}</p>
+                                    </Link>
+                                    <br/>
+                                    <Link to={`/profile/${String(track.id)}`} className={styles.album_artist} style={{
+                                        textDecoration: "none",
+                                        fontSize: "10px",
+                                        color: "#777"
+                                    }}>{track.artist}</Link>
                                 </div>
                             </div>
                         ))}

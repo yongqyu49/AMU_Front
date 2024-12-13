@@ -47,7 +47,7 @@ const SignIn = ({ isOpen, onClose }) => {
                     setTrackList(savedPlaylist);
                 }
                 // alert("savedPlaylist: " + savedPlaylist)
-                window.location.href = "/";
+                window.location.href = "/mainPage";
             })
             .catch(error => {
                 console.error("로그인 실패:", error);
@@ -68,26 +68,26 @@ const SignIn = ({ isOpen, onClose }) => {
                         <div className={styles.container}>
                             <button className={styles.modal_close_button} onClick={onClose}></button>
                             <div className={styles.scontainer}>
-                                <div className={styles.providerButtons}>
-                                    <div className={styles.form_row} style={{
-                                        backgroundColor: "#3578e5"
-                                    }}>
-                                        <button className={styles.buttons_text} style={{color: "white"}}>Continue with
-                                            Facebook
-                                        </button>
-                                    </div>
-                                    <div className={styles.form_row}>
-                                        <button className={styles.buttons_text}>Continue with Google</button>
-                                    </div>
-                                    <div className={styles.form_row} style={{backgroundColor: "black"}}>
-                                        <button className={styles.buttons_text} style={{color: "white"}}>Continue with
-                                            Apple
-                                        </button>
-                                    </div>
-                                </div>
-                                <div className={styles.auth_method_separator}>
-                                    <span>-------- or --------</span>
-                                </div>
+                                {/*<div className={styles.providerButtons}>*/}
+                                {/*    <div className={styles.form_row} style={{*/}
+                                {/*        backgroundColor: "#3578e5"*/}
+                                {/*    }}>*/}
+                                {/*        <button className={styles.buttons_text} style={{color: "white"}}>Continue with*/}
+                                {/*            Facebook*/}
+                                {/*        </button>*/}
+                                {/*    </div>*/}
+                                {/*    <div className={styles.form_row}>*/}
+                                {/*        <button className={styles.buttons_text}>Continue with Google</button>*/}
+                                {/*    </div>*/}
+                                {/*    <div className={styles.form_row} style={{backgroundColor: "black"}}>*/}
+                                {/*        <button className={styles.buttons_text} style={{color: "white"}}>Continue with*/}
+                                {/*            Apple*/}
+                                {/*        </button>*/}
+                                {/*    </div>*/}
+                                {/*</div>*/}
+                                {/*<div className={styles.auth_method_separator}>*/}
+                                {/*    <span>-------- or --------</span>*/}
+                                {/*</div>*/}
                                 <div className={styles.form_row}>
                                     <input type={"text"} name={"id"} className={styles.login_email} onChange={handleChange}
                                            placeholder={"ID"} required/>

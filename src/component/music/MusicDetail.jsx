@@ -221,7 +221,7 @@ const MusicDetail = () => {
                                                             <div className={styles.commentItem}>
                                                                 <div className={styles.commentItem_read}>
                                                                     <div className={styles.commentItem_avatarWrapper}>
-                                                                        <Link to={""} className={styles.commentItem_avatar}>
+                                                                        <Link to={`/profile/${String(comment.id)}`} className={styles.commentItem_avatar}>
                                                                             <div className={styles.sc_artwork_placeholder}
                                                                                  style={{
                                                                                      backgroundImage: `url(http://localhost:8787/${comment?.profileImg || 'default-profile.png'})`
@@ -233,7 +233,7 @@ const MusicDetail = () => {
                                                                         <div className={styles.commentItem_commentInfo}>
                                                                         <span>
                                                                             <span>
-                                                                                <Link to={"/profile"}
+                                                                                <Link to={`/profile/${String(comment.id)}`}
                                                                                       className={styles.commentItem_username}>{comment.id}</Link>
                                                                                 </span>
                                                                             </span>

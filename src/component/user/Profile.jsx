@@ -71,16 +71,18 @@ const Profile = ({setSelectedTrack}) => {
                                 <div className={styles.profile_header_edit}>
                                     <div className={styles.profile_header_chooser}>
                                         <div>
-                                            <button
-                                                type={"button"}
-                                                className={styles.sc_button_edit}
-                                                onClick={openModal}
-                                                style={{
-                                                    marginRight: "350px",
-                                                }}
-                                            >
-                                                Edit
-                                            </button>
+                                            {localStorage.getItem("id") === id && (
+                                                <button
+                                                    type={"button"}
+                                                    className={styles.sc_button_edit}
+                                                    onClick={openModal}
+                                                    style={{
+                                                        marginRight: "350px",
+                                                    }}
+                                                >
+                                                    Edit
+                                                </button>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
@@ -93,7 +95,7 @@ const Profile = ({setSelectedTrack}) => {
                                                         <span className={styles.user_sc_artwork}
                                                               style={{
                                                                     backgroundImage: `url(${userInfo.profileImg ? `http://localhost:8787/${userInfo.profileImg}` : userImg})`,
-                                                                    ...(userInfo.profileImg 
+                                                                    ...(userInfo.profileImg
                                                                         ? {
                                                                             backgroundSize: "cover",
                                                                             backgroundPosition: "center"
@@ -128,22 +130,28 @@ const Profile = ({setSelectedTrack}) => {
                             <div className={styles.user_info_bar}>
                                 <div className={styles.user_info_bar_tabs}>
                                     <ul className={styles.profile_tabs}>
-                                        <li className={styles.g_tabs_item}>
+                                        <li className={`${styles.g_tabs_item} ${
+                                            activeTab === "upload" ? styles.active : ""
+                                        }`}>
                                             <div onClick={() => setActiveTab("upload")} className={styles.tab_header} style={{cursor: "pointer"}}>
                                                 Upload
                                             </div>
                                         </li>
-                                        <li className={styles.g_tabs_item}>
-                                            <div onClick={() => setActiveTab("playlist")} className={styles.tab_header} style={{cursor: "pointer"}}>
-                                                Playlist
-                                            </div>
-                                        </li>
-                                        <li className={styles.g_tabs_item}>
+                                        {/*<li className={styles.g_tabs_item}>*/}
+                                        {/*    <div onClick={() => setActiveTab("playlist")} className={styles.tab_header} style={{cursor: "pointer"}}>*/}
+                                        {/*        Playlist*/}
+                                        {/*    </div>*/}
+                                        {/*</li>*/}
+                                        <li className={`${styles.g_tabs_item} ${
+                                            activeTab === "favorite" ? styles.active : ""
+                                        }`}>
                                             <div onClick={() => setActiveTab("favorite")} className={styles.tab_header} style={{cursor: "pointer"}}>
                                                 Favorite
                                             </div>
                                         </li>
-                                        <li className={styles.g_tabs_item}>
+                                        <li className={`${styles.g_tabs_item} ${
+                                            activeTab === "review" ? styles.active : ""
+                                        }`}>
                                             <div onClick={() => setActiveTab("review")} className={styles.tab_header} style={{cursor: "pointer"}}>
                                                 Review
                                             </div>
