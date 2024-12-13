@@ -31,14 +31,14 @@ const Contents = () => {
             });
     }, []);
 
-    // useEffect(() => {
-    //     axios.post('http://localhost:8787/music/listLatest')
-    //         .then((response) => {
-    //             setLatestMusic(response.data);
-    //         })
-    //         .catch((error) => {
-    //         });
-    // }, []);
+    useEffect(() => {
+        axios.post('http://localhost:8787/music/listLatest')
+            .then((response) => {
+                setLatestMusic(response.data);
+            })
+            .catch((error) => {
+            });
+    }, []);
 
     // useEffect(() => {
     //     axios.get("http://localhost:8787/user/myUpload", {

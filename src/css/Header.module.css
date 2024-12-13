@@ -49,6 +49,7 @@
   background: linear-gradient(#f70, #f30);
   display: block;
   float: left;
+  margin-left: 32px;
 }
 
 .header_logo_link {
@@ -69,6 +70,7 @@
   display: block;
   visibility: visible;
   float: left;
+  margin-right: 6rem;
 }
 
 .header_nav_ul {
@@ -115,6 +117,7 @@
 .header_search {
   display: block;
   visibility: visible;
+  width: 31rem;
 }
 
 .header_search_form {
@@ -132,6 +135,7 @@
   height: 28px;
   font-weight: 100;
   box-sizing: border-box;
+  width: 30rem;
 }
 
 .search_button {
@@ -153,6 +157,7 @@
 .header_right {
   display: block;
   visibility: visible;
+  margin-left: 6rem;
 }
 
 .header_upsell {
@@ -178,6 +183,7 @@
   color: #ccc;
   height: 46px;
   cursor: pointer;
+  margin-right: 20px;
 }
 
 @media (max-width: 1239px) {

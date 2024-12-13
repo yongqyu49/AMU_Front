@@ -28,7 +28,7 @@
     width: 24px;
     height: 24px;
     position: absolute;
-    top: 10px; /* 버튼의 위쪽 위치 */
+    top: 0; /* 버튼의 위쪽 위치 */
     right: 10px; /* 버튼의 오른쪽 위치 */
     border: none; /* 테두리 제거 */
     cursor: pointer; /* 마우스 커서를 포인터로 */
@@ -65,6 +65,7 @@
 }
 
 .sc_media {
+    display: flex;
     overflow: hidden;
 }
 
@@ -122,5 +123,96 @@
 }
 
 .profile_settings_base_fields {
+    width: 100%;
 }
 
+.profile_settings_cell {
+    margin-bottom: 15px;
+    width: 48.9%;
+}
+
+.text_field {
+    margin: 10px 0;
+    position: relative;
+}
+
+.text_field_label {
+    margin-bottom: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.g_flex_row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.text_field_input {
+    position: relative;
+}
+
+.display_name {
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+    font-weight: 100;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    transition: border-color .1s;
+}
+
+.profile_settings_form_buttons {
+    margin-left: 40%;
+    visibility: visible;
+}
+
+.sc_button_cancel {
+    display: inline-block;
+    position: relative;
+    height: 26px;
+    margin: 0;
+    padding: 2px 11px 2px 10px;
+    border: 1px solid #e5e5e5;
+    border-radius: 3px;
+    background-color: #fff;
+    cursor: pointer;
+    color: #333;
+    font-size: 14px;
+    line-height: 20px;
+    white-space: nowrap;
+    font-family: Inter, sans-serif;
+    font-weight: 100;
+    text-align: center;
+    vertical-align: initial;
+    box-sizing: border-box;
+}
+
+.sc_button_cta {
+    display: inline-block;
+    position: relative;
+    height: 26px;
+    margin: 0;
+    padding: 2px 11px 2px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 20px;
+    white-space: nowrap;
+    font-family: Inter, sans-serif;
+    font-weight: 100;
+    text-align: center;
+    vertical-align: initial;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    box-sizing: border-box;
+    background-color: #f50;
+    border-color: #f50;
+    color: #fff;
+}
