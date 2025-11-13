@@ -125,4 +125,4 @@ AMU_Front/
 
 ## 📧 백엔드
 
-백엔드 깃허브: https://github.com/yongqyu49/AMU_Front/
+백엔드 깃허브: https://github.com/yongqyu49/AMU_Back/
