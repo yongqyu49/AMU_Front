@@ -111,8 +111,87 @@
     background-position: 50% 50%;
 }
 
+.sc_artwork5 {
+    background-image: url(https://lh3.googleusercontent.com/2BtMyAIN0grjo0u4jZWw_HOC2BLONjvjnxt4grEPIF1EvThp4vwlkP6Ki4l1S0ILKbPDHFmJK6Lk132D=w120-h120-l90-rj);
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .1);
+    text-align: center;
+    position: relative;
+    background-repeat: no-repeat;
+    transition: opacity .2s linear;
+    display: block;
+    background-size: cover;
+    background-position: 50% 50%;
+    cursor: pointer;
+}
+
+.sc_artwork4 {
+    background-image: url(https://lh3.googleusercontent.com/4igiWMyX-TCOC4EwsL4hGJz4Z1QVSSLCrqAySMivS_UHkAjGQA7BqCf7iaaDQPSciW1T8xfDeDqP7iLzEA=w120-h120-l90-rj);
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .1);
+    text-align: center;
+    position: relative;
+    background-repeat: no-repeat;
+    transition: opacity .2s linear;
+    display: block;
+    background-size: cover;
+    background-position: 50% 50%;
+    cursor: pointer;
+}
+
+.sc_artwork3 {
+    background-image: url(https://lh3.googleusercontent.com/XBwSSFEzOgkfXmd3LLWMPrcM3BZL6D3pwYXQFPqgkOfCyaOsABKiKbNnAJMUcv7U_g_AofDvkajg6Mm2Wg=w120-h120-l90-rj);
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .1);
+    text-align: center;
+    position: relative;
+    background-repeat: no-repeat;
+    transition: opacity .2s linear;
+    display: block;
+    background-size: cover;
+    background-position: 50% 50%;
+    cursor: pointer;
+}
+
+.sc_artwork2 {
+    background-image: url(https://lh3.googleusercontent.com/nvrG1c80EKwWa0xOKnQ-KFqWajfh8bAhn0u5IBRSXQWhS5gwFnu2vMgTw2wQTv4Tmu7CMzTPTI38Q18=w120-h120-l90-rj);
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .1);
+    text-align: center;
+    position: relative;
+    background-repeat: no-repeat;
+    transition: opacity .2s linear;
+    display: block;
+    background-size: cover;
+    background-position: 50% 50%;
+    cursor: pointer;
+}
+
+.sc_artwork1 {
+    background-image: url(https://lh3.googleusercontent.com/YoQ-A-GOpgeE8tgdF3Rcf5z9V8NIIKjLH6_7X3QphIQUwVHioLu7Ik2wQzU0oCkyNm1TeLDLDYvomJ8=w120-h120-l90-rj);
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .1);
+    text-align: center;
+    position: relative;
+    background-repeat: no-repeat;
+    transition: opacity .2s linear;
+    display: block;
+    background-size: cover;
+    background-position: 50% 50%;
+    cursor: pointer;
+}
 .sc_artwork {
-    background-image: url(https://i1.sndcdn.com/artworks-Ux4Ju9ta3ltuDyto-J9zydg-t500x500.jpg);
+    background-image: url(https://lh3.googleusercontent.com/AUbQLDdIcJulGaHcpEpCucXfleMiRMpJofdQGhtk5PBrjJUrLQuWFOyee-L_WgrFcTk7JSot45_YuEC7CQ=w544-h544-l90-rj);
     width: 100%;
     height: 100%;
     opacity: 1;

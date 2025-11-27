@@ -122,33 +122,33 @@ const Modal = ({ closeModal, userInfo }) => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className={styles.profile_settings_cell}>
-                                        <div className={styles.text_field}>
-                                            <label className={styles.g_flex_row} htmlFor={"display_password"}>
-                                                <span className={styles.text_field_label}>Password</span>
-                                            </label>
-                                            <div className={styles.text_field_input}>
-                                                <input
-                                                    type={"password"}
-                                                    className={styles.display_name}
-                                                    name={"display_password"}
-                                                    onChange={handleFileChange}
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className={styles.profile_settings_cell}>
-                                        <div className={styles.text_field}>
-                                            <label className={styles.g_flex_row} htmlFor={"display_confirm_password"}>
-                                                <span className={styles.text_field_label}>Confirm Password</span>
-                                            </label>
-                                            <div className={styles.text_field_input}>
-                                                <input type={"password"} className={styles.display_name}
-                                                       name={"display_confirm_password"}
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
+                                    {/*<div className={styles.profile_settings_cell}>*/}
+                                    {/*    <div className={styles.text_field}>*/}
+                                    {/*        <label className={styles.g_flex_row} htmlFor={"display_password"}>*/}
+                                    {/*            <span className={styles.text_field_label}>Password</span>*/}
+                                    {/*        </label>*/}
+                                    {/*        <div className={styles.text_field_input}>*/}
+                                    {/*            <input*/}
+                                    {/*                type={"password"}*/}
+                                    {/*                className={styles.display_name}*/}
+                                    {/*                name={"display_password"}*/}
+                                    {/*                onChange={handleFileChange}*/}
+                                    {/*            />*/}
+                                    {/*        </div>*/}
+                                    {/*    </div>*/}
+                                    {/*</div>*/}
+                                    {/*<div className={styles.profile_settings_cell}>*/}
+                                    {/*    <div className={styles.text_field}>*/}
+                                    {/*        <label className={styles.g_flex_row} htmlFor={"display_confirm_password"}>*/}
+                                    {/*            <span className={styles.text_field_label}>Confirm Password</span>*/}
+                                    {/*        </label>*/}
+                                    {/*        <div className={styles.text_field_input}>*/}
+                                    {/*            <input type={"password"} className={styles.display_name}*/}
+                                    {/*                   name={"display_confirm_password"}*/}
+                                    {/*            />*/}
+                                    {/*        </div>*/}
+                                    {/*    </div>*/}
+                                    {/*</div>*/}
                                 </div>
                             </div>
                             <div className={styles.profile_settings_form_buttons}>

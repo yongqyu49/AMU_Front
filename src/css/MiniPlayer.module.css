@@ -178,6 +178,7 @@
     height: 100%;
     align-items: center;
     visibility: visible;
+    margin-left: 200px;
 }
 
 .play_controls_previous {

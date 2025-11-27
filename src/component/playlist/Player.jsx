@@ -34,13 +34,22 @@ const Player = memo(({ selectedTrack }) => {
             </div>
             <div className={styles.side_panel}>
                 <div className={styles.tabs_container}>
-                    <div onClick={() => setActiveTab("nextTracks")} className={styles.tab_header}>
+                    <div
+                        onClick={() => setActiveTab("nextTracks")}
+                        className={`${styles.tab_header} ${activeTab === "nextTracks" ? styles.active_tab : ""}`}
+                    >
                         다음 트랙
                     </div>
-                    <div onClick={() => setActiveTab("lyrics")} className={styles.tab_header}>
+                    <div
+                        onClick={() => setActiveTab("lyrics")}
+                        className={`${styles.tab_header} ${activeTab === "lyrics" ? styles.active_tab : ""}`}
+                    >
                         가사
                     </div>
-                    <div onClick={() => setActiveTab("reviews")} className={styles.tab_header}>
+                    <div
+                        onClick={() => setActiveTab("reviews")}
+                        className={`${styles.tab_header} ${activeTab === "reviews" ? styles.active_tab : ""}`}
+                    >
                         리뷰
                     </div>
                 </div>

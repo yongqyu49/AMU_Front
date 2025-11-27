@@ -57,6 +57,13 @@
     transition: background 0.3s;
 }
 
+.active_tab {
+    background-color: #007bff; /* 활성 탭 배경색 */
+    color: #ffffff !important; /* 활성 탭 텍스트 색상 */
+    font-weight: 600;
+}
+
+
 .tab_header:last-child {
     border-right: none; /* 마지막 탭의 경계선 제거 */
 }

@@ -16,21 +16,20 @@ const SideBar = () => {
                             <ul className={styles.sc_list_nostyle}>
                                 <li className={styles.soundBadgeList_item}>
                                     <div className={styles.soundBadge}>
-                                                    <span className={styles.soundBadge_artwork}>
-                                                        <div className={styles.image_light_outline}>
-                                                            <span className={styles.sc_artwork}></span>
-                                                        </div>
-                                                    </span>
+                                        <span className={styles.soundBadge_artwork}>
+                                            <div className={styles.image_light_outline}>
+                                                <span className={styles.sc_artwork5}></span>
+                                            </div>
+                                        </span>
                                         <div className={styles.sc_media_content}>
                                             <div className={styles.soundTitle}>
                                                 <div className={styles.soundTitle_titleContainer}>
                                                     <div
                                                         className={styles.soundTitle_usernameTitleContainer}>
                                                         <div className={styles.sc_type_light}>
-                                                            <span>deja vu</span>
+                                                            <span>TATTOO</span>
                                                         </div>
-                                                        <Link to={""}
-                                                              className={styles.sc_link_primary}>HAEWON</Link>
+                                                        <Link to={""} className={styles.sc_link_primary}>OFFICIAL HIGE DANDISM</Link>
                                                     </div>
                                                 </div>
                                             </div>
@@ -39,21 +38,19 @@ const SideBar = () => {
                                 </li>
                                 <li className={styles.soundBadgeList_item}>
                                     <div className={styles.soundBadge}>
-                                                    <span className={styles.soundBadge_artwork}>
-                                                        <div className={styles.image_light_outline}>
-                                                            <span className={styles.sc_artwork}></span>
-                                                        </div>
-                                                    </span>
+                                        <span className={styles.soundBadge_artwork}>
+                                            <div className={styles.image_light_outline}>
+                                                <span className={styles.sc_artwork4}></span>
+                                            </div>
+                                        </span>
                                         <div className={styles.sc_media_content}>
                                             <div className={styles.soundTitle}>
                                                 <div className={styles.soundTitle_titleContainer}>
-                                                    <div
-                                                        className={styles.soundTitle_usernameTitleContainer}>
+                                                    <div className={styles.soundTitle_usernameTitleContainer}>
                                                         <div className={styles.sc_type_light}>
-                                                            <span>deja vu</span>
+                                                            <span>Sugar</span>
                                                         </div>
-                                                        <Link to={""}
-                                                              className={styles.sc_link_primary}>HAEWON</Link>
+                                                        <Link to={""} className={styles.sc_link_primary}>Maroon 5 • V (Aisa Tour Edition)</Link>
                                                     </div>
                                                 </div>
                                             </div>
@@ -62,21 +59,21 @@ const SideBar = () => {
                                 </li>
                                 <li className={styles.soundBadgeList_item}>
                                     <div className={styles.soundBadge}>
-                                                    <span className={styles.soundBadge_artwork}>
-                                                        <div className={styles.image_light_outline}>
-                                                            <span className={styles.sc_artwork}></span>
-                                                        </div>
-                                                    </span>
+                                        <span className={styles.soundBadge_artwork}>
+                                            <div className={styles.image_light_outline}>
+                                                <span className={styles.sc_artwork3}></span>
+                                            </div>
+                                        </span>
                                         <div className={styles.sc_media_content}>
                                             <div className={styles.soundTitle}>
                                                 <div className={styles.soundTitle_titleContainer}>
                                                     <div
                                                         className={styles.soundTitle_usernameTitleContainer}>
                                                         <div className={styles.sc_type_light}>
-                                                            <span>deja vu</span>
+                                                            <span>Too Sweet</span>
                                                         </div>
                                                         <Link to={""}
-                                                              className={styles.sc_link_primary}>HAEWON</Link>
+                                                              className={styles.sc_link_primary}>Hozier</Link>
                                                     </div>
                                                 </div>
                                             </div>
@@ -98,21 +95,19 @@ const SideBar = () => {
                             <ul className={styles.sc_list_nostyle}>
                                 <li className={styles.soundBadgeList_item}>
                                     <div className={styles.soundBadge}>
-                                                    <span className={styles.soundBadge_artwork}>
-                                                        <div className={styles.image_light_outline}>
-                                                            <span className={styles.sc_artwork}></span>
-                                                        </div>
-                                                    </span>
+                                        <span className={styles.soundBadge_artwork}>
+                                            <div className={styles.image_light_outline}>
+                                                <span className={styles.sc_artwork2}></span>
+                                            </div>
+                                        </span>
                                         <div className={styles.sc_media_content}>
                                             <div className={styles.soundTitle}>
                                                 <div className={styles.soundTitle_titleContainer}>
-                                                    <div
-                                                        className={styles.soundTitle_usernameTitleContainer}>
+                                                    <div className={styles.soundTitle_usernameTitleContainer}>
                                                         <div className={styles.sc_type_light}>
-                                                            <span>deja vu</span>
+                                                            <span>2002</span>
                                                         </div>
-                                                        <Link to={""}
-                                                              className={styles.sc_link_primary}>HAEWON</Link>
+                                                        <Link to={""} className={styles.sc_link_primary}>Anne-Marie • 2002</Link>
                                                     </div>
                                                 </div>
                                             </div>
@@ -121,21 +116,19 @@ const SideBar = () => {
                                 </li>
                                 <li className={styles.soundBadgeList_item}>
                                     <div className={styles.soundBadge}>
-                                                    <span className={styles.soundBadge_artwork}>
-                                                        <div className={styles.image_light_outline}>
-                                                            <span className={styles.sc_artwork}></span>
-                                                        </div>
-                                                    </span>
+                                        <span className={styles.soundBadge_artwork}>
+                                            <div className={styles.image_light_outline}>
+                                                <span className={styles.sc_artwork1}></span>
+                                            </div>
+                                        </span>
                                         <div className={styles.sc_media_content}>
                                             <div className={styles.soundTitle}>
                                                 <div className={styles.soundTitle_titleContainer}>
-                                                    <div
-                                                        className={styles.soundTitle_usernameTitleContainer}>
+                                                    <div className={styles.soundTitle_usernameTitleContainer}>
                                                         <div className={styles.sc_type_light}>
-                                                            <span>deja vu</span>
+                                                            <span>Circles</span>
                                                         </div>
-                                                        <Link to={""}
-                                                              className={styles.sc_link_primary}>HAEWON</Link>
+                                                        <Link to={""} className={styles.sc_link_primary}>Post Malone • Hollywood's Bleeding</Link>
                                                     </div>
                                                 </div>
                                             </div>
@@ -144,21 +137,19 @@ const SideBar = () => {
                                 </li>
                                 <li className={styles.soundBadgeList_item}>
                                     <div className={styles.soundBadge}>
-                                                    <span className={styles.soundBadge_artwork}>
-                                                        <div className={styles.image_light_outline}>
-                                                            <span className={styles.sc_artwork}></span>
-                                                        </div>
-                                                    </span>
+                                        <span className={styles.soundBadge_artwork}>
+                                            <div className={styles.image_light_outline}>
+                                                <span className={styles.sc_artwork}></span>
+                                            </div>
+                                        </span>
                                         <div className={styles.sc_media_content}>
                                             <div className={styles.soundTitle}>
                                                 <div className={styles.soundTitle_titleContainer}>
-                                                    <div
-                                                        className={styles.soundTitle_usernameTitleContainer}>
+                                                    <div className={styles.soundTitle_usernameTitleContainer}>
                                                         <div className={styles.sc_type_light}>
-                                                            <span>deja vu</span>
+                                                        <span>アイデア</span>
                                                         </div>
-                                                        <Link to={""}
-                                                              className={styles.sc_link_primary}>HAEWON</Link>
+                                                        <Link to={""} className={styles.sc_link_primary}>Gen Hoshino</Link>
                                                     </div>
                                                 </div>
                                             </div>
